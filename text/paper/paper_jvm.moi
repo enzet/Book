@@ -1,0 +1,6 @@
+\2 {\[DiSL\] The \abbr {JVM} is Not Observable Enough (and What To Do About It)} {paper_jvm}
+
+\paperblock {jvm}
+
+\page {1} Article is about \abbr {VM}-level interfaces and tools build on top of them for debugging,
+

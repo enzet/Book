@@ -1,0 +1,6 @@
+\2 {\abbr {DSD}-Crasher: A Hybrid Analysis Tool for Bug Finding} {paper_dsd_crasher}
+
+\paperblock {dsd_crasher}
+
+\page {1} \abbr {DSD} is dynamic-static-dynamic. Three steps\: extract invariants (to exclude unwanted values), explore paths with static analysis, generate tests based on static results. \page {2} They use Daikon tool to infer program invariants (D) and their previous tool Check’n’Crash (SD): \abbr {ESC}/Java (S), JCrasher (D).
+

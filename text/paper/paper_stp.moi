@@ -1,0 +1,6 @@
+\2 {\[\ref {#stp} {\abbr {STP}}\] A Decision Procedure for Bit-Vectors and Arrays} {paper_stp}
+
+\paperblock {stp}
+
+\abbr {STP} is for quantifier-free formulae. Uses translation to \ref {#sat} {\abbr {SAT}}.
+

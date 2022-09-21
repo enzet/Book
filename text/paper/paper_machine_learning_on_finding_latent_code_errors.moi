@@ -1,0 +1,10 @@
+\2 {Finding latent code errors via machine learning over program executions} {paper_machine_learning_on_finding_latent_code_errors}
+
+\paperblock {machine_learning_on_finding_latent_code_errors}
+
+\quote {See Yuriy Brun's master's thesis \ref {http://people.cs.umass.edu/~brun/pubs/pubs/Brun03masters.pdf} {Software Fault Identification via Dynamic Analysis and Machine Learning}.}
+
+\tag {#machine learning}
+
+\pages {11 pages}
+

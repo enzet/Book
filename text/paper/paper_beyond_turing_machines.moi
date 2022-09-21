@@ -1,0 +1,15 @@
+\2 {Computation Beyond Turing Machines} {paper_beyond_turing_machines}
+
+\paperblock {beyond_turing_machines}
+
+\page {1} Gödel proved that logic could not completely model mathematical truth. Computer science is a fundamentally non-mathematical discipline. Interaction is not the only way to extend Turing machine. 1900—Hilbert's principle, 1931—Gödel proved that Entscheidungsproblem is unsolvable. 1935—Church proved thath Entscheidungsproblem could \page {2} not be solved by the lambda calculus. Turing\: halting problem of Turing machines. → Church-Turing thesis\: logic, lambda calculus, Turing machines, and effective function computations are equals as problem solving mechanisms.
+
+Algorithm\: predetermined input → output. Interaction cannot be replaced by any set of inputs determined prior to the computations\: \abbr {AI}, graphics, and the Internet could not be expressed by \abbr {TM}.
+
+\quote {\page {3} the classical Turing paradigm
+may no longer be fully appropriate
+to capture all features of present-day
+computing}
+
+/* \2 {2004} {paper_2004} */
+

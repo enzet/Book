@@ -1,0 +1,10 @@
+\2 {\[\abbr {SAGE}\] Automated Whitebox Fuzz Testing} {paper_sage}
+
+\paperblock {sage}
+
+\tag {#solving optimization}
+
+\comment {Here should be some first ideas about solving optimization.}
+
+Tool \ref {#sage} {\abbr {SAGE}}.
+

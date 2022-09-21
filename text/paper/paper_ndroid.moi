@@ -1,0 +1,10 @@
+\2 {\[NDroid\] On Tracking Information Flows through \abbr {JNI} in Android Applications} {paper_ndroid}
+
+\paperblock {ndroid}
+
+\quote {See \ref {#ndroid} {NDroid}, \ref {#jni} {\abbr {JNI}}, \ref {#android} {Android}.}
+
+\date {12.03.2015} \page {1} Number of apps used \abbr {JNI} increase recent years. \date {19.03.2015} \abbr {JNI} is used for OpenGL \abbr {ES}, OpenSL \abbr {ES}, re-using native codes in C/C++. Percent of using \abbr {JNI} in Android applications increased: 4.52~% → 9.42~% → 16.46~% (June 2013) → 24~% (for Asia apps). \ref {#taintdroid} {TaintDroid} and \ref {#droidscope} {Droidscope} are limited in the taint propagation logic related to \abbr {JNI}, because they \i {were not designed specially for apps using \ref {#ndk} {\abbr {NDK}}}. \comment {What is specially design in NDroid?} Taintdroid under-taints explicit information flows from native code to Dalvik. Droidscope’s overhead is quite high, because it reconstructs \abbr {OS} level and \abbr {DVM} level information only from the machine instructions without exploiting \abbr {JNI}’s semantic information. Moreover, its capability could be restricted by Just-In-Time compilation. \comment {Is \abbr {JIT} critical?} NDroid can track information flows from selected \i {sources} to specified \i {sinks}.
+
+\page {2} \comment {Read about!} Android uses indirect references in native code rather than direct pointers to reference objects. By doing so, when the garbage collector (\abbr {GC}) moves an object, it updates the indirect reference table with the object’s new location. Consequently, native codes will hold valid object pointers every time \abbr {GC} moves objects around. TaintDroid modified Android's application framework and \abbr {DVM}.
+

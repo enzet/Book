@@ -1,0 +1,17 @@
+\2 {\ref {#jdart} {JDart}: A Dynamic Symbolic Analysis Framework} {paper_jdart}
+
+\paperblock {jdart}
+
+\page {1} Feature: modular architecture. Created by \ref {#carnegie_mellon} {\abbr {CMU}} and \abbr {NASA} since 2010. \page {2} Two main components: the \i {Executor} and the \i {Explorer}. Executor is an extension to \ref {#jpf} {Java PathFinder}. Explorer determines the exploration strategy. It uses \sc {JConstraints} library (also their work). \page {3} Thay said, path constraints are combined into \term {constraints tree}. \page {5} It executes Java bytecode. It also generates \i {method summaries} and \i {jUnit tests}. It can analyze \i {the whole program} as well as \i {method}. As a plugin to \abbr {JPF}, JDart implements:
+
+\list
+    {setting concrete values (mark points to back track),}
+    {recording symbolic constraints.}
+
+\page {6}
+
+\page {11} They said, \ref {#jcute} {JCute} and JFuzz are no longer actively maintained.
+
+\3 {About native} {paper_jdart_native}
+
+They could deal with native methods from \m {java.lang.Math}. \comment {Only with them, or with any native method?} They said, there is an extension to \ref {#jpf} {Java PathFinder} for dealing with native code. In the table with result their tool marked as tool with native code support (as well as \ref {#jpf} {Symbolic PathFinder} and JFuzz).

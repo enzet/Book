@@ -1,0 +1,14 @@
+\2 {Optimizing Constraint Solving to Better Support Symbolic Execution} {paper_high_dpll}
+
+\paperblock {high_dpll}
+
+\i {See also} good \ref {http://www.cc.gatech.edu/~orso/papers/erete.orso.CSTVA11.presentation.pdf} {presentation} with simple algorithm explanation.}
+
+\tag {#solving optimizations}
+
+\page {1} Constrant solving is an integral part of symbolic execution. But solvers are mostly used in a black-box fashion without leveraging any of the contextual and domain information. They use \ref {#cvc3} {\abbr {CVC3}} and \ref {#z3} {Z3}. \page {2} They call Avalanche's approach \i {dynamic symbolic execution}. \i {Target constraint} is constraint to inverse, \i {target variables} are variables involved in such constraint. We know solution for executed path. First technique is \i {DomainReduce}. It relies on two observations: constraint that are not dependent on the target constraint cannot affect the solution of the modified condition (\comment {Great, what else?}), \page {3} restricting the domain (replace all symbolic variables with except \i {one} of target variables with concrete values) may help the solver to find a solution faster (\comment {and that is really cool}). If the solver cannot find a solution, we try a different symbolic variable and eventually expand the domain by adding \i {one} variable to the set of symbolic variables whose value is not fixed. They use \i {concrete values} for some symbolic variables. They have 2 variants: replace only target variables with concrete values or all dependent variables.
+
+Firstly, they take one target variable, make it symbolic (and all variables it depend on) and other replace with concrete values. Then other variables. On next iteration take two target variables and so on.
+
+\pages {6 pages, readed}
+

@@ -1,0 +1,12 @@
+\2 {\[\ref {#splat} {Splat}\] Testing for Buffer Overflows with Length Abstraction} {paper_splat}
+
+\paperblock {splat}
+
+\page {1} Tool \ref {#splat} {Splat}. Path explosion can be alleviated by performing test generation compositionally (link to \ref {#paper_compositional_test_generation} {this paper}). Their \b {approach is less precise} but much faster than normal symblic execution\: it is an approach to search space pruning. String is just a buffer with string content. \page {2} Main idea\: track buffers and string \i {partially symbolically}, use symbolic prefix and fill buffer beyond prefix with random. For each pointer they have \term {valid range} (addresses can be safely accessed by the pointer, e.g. bounds for a pointer into a buffer). For each memory dereference they write danger condition. \page {3} Partial symbolic representation can miss path, but you always can increase symbolic prefix size.
+
+\comment {They analyze program on the source level. So, they don't bind symbolic variables of string prefix to real memory cells. Thus, they just use non-zero characters and add terminator.}
+
+\image {image/diagram/splat.png} {Possibly symbolic representation of string lenght}
+
+\page {5} Splat is for C programs, it uses source-to-source instrumentation. \page {6} Memory nodes are sorted by address ranges using a splay tree (self-adjusting binary search tree). They replace functions in \m {string.h} with their string library (\comment {own string library!}) that is aware of symbolic length and memory nodes. Splat use different search strategies. They looks for memory violations like Valgrind's \ref {#memcheck} {Memcheck}. But they can always detect buffer overflows that overwrite the return address. They also use more precise asserts. \page {7} For solving they use \ref {#stp} {\abbr {STP}} (bit-accuracy of \abbr {STP} matter). They have a real exploit benchmarks.
+

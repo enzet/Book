@@ -1,0 +1,8 @@
+\2 {\abbr {PEBIL}: Efficient Static Binary Instrumentation for Linux} {paper_pebil}
+
+\paperblock {pebil}
+
+\page {1} Static binary instrumentation toolkit for \ref {#linux} {Linux} on \ref {#x86} {x86}. It inserts branch instruction at each instrumentation point that transfers control to the instrumentation code. \page {2} 3 tools: function counter, block counter, cache simulation tool. \abbr {PEBIL} is for \ref {#elf} {\abbr {ELF}} on the Linux, x86. \abbr {PEBIL} needs debug information. \page {4} Fixed-length instrumentation is much simpler than variable-length instructions instrumentation because you may not have enough space for jump instruction. Solution is intermediate branches (on x86 even smallest branch instruction requires 2 bytes), or \m {int3} interrupt instruction, or code rewrite.
+
+\page {8} \ref {#eraser} {Earlier} implementations: \ref {#atom} {\abbr {ATOM}} (only for Alpha platform), \abbr {EEL} (has platform-independent interface to rewrite binaries). They say, \ref {#dyninst} {Dyninst} is also static instrumentator and it is more powerful than \abbr {PEBIL}.
+

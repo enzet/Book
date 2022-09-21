@@ -1,0 +1,42 @@
+\2 {\[\ref {#minisat} {\sc {MiniSat}}\] An Extensible \abbr {SAT}-solver} {paper_minisat}
+
+\paperblock {minisat}
+
+\tag {#SAT}
+
+\ref {#minisat} {\sc {MiniSat}} allows to construct your own solver in a very short time.
+
+\date {13.02.2015} \page {1} Main feature of \sc {MiniSat}—extensibility. In 2002 they have implemented \sc {Satzoo} and \sc {Satnik}. \sc {MiniSat} is based on the ideas of \i {conflict-driven backtracking}, \i {watched literals}, and \i {dynamic variable ordering}. \page {2} \sc {MiniSat} is actually minimal \abbr {SAT}-solver with useful \abbr {API} (< 600 lines of C++ code). It includes an \b {incremental} \abbr {SAT} interface. \page {3} You can provide \i {assumptions} (set of literals that is true) to \m {solve()} method to get “\abbr {SAT}” or “\abbr {UNSAT} under assumptions”.
+
+\term {Conflict-driven} \abbr {SAT}-solver: based on \ref {#dpll} {\abbr {DPLL}}, backtracking by conflict analysis and clause recording (\term {learning}) [\ref {#paper_grasp} {\abbr {GRASP}}], Boolean constraint propagation using watched literals [\ref {#paper_chaff} {Chaff}].
+
+\term {Search}: \page {4} make assumptions (heuristically, pick variables and assign values). \comment {Can we offer better assumptions based on high-level structures?} \sc {MiniSat} is extensible for \i {arbitrary constraints}.
+
+\term {Propagation}. Clause\: \simplemath {(\i {x} ∨ \i {y} ∨ \i {z})}, unit clause: \simplemath {(\i {x})}. Watcher queue: for each literal, a list of constraints (which \i {may} propagate unit information if literal becomes true) is kept. On backtracking, no adjustment to the watcher lists need to be done.
+
+\image10 {image/diagram/watcher_queue.svg} {Watcher queue}
+
+\term {Learning}: when a constraint becomes conflicting under current assignment, learning starts. As result, we get \i {learned clause} (set of variables that implies the confilict).
+
+\image10 {image/diagram/solving_learning.svg} {Learning}
+
+\page {5} \term {Search}. It is a recursive procedure, but typically implemented iteratively\: select unassigned variable \simplemath {\i {x}} (\term {decision variable}), assume a value. Stack of assignments reffered to as \term {trail}. If the clause remains unit for several decision levels, it is advantageous to chose the lowest level (\term {backjumping} [\ref {#paper_grasp} {\abbr {GRASP}}]). \page {6} An important part of the procedure is the heuristic for \m {decide()}. Like \sc {Chaff}, \sc {MiniSat} uses \term {dynamic variable order}\: priority to varialbes involved in recent conflicts. Variable ordering is a traditional target for improving \abbr {SAT}-solvers. \comment {Optimizations.}
+
+\image10 {image/diagram/solving_search.svg} {Search}
+
+Each variable has an \term {activity} attached to it. \term {Bumping}\: increasing activity when a variable occurs in a recorded conflict clause. \term {Decaying}\: multiply activity of all the variables by a constant less than 1. \sc {MiniSat} uses the same idea for clauses.
+
+The constraint database is divided into two parts\: the \term {problem constraints} and the \term {learnt clauses}. For performance, learned clauses can be periodically reduced.
+
+\3 {Implementation} {minisat_implementation}
+
+\page {8} \sc {MiniSat} can handle arbitrary constraints over boolean variables. \page {10} Class \m {Constr} is an arbitrary constraint (not only clause). It is interface that must implement \m {remove()}, \m {propagate()}, \m {simplify()}, \m {undo()}, and \m {calcReason()} functions. They said, \abbr {SAT}-solver spends about 80\nbs {}% of the time propagating. \comment {Can we use this fact?} The propagation routine keeps \term {propagation queue} (a set of literals that is to be propagated). \page {11} \m {Clause} is a subclass of \m {Constr}. \m {Clause} has fields\: \m {bool learnt}, \m {float activity}, and \m {Vec<lit> lits}.
+
+\page {13} \term {Conflict-driven clause learning}\nbs {}[\ref {#paper_grasp} {\abbr {GRASP}}]. Example. \abbr {DB} {database} contains clause \simplemath {\{\i {x}, \i {y}, \i {z}\}}: \simplemath {(\i {x} ∨ \i {y} ∨ \i {z})}. It became usatisfied during propagation. This is a conflict. \simplemath {(¬\i {x} ∧ ¬\i {y} ∧ ¬\i {z})} is the reason of the conflict. We ask \m {calcReason()} for propagating \simplemath {¬\i {x}}. If result is \simplemath {(\i {u} ∧ ¬\i {v})} (what had implied \simplemath {¬\i {x}}), the \term {learn conflict clause} is \simplemath {\{¬\i {u}, ¬\i {v}, \i {y}, \i {z}\}}.
+
+\page {14} In the terms of \sc {MiniSat}, \term {fact} is a litera with reason.
+
+\comment {Is there parallelization?}
+
+\pages {23 pages}
+

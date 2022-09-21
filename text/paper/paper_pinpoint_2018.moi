@@ -1,0 +1,3 @@
+\2 {Pinpoint: Fast and Precise Sparse Value Flow Analysis for Million Lines of Code} {paper_pinpoint}
+
+\page {1} There is "pointer trap" in static analysis.

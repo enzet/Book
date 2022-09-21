@@ -1,0 +1,12 @@
+\2 {ISP-Fuzzer: extendable fuzzing framework} {paper_isp_fuzzer}
+
+\3 {Paper review} {paper_isp_fuzzer_review}
+
+The paper presents ISP-Fuzzer, a dynamic program analysis framework. The approach described in the paper is to enhance coverage-based fuzzing performance through the use of additional techniques such as static analysis and dynamic symbolic execution. The framework seems to be useful since it is multiplatform, can run on distributed and multiprocessor systems. 
+
+The internal plugin manager can support a lot of additional tools, so the user can choose which one is better suited to analyzing a given program.
+
+The paper is short and far from exceeding limits. Nevertheless, it just describes the internal structure of the framework and gives only a partial picture of tool results. From the paper, it is not clear, if there are similar projects and, if so, why the proposed approach is better, e.g. if it has a more comprehensive interface. It is also not clear how additional tools improves grey-box fuzzing.
+
+I recommend revising the paper's organization, leaving more room for results and comparison with other fuzzing frameworks and trimming down general and introductory parts.
+

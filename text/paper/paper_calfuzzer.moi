@@ -1,0 +1,5 @@
+\2 {\sc {CalFuzzer}: An Extensible Active Testing Framework for Concurrent Programs} {paper_calfuzzer}
+
+\paperblock {calfuzzer}
+
+\page {1} \sc {CalFuzzer} uses \ref {#static_analysis} {static} and \ref {#dynamic_analysis} {dynamic} analyses to detect \ref {#concurrency_defect} {concurrent defects}. Two phases: \abbr {SA} and \abbr {DA} followed by \term {active testing} (randomized thread scheduling). \page {2} It pauses a thread when it reaches a statement involved in the potential bug. It is for \ref {#java} {Java} programs.

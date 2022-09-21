@@ -1,0 +1,21 @@
+\2 {\abbr {MAJORCA}: Multi-Architecture \abbr {JOP} and \abbr {ROP} Chain Assembler} {paper_majorca}
+
+\tag {rop}
+
+\page {1} \abbr {ROP} is return-oriented programming and \abbr {JOP} is jump-oriented programming. They are code-reuse attack techniques. Programming languages with non-safety memory operations are on the scene yet. \comment {Is it a suggestion, that they will gone some time soon?} \abbr {ROP} chain is if fact a program for the virtual machine defined by an executable.
+
+\page {2} \abbr {ROP} chains can be created with genetic algorithms or \abbr {SMT} solvers.
+
+\3 {Review}
+
+Code-reuse attack techniques are a great threat to operating systems. In the paper, MAJORCA is presented. It is a tool that uses techniques to automatically create ROP (return-oriented programming) and JOP (jump-oriented programming) chains.
+
+MAJORCA has a number of features that distinguish it from the other tools:
+\list
+    {It combines ROP and JOP chain generation.}
+    {It uses filtering and prioritization to speed up search.}
+    {It has additional technique to get rid of gadgets with restricted symbols and use arithmetic operations to get values with these symbols.}
+
+The implementation uses ROPGadget tool for creating gadgets. The tool allows user to create human-readable ROP chains in Python programming language as well as raw binary ROP chain data.
+
+The evaluation results shows that MAJORCA works more effectively than other open-source tools it was compared to, which looks impressive. The authors discuss techniques to solve an important problem, and I think that the paper should be accepted.

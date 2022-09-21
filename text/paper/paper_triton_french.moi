@@ -1,0 +1,8 @@
+\2 {\ref {#triton} {Triton} : Framework d’exécution concolique et d’analyses en \i {runtime}} {paper_triton_french}
+
+\paperblock {triton_french}
+
+\page {1} They use terms \term {exécution concolique} and \term {\i {fuzzing} symbolique}.
+\page {2} Abstract interpretation is a type of \ref {#static_analysis} {static analysis}. Value-set analysis is a method of abstract interpretation. L’analyse dynamique se fait sur \b {une unique} trace. Mais la difficulté est parcourir l'ensemble de l'arbre d'exécution.
+L’exécution symbolique dynamique (\abbr {DSE}) = exécution concolique.
+

@@ -1,0 +1,17 @@
+\2 {Under-Constrained Symbolic Execution: Correctness Checking for Real Code} {paper_ucse}
+
+\paperblock {ucse}
+
+\page {2} Their framework is \abbr {UC-\ref {#klee} {KLEE}}. For checking C/C++ code. They check \i {patches} for chashes introducing. Patches intended to fix bugs are frequent source of them. \page {3} \abbr {UC-KLEE} can \i {verify} that patch does not introduce new crashes. 3 checkers: memory leaks, uses of uninitialized, unsanitized uses of user input. On one function it can exhaust all paths. \abbr {UC-KLEE} executes functions \i {without} preconditions, so this under-constraining may cause false positives. \comment {Has \abbr {FP}, but still verify code.} Function's symbolic input generation uses lazy initizlization. \page {4} Limitations: only check patches that do not reorder fields in data structures. \page {5} \abbr {UC-KLEE} symbolically executes both patched and unpatched versions and report defect iff it occures in patched version and \i {not} occured in unpatched (if crash was in unpatched version, it is likely a \abbr {FP} {false positive}). They have previous paper about function equivalence.
+
+For path pruning it has \i {static cross-checker}. It walks over \abbr {CFG} and mark \abbr {BB} {basic blocks} that differs. So, not patched paths will be pruned. Also it prunes pathses that has no error or has error without reaching differing blocks.
+
+\pages {evaluate skipped}
+
+\page {14} They use symbolically-sized objects. Inputs for one function checking is more complex that command-line and input files for whole program. It hard to be created by user and hard to reproduce automatically. \page {15} So, \abbr {UC-KLEE} emits a path summary for each error with complete source code listing with \abbr {PC} {path constraints}. They found query timeouts due to symbolic \ref {#smt_div} {division and remainder operations}. Their solution—\i {lazy constraints}. They postpone evaluation of expensive constraints until error is found:
+
+\code {int x = y / z; // lazy_x = y / z
+if (x > 10)    // lazy_x > 10}
+
+Complex C-systems frequently use function pointers within \m {struct} types to emulate \abbr {OO} {object-oriented} methods. So, there is \ref {#indirect_call} {indirect calls problem}. Their solution: require that users specify concrete function pointers to associate with each type of object.
+

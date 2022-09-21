@@ -1,0 +1,13 @@
+\2 {Static Analysis to Support the Evolution of Exception Structure in Object-Oriented Systems}
+
+\paperblock {jex}
+
+They present a general model of the excepton-handling structures and mechanisms adapted from Schaefer and Bundy model for Ada.
+
+\page {2} There are three exception models:
+\list
+	{\b {termination}: the lexical scope raising an exception is destroyed, and, if a handler is found and executed, control resumes at the first syntactic unit following this handler (C++ and Java are here)}
+	{\b {resumption}: once an exception is handled, control continues where the exception was raised}
+	{\b {retry}: model, when an exception is handled, the syntactic block raising the exception is terminated and then retried}
+
+	\page {3} Type subsumption (using value of type A as a value of its supertype B) is used in both exception handling and exception propagation from the method (throws declaration).

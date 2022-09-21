@@ -1,0 +1,36 @@
+\2 {Static Analysis of Dynamic Languages} {paper_sa_of_dynamic_languages}
+
+\paperblock {sa_of_dynamic_languages} 
+
+\page {7} \table
+    {{} {\b {Statically checked}} {\b {Dynamically checked}}}
+    {{\b {Safe}} {Java, Standard ML, etc.} {\ref {#js} {JavaScript}, \ref {#python} {Python}, etc.}}
+    {{\b {Unsafe}} {C, C++, etc.} {}}
+
+\page {9} Pros of static typing\:
+\list
+	{no type errors,}
+	{\page {10} refactoring,}
+	{auto-completion,}
+	{performance (compiler generates more efficient code),}
+	{modularity (check types in interface usages),}
+	{\page {11} documentation.}
+
+Cons\:
+\list
+	{type slack (rejecting of OK programs if types cannot be 100% proven),}
+	{incomplete programs are not accepted,}
+	{classes/modules cannot change over time and it is hard to extend them,}
+	{\page {12} too many type annotations.} 
+
+Features (and also problems for analysis)\:
+\list
+	{impurity (side-effects, mutable structures in the heap),}
+	{globals \comment {Maybe only for \abbr {JS} and \abbr {PHP}, not Python},}
+	{object-based (and prototype-based for \abbr {JS}),}
+	{\page {13} higher-order functions (it enables functional programming, but due to side effects and the lack of types most functions behave as procedures),}
+	{reflection (\m {eval} and \m {exec} for Python),}
+	{ubiquitous strings (using string as e.g. return state values),}
+	{\page {14} coercions (Python and Ruby — only for numbers).}
+
+\page {20} \b {Over-approximation}: if approximation is bug-free, then the program is bug-free. \b {Under-approximation}: if approximation has a bug, then the program has that bug. \page {21} \b {Precision}: how closely the approximation matches the behaviour of the program.

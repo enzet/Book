@@ -1,0 +1,5 @@
+\2 {A Survey of Symbolic Execution Techniques} {paper_se_survey}
+
+\paperblock {se_survey}
+
+\page {2} They said, \abbr {SMT} solver used in dynamic symbolic execution tool is in fact a model checker, that checks property violations or path constraints. Symbolic execution found 30 % bugs, which other program analyses missed.

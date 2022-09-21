@@ -1,0 +1,12 @@
+\2 {Dynamically validating static memory leak warnings} {paper_valid_static_leak}
+
+\paperblock {}
+
+\quote {See \ref {https://www.ics.uci.edu/~guoqingx/papers/li-issta13.pdf} {\abbr {PDF} online}.}
+
+\quote {Leonid's review. 2013
+	    Результат: \abbr {MUST-LEAK}, \abbr {LIKELY-NOT-LEAK}, \abbr {BLOAT}, and \abbr {MAY-LEAK}
+	    Свой memcheck с ослабленными условиями для уменьшения времени анализа
+	    Итеративный д.а., исследуются только пути, которые проходят через фрагмент пути, полученный от с.а.}
+
+

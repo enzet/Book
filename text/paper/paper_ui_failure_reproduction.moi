@@ -1,0 +1,10 @@
+\2 {Automated Extraction of Failure Reproduction Steps from User Interaction Traces} {paper_ui_failure_reproduction}
+
+\paperblock {ui_failure_reproduction}
+
+\quote {See \ref {https://www1.in.tum.de/lehrstuhl_1/images/general/saner15main-mainid25-p-26819-159e090-22736-preprint.pdf} {\abbr {PDF} online}.}
+
+\quote {Leonid's review.       \abbr {GUI} capture/replay tool to collect input data →
+      Send collected info (trace) to server →
+      Extract min subsequence from received trace to reproduce crash (3 strategies).}
+

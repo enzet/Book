@@ -1,0 +1,10 @@
+\2 {\ref {#simplify} {Simplify}: A Theorem Prover for Program Checking} {paper_simplify}
+
+\paperblock {simplify}
+
+\page {1} Theorem prover. Uses \ref {#nelson_oppen} {Nelson-Oppen} approach. A part of Extended Static Checking project (\abbr {ESC}). \page {2} Input: first-order formula, including quantifiers. Theories: equality, linear rational arithmetic, linear integer arithmetic. To check the validity of a conjecture \simplemath {\i {G}}, Simplify tests the satisfiability of \simplemath {¬\i {G}}. Uses \term {backtracking search}.
+
+\page {3} Theory of equality: \simplemath {=}. Theory of arithmetic: \simplemath {+}, \simplemath {—}, \simplemath {×}, \simplemath {>}, \simplemath {<}, \simplemath {≥}, \simplemath {≤}.
+
+/* \2 {2006} {paper_2006} */
+

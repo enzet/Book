@@ -1,0 +1,12 @@
+\2 {Soot—a Java Bytecode Optimization Framework} {paper_soot}
+
+\paperblock {soot}
+
+\page {2} Java features\: platform independence, execution safety, garbage collection, object orientation. They said applications written in Java are often much slower than their counterparts written in C or C++. \comment {To thesis.} Soot is for bytecode optimization. It is implemented in Java.
+
+Three Java bytecode intermediate representation\:
+
+\list
+    {Baf,}
+    {Jimple,}
+    {Grimp.}

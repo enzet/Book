@@ -1,0 +1,6 @@
+\2 {Type-Dependence Analysis and Program Transformation for Symbolic Execution} {paper_type_dependence_analysis}
+
+\paperblock {type_dependence_analysis}
+
+Their next paper is \ref {#paper_heap_cloning} {\i {Heap Cloning: Enabling Dynamic Symbolic Execution of Java Programs}}.
+

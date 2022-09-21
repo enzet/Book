@@ -1,0 +1,24 @@
+\2 {Mixed Abstractions for Floating-Point Arithmetic} {paper_float_abstract}
+
+\paperblock {float_abstract}
+
+\tag {floating point}
+
+\page {1} Floating point is essential for avionics. \comment {Got it.} Main problem with floating point is rounding. (You can get non-associative addition.) Two ways: (1) \i {abstract interpretation} (program is partially executed on an abstract domain such as real intervals \comment {I don't understand.}) and (2) \i {proof assistants} (tools that prove theorems about programs under human guidance). They want to encode float-point operations as functions on bit-vectors and use \abbr {SAT}-solvers. But this approach \b {has proven to be intractable} in practice (very large and hard-to-solve). They use overapproximation and underapproximation: unsat of overapproximated A implies unsat of A (\abbr {CEGAR}), sat of A implies sat of underapproximated A. \page {2} Algorithm termination is guaranteed.
+
+Rounding function can be in (1) round-up or (2) round-down modes. Rounding always return nearest number. Every floating point operation approximates its result: \simplemath {\i {x} +\sub {fp} \i {y} = round(\i {x} + \i {y})}. Each \abbr {FP} operation can be modeled as a formula in propositional logic, so formula in \abbr {FPA} can be translated to propositional formula and passed to \abbr {SAT}-solver. \page {3} But (!) complexity is a bottleneck. Algorithm for addition/subtraction:
+
+\list
+    {align,}
+    {do operation,}
+    {round.}
+
+For double-precision you need 1404 propositional variable for align, 826 for operation, and 2923 for rounding. For multiplication/division 5 times more!
+
+\page {5} \hidden {mixed_abstraction_image} {Mixed abstraction algorithm scheme}
+{
+    \image {image/diagram/mixed_abstraction.png} {Mixed abstraction algorithm scheme}
+}
+
+\pages {8 pages, skip}
+

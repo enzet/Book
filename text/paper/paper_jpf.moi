@@ -1,0 +1,22 @@
+\2 {Test Input Generation with \ref {#jpf} {Java PathFinder}} {paper_jpf}
+
+\paperblock {jpf}
+
+\page {1} Model checking and symbolic execution to generate test inputs to achieve branch coverage. They try 3 techniques: 
+\list
+	{raw model checking,} 
+	{model checking as fuzzing (to generate inputs of fixed size),} 
+	{with \abbr {DSE.}}
+
+They said, input data may be simple (unstructured) or complex (data structures). There is a big difference. Their previous tool was based on method preconditions and postconditions, but now it is automated. \page {2} \comment {\m {ignoreIf}–for what?} \abbr {JPF} was used for prototype Mars Rover. \page {3} Term \term {symbolic execution tree}. In previous work they use \term {generalized symbolic execution} to support advanced constructs: dynamically allocated structures, primitive data and concurrency. Now they support also arrays. They perform \abbr {DSE} of a method (\comment {not from \m {main()}?}) on inputs with \i {uninitialized} fields. When the execution accesses an uninitialized reference field, they choose \m {null}, new object with uninitialized fields, or initialized object. But, for primitive types they use just normal symbolic variables.
+
+They use source-to-source instrumentation. They check for satisfiability whenever a path condition is updated (\comment {Is it too frequent?}). They use \ref {#omega} {Omega library solver}. For every new path they report input heap configuration as test (\comment {not input files?}). Statement: if program has loops, you may have infinite execution trees. Term \i {forward \abbr {SE}}. \comment {What is data-flow based coverage?}
+
+\page {4} They modify \m {get()} and \m {set()} methods to field reads and updates and add new Boolean field to each field (is it initialized). They also should \b {check all aliasing possibilities}. They use method preconditions: if it is violated, model checker backtracks.
+
+\page {5} Their testing criterion is source code level branch-coverage. They aim to generate \i {non-isomorphic} tests. Importaint: to find uncaught exceptions. The tool can be used to generate Java structures from a description of method preconditions.
+
+\todo {Add notes from printed paper.}
+
+\pages {11 pages}
+

@@ -1,0 +1,15 @@
+\1 {Scalpel: The Python Static Analysis Framework} {paper_scalpel}
+
+\paperblock {scalpel}
+
+\page {1} A framework for static analysis of Python programs.
+
+\page {3} They rewrite source code before analysis. Five simplification rule:
+\list
+    {unfold comprehension,}
+    {unfold nested fucntion calls,}
+    {simplify subscribtions,}
+    {\m {lambda} → \m {def},}
+    {split call chains.}
+
+\page {8} Function identifiers are full function name including all nested modules plus basic block number.

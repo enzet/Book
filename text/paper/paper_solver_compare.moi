@@ -1,0 +1,14 @@
+\2 {An Empirical Study of Path Feasibility Queries} {paper_solver_compare}
+
+\paperblock {solver_compare}
+
+\tag {#solving}
+
+\page {1} Theory for symbolic execution is \abbr {QF_ABV} (\comment {Why? Research needed.}) He said \ref {#stp} {\abbr {STP}} is better than \ref {#z3} {\abbr {Z3}}. \page {2} He have tried \ref {#klee} {\abbr {KLEE}}, \ref {#bitblaze} {Bitblaze}, \ref {#jpf} {Java PathFinder}, and {#fuzzgrind} {Fuzzgrind}. All experiment results are from Bitblaze. He tested SQLite and libPNG. They modify Bitblaze to generate mapping between the variables used in formula to the variables used in the assembly code. And they map symbols from assembly to source code using \ref {#binutils} {Binutils}. \page {3} They extract formulae of different size from formula of executed path (all them from the start of the program).
+
+\page {5} They use number a ratio \i {branches} (control flow) to \i {memory writes} (data flow) as path characteristics. For libPNG and SQLite this ratio is different (1.7 and 0.9) but doesn't change for different formula sizes.
+
+\comment {So, you can predict time for path solving? Think about.}
+
+\pages {10 pages}
+

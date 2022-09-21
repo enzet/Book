@@ -1,0 +1,6 @@
+\2 {Higher-Order Symbolic Execution via Contracts} {paper_higher_order_se}
+
+\paperblock {higher_order_se}
+
+\page {1} They provide \i {symbolic approximation of higher-order behavior}. First-order programs: functions can be arguments (computation is data). They are talking on symbolic execution as technique to make missing data symbolic? \comment {What kind of missing data? Research and add to thesis.} Term \term {specifications as values}.
+

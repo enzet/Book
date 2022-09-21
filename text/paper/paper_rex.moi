@@ -1,0 +1,8 @@
+\2 {\ref {#rex} {Rex}: Symbolic Regular Expression Explorer} {paper_rex}
+
+\paperblock {rex}
+
+\tag {#solving}
+
+\page {1} Based on \ref {#z3} {Z3}.
+

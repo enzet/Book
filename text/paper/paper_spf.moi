@@ -1,0 +1,12 @@
+\2 {\ref {#jpf} {Symbolic PathFinder}: Symbolic Execution of Java Bytecode} {paper_spf}
+
+\paperblock {spf}
+
+\page {1} Combination of model checking and \abbr {SE} for error detection and test case generation. \abbr {JPF}-core executes program concretely (based on their custom \abbr {VM}), \abbr {SPF} performs symbolic interpretation. \page {2} Supported solvers: \ref {#cvc} {\abbr {CVC3}} and IASolver. They use appropriate constraint solvers for complex math constraints and \ref {#string_solving} {string operations}.
+
+\3 {Native} {spf_native}
+
+They said, \ref {#jpf} {\abbr {JPF}-core} has native peers mechanism to \i {model} native libraries and any other program part. It captures \m {java.lang.Math} libraries.
+
+/* \2 {2011} {paper_2011} */
+

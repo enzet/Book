@@ -1,0 +1,15 @@
+\2 {Statically-Directed Dynamic Automated Test Generation} {paper_statically_directed}
+
+\paperblock {statically_directed}
+
+\quote {See \ref {https://people.eecs.berkeley.edu/~dawnsong/papers/2011%20issta11sandwich.pdf} {\abbr {PDF} online}.}
+
+\quote {Leonid's review. 2011
+	    Граф вызовов дополняется в динамике (для вычисляемых переходов)
+	    Свой статический анализ исполняемого кода - выход за границы массива
+	    2 эвристики: двухкомпонентная (расстояние + количество достижимых инструкци из data-flow slice) и эвристика для циклов на основе шаблонов путей
+	    нет эксперементальных данных по отдельным эвристикам
+	    data-flow slice - a transitive closure of read-write dependencies of all variables used by the statement triggering the vulnerability}
+
+*/
+

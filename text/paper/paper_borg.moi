@@ -1,0 +1,14 @@
+\2 {The \abbr {BORG}: Nanoprobing Binaries for Buffer Overreads} {paper_borg}
+
+\paperblock {borg}
+
+\page {1} Typically analyzers try to explore the whole program, but they looking for specific defect type in specific program parts. \abbr {BORG} (buffer over-read guard) uses \ref {#static_analysis} {static analysis} and \ref {#dynamic_analysis} {dynamic analysis}, taint propagation and symbolic execution to detect \b {buffer overread} bugs. Operates on binaries.
+
+Buffer overwrites may be used to bypass \abbr {ASLR} and \abbr {DEP} or extract sensitive user information.
+
+\abbr {BORG} is based on \ref {#s2e} {S\super {2}E}. It uses \b {guided} symbolic execution. \comment {They declare, paths grow exponentially with the number of branch points.} They try to guide \abbr {DSE} towards “interesting” parts of the program using path selection heuristics.
+
+\page {2} They \innerlist {{select target,} {guide execution towards those targets,} {detect a bug.}}
+
+/* \2 {2016} {paper_2016} */
+

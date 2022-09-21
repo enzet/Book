@@ -1,0 +1,13 @@
+\2 {PySMT: a Solver-Agnostic Library for Fast Prototyping of \abbr {SMT}-Based Algorithms} {paper_pysmt}
+
+\paperblock {pysmt}
+
+\tag {#SMT}
+
+\hidden {pysmt_image} {PySMT structure}
+{
+	\image {image/diagram/pysmt.png} {PySMT structure}
+}
+
+\page {1} Using \ref {#smtlib2} {\abbr {SMT}-\abbr {LIB}} losing the ability of exploiting features provided by solvers. Tools often use \abbr {POSIX} pipe to send textual commands to solver or call solver \abbr {API}. Second approach yields better performance and allows to access solver features beyond \abbr {SMT}-\abbr {LIB}. \page {2} PySMT is a bridge between power of \abbr {API} and generality of the \abbr {SMT}-\abbr {LIB}.
+

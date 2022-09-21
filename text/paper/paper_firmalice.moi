@@ -1,0 +1,14 @@
+\2 {Firmalice - Automatic Detection of Authentication Bypass Vulnerabilities in Binary Firmware} {paper_firmalice}
+
+\paperblock {firmalice}
+
+\ref {#paper_driller} {Driller paper} said this is about \ref {#angr} {angr}.
+
+\page {1} Firmalice uses \ref {#symbolic_execution} {\abbr {SE} {symoblic execution}} engine and some techniques such as program slicing. They are looking for bypass flaws in firmware. \page {2} Firmware often runs directly on hardware without \abbr {OS}. It is just a \i {binary blob}. Modification is hard because of cryptographical signing. Firmalice recieves blob and specification of its security policy, translates binary code into an \abbr {IR} {intermediate representation}, and performs a static full-program control and data flow analysis, followed by \abbr {SE} of slices. It based on \term {input determinism} concept.
+
+\page {3} Devices contain \i {privileged operations} accessible only by authorized users. Types of authentication bypass: \innerlist {{hardcoded authentication credentials,} {hidden (undocumented) authentication interface (without auth.),} {bugs (e.g. command injections)}}. Goal is to generate input that leads to path from entry point to privileged operation. \comment {Can we use our directed analysis?} Authentication bypass is a \i {logic vulnerability} instead of, for example, memory corruption vulnerability (buffer overflow). And it is required privileged operation specification.
+
+\page {4} Firmalice performs static analysis for \abbr {CFG} and \abbr {DDG} {data dependency graph} extraction and \i {authentication slice} from entry to priveleged point creation. And then \abbr {SE} {symbolic execution} to reach privileged point. Authentication slice is a set of nodes which \i {may} contains needed path (all possible paths).
+
+\page {7} Their symbolic execution engine is based on ideas of KLEE, FuzzBALL, and Mayhem. It is performed on authentication slice. \page {8} And it has support for symbolic summaries of functions (detect common library functions and abstract their effects on the symbolic state). They use 49 manually written abstractions. They use sets of test cases to determine if some arbitrary binary function is an implementation of the summarized function.
+

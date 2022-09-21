@@ -1,0 +1,6 @@
+\2 {\ref {#catchconv} {Catchconv}: Symbolic execution and run-time type inference for integer conversion errors} {paper_catchconv}
+
+\paperblock {catchconv}
+
+\page {11} All memory as array is a naive approach. They use optimization from \ref {#exe} {\abbr {EXE}}: divide memory into different \i {regions}.
+

@@ -1,0 +1,23 @@
+\2 {\ref {#cute} {\abbr {CUTE}}: A Concolic Unit Testing Engine for C} {paper_cute}
+
+\paperblock {cute}
+
+\quote {\ref {#concolic} {Concolic testing}.}
+
+\tag {#solving optimizations}
+
+\page {1} \ref {#cute} {\abbr {CUTE}} is for automating unit testing with \term {memory graphs} as inputs (because function may contain pointer arguments) using concolic execution. First using of word \i {concolic}: concrete + symbolic. Unit testing requires input values specification (\term {test inputs}) for each unit. They want to create such specifications automatically using symbolic execution. \abbr {CUTE} is for \ref {#c} {C} code.
+
+Program is decomposed into units: collection of funcitons. They said first combining concrete and symbolic execution is in \i {\ref {#paper_high_coverage_detection} {High coverage detection of input-related security faults}} by E. Larson and T. Austin.
+
+\page {2} They use \ref {#dart} {Dart}'s approach. But what about \b {pointers}? They may have \b {aliases}. So, they \i {approximate pointer constraints}. Input is a \i {logical input map}. \comment {Logical input map is only needed for one function analysis? Or it's because the pointer arithmetic itself? Actually, is it a problem for all programming languages or for those which has pointer arithmetic?} They instrument code by inserting function calls.
+
+2 symbolic states: 
+\list
+	{one for pointer values}
+	{and one for primitive (e.g. integer) values.}
+
+\term {Explicit path model-checking}. \abbr {CUTE} is for \i {concolic unit testing engine}.
+
+\comment {Here is incremental solving technique.}
+

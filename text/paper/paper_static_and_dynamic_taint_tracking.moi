@@ -1,0 +1,3 @@
+\2 {Static program analysis assisted dynamic taint tracking for software vulnerability discovery} {paper_static_and_dynamic_taint_tracking}
+
+\page {1} They combine static and dynamic analysis. \page {3} Dynamic analysis can only detect taint vulnerability when the program is under attack.

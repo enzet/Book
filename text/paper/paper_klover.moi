@@ -1,0 +1,10 @@
+\2 {\abbr {KLOVER}: A Symbolic Execution and Automatic Test Generation Tool for \ref {#cpp} {C++} Programs} {paper_klover}
+
+\paperblock {klover}
+
+\page {1} It is about automatic test generation. They are extending \abbr {SE} tool from C to C++. They use symbolic virtual machine. They use term \term {structural coverage} (\abbr {SE} is good for it). They check: memory out-of-bounds access, divide-by-zero, user-defined assertions.
+
+\page {2} \abbr {KLOVER} is built on top of \ref {#klee} {\abbr {KLEE}} (which is for \ref {#c} {C}). Flow is similar to \abbr {KLEE}’s.
+
+/* \2 {2012} {paper_2012} */
+

@@ -1,0 +1,6 @@
+\2 {ARTist: The Android Runtime Instrumentation and Security Toolkit} {paper_artist}
+
+\paperblock {artist}
+
+\page {1} Based on \ref {#android_art} {dex2oat} compiler.
+

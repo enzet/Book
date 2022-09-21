@@ -1,0 +1,8 @@
+\2 {Z3-str: a z3-based string solver for web application analysis} {paper_z3str}
+
+\paperblock {z3str}
+
+\comment {Why exactly \b {web} analysis?}
+
+\page {1} It uses Z3's plug-in interface. They use term \term {solver-based analysis tool} for both static and dynamic analysis tool. They implement concatenation, sub-string, and replace functions. \ref {#hampi} {\abbr {HAMPI}}, \ref {#dprle} {\abbr {DPRLE}}, \ref {#rex} {Rex} support only string operations.
+

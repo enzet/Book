@@ -1,0 +1,11 @@
+\2 {AEG: Automatic Exploit Generation} {paper_aeg}
+
+\paperblock {aeg}
+
+\page {1} They are looking for \i {control flow exploits}. Given program is in \b {source form}.
+
+\page {2} \abbr {AEG}'s workflow:
+\list
+		{build project with \ref {#gcc} {\abbr {GCC}},}
+		{build project with \ref {#llvm} {\abbr {LLVM} compiler},}
+		{run tool to get an exploit.}

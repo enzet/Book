@@ -1,0 +1,14 @@
+\2 {Semantics with Applications\: An Appetizer} {paper_nielson_appetizer}
+
+\page {1} We will use informal \i {set-theoretic notation} to represent semantic concepts.
+
+\page {2} Semantics is a \i {meaning}, so it can be many semantics\:
+\list
+	{\i {operational}: how the effect of a computation is produced (abstraction of how to execute a program),}
+	{\i {denotational}: meanings are modeled by mathematical objects,}
+	{\i {axiomatic}: some properties of effect are expressed as assertions, some igonred.}
+
+\page {3} Operational semantics is an abstraction of now to execute (no memory details, no registers) – it is machine-independent.
+\list
+	{structural (small-step) operational semantics,}
+	{natural (big-step) operational semantics – hide even more execution details.}

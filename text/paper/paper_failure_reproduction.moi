@@ -1,0 +1,12 @@
+\2 {A Search-Based Framework for Failure Reproduction} {paper_failure_reproduction}
+
+\paperblock {failure_reproduction}
+
+\quote {See \ref {http://selab.fbk.eu/kifetew/papers/ssbse12.pdf} {\abbr {PDF} online}.}
+
+\quote {Leonid's review.       Program is instrumented →
+      Deployed to end users →
+      Collected info is used to guid search for potential sets of inputs to follow failing execution path.
+   Collected info (trajectory): variable-value mappings sequence
+   The search is among candidate trajectories minimizing distance to received trajectory}
+

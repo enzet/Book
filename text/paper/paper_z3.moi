@@ -1,0 +1,14 @@
+\2 {\ref {#z3} {Z3}: An Efficient SMT Solver} {paper_z3}
+
+\paperblock {z3}
+
+\page {1} Z3 uses novel algorithms for quantifier instantiation and theory combination. It has textual format (\ref {#smtlib} {\abbr {SMT-LIB} 2}, \ref {#simplify} {Simplify}, something like \ref {#dimacs} {\abbr {DIMACS}}) and binary \abbr {API} (C, \abbr {.NET}, OCalm).
+
+\page {2} Z3 is based on \ref {#dpll} {\abbr {DPLL}}-based \abbr {SAT} solver (core theory solver, for equalities and \abbr {UF} {uninterpreted functions}), satelite solvers (for arithmetic, arrays), E-matching abstract machine (for quantifiers). Implemented in C++.
+
+\3 {Architecture} {z3_architecture}
+
+\image {image/diagram/z3_architecture.png} {Architecture}
+
+\page {3} Simplifier: fast incomplete simplification. Compiler: compile \abbr {AST} into a clauses and congruence-closure nodes. Congruence Colsure Core\: E-graph (see \ref {#simplify} {Simplify}) propagates truth assignments receivde from the \abbr {SAT} solver. Theory combination. \abbr {SAT} solver\: two-watch literals, lemma learning, conflict clauses, phase caching, non-chronological backtracking. Deleting clauses: they don't delete conflict clauses. Relevancy propagation: ignore atoms that don't care. \page {4} Quantifier instantiation using E-matching. Theory Solvers\: linear arithmetic from \ref {#yices} {Yices}, bit-blasting. Model generation\: model as a part of output.
+

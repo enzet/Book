@@ -1,0 +1,7 @@
+\2 {JuCify: A Step Towards Android Code Unification for Enhanced Static Analysis} {paper_jucify}
+
+\page {1} Dex is still used in Android. They want to build a unified model of all code in Android apps (Java + native). They use Soot intermediate representation.
+
+Error type\: data leaks.
+
+Bird, S., Klein, E., & Loper, E. (2009). Natural Language Processing with Python: Analyzing Text with the Natural Language Toolkit. O'Reilly Media, Inc.

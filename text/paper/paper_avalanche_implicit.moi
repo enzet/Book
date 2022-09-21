@@ -1,0 +1,12 @@
+\2 {A Dynamic Marking Method for Implicit Information Flow in Dynamic Taint Analysis} {paper_avalanche_implicit}
+
+\paperblock {avalanche_implicit}
+
+\quote {See \ref {paper/A dynamic marking method for implicit information flow in dynamic taint analysis.pdf} {\abbr {PDF} on disk}.}
+
+\tag {#implicit tainted data}
+
+\quote {Tool is pipeline. It is based on \ref {#avalanche} {Avalanche}!}
+
+\page {1} Avalanche method is described. They call it \i {dynamic taint analysis}. If not deal with implicit information flow, it will cause under-tainting problem. For source code there is simple solution: get \abbr {CFG} and record all control dependencies. But for binary code disassembling is a problem. If we mark all assignments after control branches as tainted, we get over-tainting. They propose \i {dynamic marking method} to handle specific type of dependencies. Their tool is pipeline.
+

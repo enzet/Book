@@ -1,0 +1,12 @@
+\2 {\ref {#cute} {\abbr {CUTE}} and \ref {#jcute} {jCUTE}: Concolic Unit Testing and Explicit Path Model-Checking Tools (Tools Paper)} {paper_jcute}
+
+\paperblock {jcute}
+
+\page {1} \abbr {CUTE} is for \ref {#c} {C} and jCUTE is for \ref {#java} {Java} programs. They calls \abbr {DSE} \term {symbolic execution}, and pure symbolic execution \term {traditional symbolic execution}. They use term \term {symbolic constraint} for constraint from branch point to branch point, and \term {path constraint} for the conjunction of these constraints. \page {2} They also computes race conditions.
+
+At every iteration they either \innerlist {{generate new input based on solving symbolic constraints or} {generate new schedule based on re-ordering the events involved in a race.}} They use term \term {sound} as “without false positives”. They also use replacing some symbolic values with concrete ones to simplify constraints. \comment {Try it.}
+
+\abbr {CUTE} and jCUTE use \abbr {CIL} (C intermediate language), Soot (Java optimization framework), and lp_solve for constraints solving.
+
+/* \2 {2007} {paper_2007} */
+

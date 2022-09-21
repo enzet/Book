@@ -1,0 +1,6 @@
+\2 {\ref {#explisat} {ExpliSAT}: Guiding \abbr {SAT}-Based Software Verification with Explicit States} {paper_explisat}
+
+\paperblock {explisat}
+
+\page {2} Hybrid explicit-state and symbolic (\abbr {SAT}-based) method for model checking. They store both explicit state vector and a symbolic \abbr {CNF} formula for the state. They are looking for \abbr {NPD}, \abbr {ABV}, data races. Their tool is for C++.
+

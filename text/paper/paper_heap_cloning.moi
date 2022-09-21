@@ -1,0 +1,12 @@
+\2 {Heap Cloning: Enabling Dynamic Symbolic Execution of Java Program} {paper_heap_cloning}
+
+\paperblock {heap_cloning}
+
+\tag {dynamic symbolic execution} \tag {Java} \tag {\abbr {JNI}}
+
+Their previous paper is \ref {#paper_type_dependence_analysis} {\i {Type-Dependence Analysis and Program Transformation for Symbolic Execution}}.
+
+\page {1} To be able to compute \abbr {PC} {path constraints}, one should take in account language features. For Java there are \ref {#jni} {native methods}, reflection, etc. \i {A quantitative evaluation of the contribution of native code to Java workloads} sais, native methods in the \abbr {SPEC} \abbr {JVM98} (\comment {read about this spec}) ranges from 45 K to 5 M. They said, modifying \abbr {JVM} is one of the ways to perform \abbr {DSE} {dynamic symbolic execution} for Java. But, \i {none of the existing \abbr {SE} {symbolic execution} (not \abbr {DSE} {dynamic symbolic execution}!) tools for Java are based on this approach}: difficult to implement and maintain. \comment {They mean the \abbr {JVM} or any virtual machine?} They said, one of the features of \abbr {DSE}: if you cannot execute something symbolically, you can execute in concretely. (You cannot do it in pure \abbr {SE}.) They links to \ref {#dart} {Dart} and \ref {#cute} {\abbr {CUTE}}.
+
+\page {2} They consider two approaches: \abbr {JVM} modification and code instrumentation. Their technique is \term {heap cloning}: transformation \simplemath {\i {P} → \i {P'}}. \simplemath {\i {P'}} uses copies of the original classes and use “concrete heap” and “symbolic heap”.
+

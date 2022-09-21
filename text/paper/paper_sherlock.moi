@@ -1,0 +1,12 @@
+\2 {Sherlock: Scalable Deadlock Detection for Concurrent Programs} {paper_sherlock}
+
+\paperblock {sherlock}
+
+\quote {M.~Eslamimehr (\ref {http://www.mah-d.com/} {home page}), J.~Palsberg (\ref {http://www.cs.ucla.edu/~palsberg/} {home page}). \abbr {UCLA}, Univercity of California. See also M.~Eslamimehr PhD: \ref {http://www.mah-d.com/dissertation.pdf} {\abbr {PDF} online}, \ref {#sherlock} {Sherlock}.}
+
+\date {26.06.2015} \page {1} Deadlock detection. Many deadlock detectors requires annotations. They don't use annotations. Dynamic analysis good for this because it reports only real deadlocks. \i {Schedule} is a sequence of events that must be executed in order. Real deadlock is a combination of deadlock pattern and executable schedule. \page {2} They use \ref {#goodlock} {GoodLock} to quickly produce deadlock candidates. They use \ref {#concolic} {concolic execution} and new constraint-based approach to drive execution towards a deadlock candidate. \comment {Oh, it's look like Leonid's work! They check static analyzer defect candidates!} They can replay founded deadlock. They produce a set of deadlock candidates and then use separate search for each one.
+
+They have initial schedule. It is executed and permuted iteratively until execution found deadlock. Schedule is not actually execution path, it is sequence of concurrency events. \page {3} GoodLock is not static, it combines \abbr {DA} and model checking and can produce \abbr {FP} and \abbr {FN}. They \b {control the thread scheduler} to ensure that events are executed in right order. \comment {Wow, they are cool guys!}
+
+They major innovation is premute function. Said et al. in \i {Generating data race withesses by an \abbr {SMT}-based analysis} show how to use \abbr {SMT}-solvers to premutate traces to find data races. \comment {I think, it very similar to Mikhail's work to mixing events for GUITar.} Other guys use static analysis to build locks graph and use \abbr {SMT}-solver to find cycles (i.e. deadlocks) in graph. Author combine these two approaches!
+

@@ -1,0 +1,18 @@
+\2 {\ref {#dart} {\abbr {DART}}: Directed Automated Random Testing} {paper_dart}
+
+\paperblock {dart}
+
+\page {1} \ref {#dart} {\abbr {DART}} is for \term {directed automated random testing}. Unit testing is good but so hard and expensive in practice, that it is rarely done properly. Three main techniques:
+\list
+	{\i {automated} extraction of the interface of a program with its external environment using \ref {#static_analysis} {static source-code parsing};}
+	{automatic generation of a test driver for \i {random} testing;}
+	{dynamic analysis based on that random and \i {direct} execution along alternative paths. \comment {Concolic?}}
+
+\abbr {DART} is all of them. Implemented for \ref {#c} {C} code. \page {2} They call \abbr {DSE} \term {directed search} (dynamically gather knowledge about the execution of the program). \comment {Research, which solver can return model without free variables.} \term {Path constraint} represents an equivalence class of inputs. \page {3} \comment {Here is good theory on program and symbolic execution.} Input specification is a sequence of addresses. \comment {We can change initial input during analysis.} \term {Execution tree}. The goal of \abbr {DART} is to explore all path. \comment {Good luck!} They support only the theory of integer linear constraints. When expression falls outside the theory, \abbr {DART} simply falls back to the concrete value. In two cases: \innerlist {{not linear and} {tainted pointer dereference}} we raise incompleteness flag. \comment {I think, implicit flow does not imply incompleteness. We should prove it.} They use term \term {stack} for prediction: with elements (then-branch or else-branch, was inverted or not).
+
+\page {4} Their algorithm: we start \abbr {DSE} (inner loop); when it ends, we checks completeness; if there was non-linear or tainted pointer dereference, we choose new random input and start \abbr {DSE} again (outer loop). \comment {What? There is always incompleteness on the real programs.} Their invariant: last stack element is not inverted. They preserve input elements not involved in path constraint. \comment {Z3 can do that.}
+
+The theorem: \abbr {DART} will \innerlist {{found a bug;} {or explore all paths;} {or run forever}}. \comment {Oh! That's great! Theorem about nothing.}
+
+\page {5} One of the advantages of \abbr {DSE}: it does not require alias analysis.
+

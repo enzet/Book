@@ -1,0 +1,12 @@
+\2 {\green {\ref {#green_solver} {Green}}: Reducing, Reusing and Recycling Constraints in Program Analysis} {paper_green_solver}
+
+\paperblock {green_solver}
+
+\page {1} They propose to use persistent cache between \abbr {SE} runs. Even different programs, even different analysis. \page {2} Four phases: slicing, canonization, reuse, and translation. \i {Slicing} is just removing independent constraints. \i {Canonization} is renaming and reordering. \page {3} They assume that \abbr {SE} invokes \abbr {SAT}-solver on every branch. \comment {I think, it isn't truth.} With canonization they replace semantic equivalence of formulae with syntactic equivalence. Slicing helps to reuse because of small number of variables. \comment {See DiSE path-sensitive regression analysis.} Three different container implementation has strong reusing.
+
+\comment {Very good:} \page {4} Any path condition can be split into \i {known} and \i {unknown} parts. In classic \abbr {SE} every branch introduces new constraint. In \abbr {DSE} you negates one of conditions and remove others. Unknown part is not dependent on all of the known. They construct the graph: V are variables and E indicate whether two variables are part of the same constraint.
+
+Canonization: they work only for \b {linear arithmetic} with lexicographic ordering to \m {ax + by + cz + ... + k \[==|!=|<=\] 0}. \page {5} Their tool is Redis. They can use any database with \m {get(key)} and \m {put(key, value)} (\m {key} is a string formula representation, \m {value} is just \abbr {SAT}/\abbr {UNSAT}). \comment {See Symbolic PathFinder}. \page {7} Small changes to program can reduce the potential for reuse dramatically. There is a spectrum of related programs (binary tree, tree map).
+
+\page {9} Slicing has the biggest impact. \page {10} Canonical form expose semantic equivalence as syntactic equivalence.
+

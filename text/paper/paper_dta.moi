@@ -1,0 +1,12 @@
+\2 {\abbr {DTA}++: Dynamic Taint Analysis with Targeted Control-Flow Propagation} {paper_dta}
+
+\paperblock {dta}
+
+\quote {Based on \ref {#bitblaze} {BitBlaze}.}
+
+\tag {#implicit tainted data}
+
+\date {18.03.2015} \page {1} Input is tainted and it propagated to other values that are computed transitively based on those tainted inputs. You can use \abbr {DTA} for finding a purpose of inapropriate \i {sink}. Implicit flows are \i {control dependencies}. Their hypothesis: under-tainting occurs at just a few places. No control dependencies—under-tainting, all control dependencies—over-tainting. \abbr {DTA}++ is their approach—identify targets for additional propagation. \abbr {DTA}++ has 2 phases: generate \page {2} rules for branches using offline analysis and then apply them during future runs of dynamic taint analysis.
+
+Terms: \term {dynamic taint analysis} {tracking the flow of sensitive information}, \term {implicit flow} {situation in which tainted data values affect control flow}.
+

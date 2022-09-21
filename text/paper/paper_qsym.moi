@@ -1,0 +1,3 @@
+\2 {Qsym: A Practical Concolic Execution Engine Tailored for Hybrid Fuzzing}
+
+\page {1} Hybrid \ref {#fuzzing} {fuzzing} (combination of \ref {#concolic} {concolic} and fuzzing). Qsym is a fast concolic execution engine. It uses dynamic binary translation. They claim they better than \ref {#driller} {Driller} and \ref {#vuzzer} {Vuzzer}.

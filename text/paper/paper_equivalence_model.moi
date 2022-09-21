@@ -1,0 +1,10 @@
+\2 {Equivalence Problems in a Model of Computation} {paper_equivalence_model}
+
+\paperblock {equivalence_model}
+
+\page {1} Questions\: are programs equivalent, if program fail to halt... \page {2} Halting problem. \page {4} Presented model of computation\: storage divided up into a finite number of discrete locations of fixed domain. Typical instruction\: \simplemath {L\sub {2} \:= F(L\sub {2}, L\sub {3})}
+
+\page {120} Great graphs.
+
+/* \2 {1976} {paper_1976} */
+

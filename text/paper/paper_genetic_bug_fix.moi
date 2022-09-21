@@ -1,0 +1,6 @@
+\2 {A Systematic Study of Automated Program Repair: Fixing 55 out of 105 Bugs for $8 Each} {paper_genetic_bug_fix}
+
+\paperblock {genetic_bug_fix}
+
+\page {1} Tool GenProg for automated C-program repair. It repairs 55 of 105 defects. It uses \ref {#genetic_programming} {genetic programming} without a priori knowledge or specification. Key algorithmic insight is \i {to represent candidate repairs as patches, rather than as \abbr {AST}}. \page {2}
+

@@ -1,0 +1,8 @@
+\2 {\ref {#llvm} {\abbr {LLVM}}: A Compilation Framework for Lifelong Program Analysis & Transformation} {paper_llvm}
+
+\paperblock {llvm}
+
+\date {27.01.2015} \page {1} \ref {#llvm} {\abbr {LLVM}} code representation—\abbr {RISC}-like instruction set. Uses \ref {#ssa} {\abbr {SSA} (Static Single Assignment)}. \page {2} \abbr {LLVM} is complementary to such machines as \abbr {JVM} and not an alternative to them. \page {3} Only 31 opcodes, most opcodes overloaded. A function is a set of basic blocks,  and each basic block is a sequence of \abbr {LLVM} instructions, ending in exactly one terminator instruction (branches, return, \m {unwind}, or \m {invoke}). \date {30.03.2015} Types: void, bool, integers (signed, unsigned, from 8 to 64 bits), 2 floating point, pointers, arrays, structures, functions. All casts are explicit using \m {cast}. \m {getelementptr} for pointers arithmetic. \date {12.03.2015} \page {4} \abbr {LLVM} provides an explicit, low-level, machine-independent mechanism to implement exception handling in high-level languages. \m {malloc}, \m {alloca}, and \m {free} for memory allocation. \m {call} for functions, \m {invoke} and \m {unwind} for exceptions.
+
+\pages {12 pages}
+

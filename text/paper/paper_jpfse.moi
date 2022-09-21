@@ -1,0 +1,8 @@
+\2 {\ref {#jpf} {JPF-SE}: A Symbolic Execution Extension to Java PathFinder} {paper_jpfse}
+
+\paperblock {jpfse}
+
+\page {1} They said, \ref {#jpf} {Java PathFinder} is model checker framework. \abbr {JPF-SE} is an extension to \abbr {JPF}. More precise, \abbr {JPF} is an explicit state model checking tool.
+
+\page {12} ExpliSAT based on \abbr {SAT}-solver \ref {#mage} {Mage}.
+

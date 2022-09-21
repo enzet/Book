@@ -1,0 +1,6 @@
+\2 {Automatic Low Overhead Program Instrumentation with the \abbr {LOPI} Framework} {paper_lopi}
+
+\paperblock {lopi}
+
+\page {1} They said they are better than \ref {#dyninst} {Dyninst}.
+

@@ -1,0 +1,10 @@
+\2 {Context-Insensitive Alias Analysis Reconsidered} {paper_ruf95}
+
+\page {1} They compare \page {2} context-sensitive and context-insensitive versions of alias analysis and say context-sensitive is more precise but can be improved by context-insensitive.
+
+\comment {Read about \abbr {VDG}, a version of static single assignment (SSA) form, in which all program dependences (not merely alias-free def/use dependences) are modeled explicitly.}
+
+Two models for alias analysis\:
+\list
+	{points-to relations,}
+	{equivalence classes of location-value expressions.}

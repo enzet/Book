@@ -1,0 +1,19 @@
+\2 {All You Ever Wanted to Know About Dynamic Taint Analysis and Forward Symbolic Execution (but might have been afraid to ask)} {paper_dta_fse}
+
+\paperblock {dta_fse}
+
+\page {1}\nbs {}\term {Dynamic analysis}—the ability to monitor code as it executes. They differs \term {dynamic taint analysis} (observes which computation are \comment {may be?} affected by input) and \term {forward symbolic execution} (construct logical formula of path). \page {2}\nbs {}They use \sc {SimpIL}. It is enough to express typical languages. \comment {What about some strange assembly operations?} It is side-effect free. Context: statements, memory state, variable values, \abbr {PC} {program counter}, current statement (\simplemath {Σ}, \simplemath {µ}, \simplemath {∆}, \simplemath {pc}, \simplemath {ι}). Context does not change between transitions, so \sc {SimpIL} does not support dynamically generated code (they discuss modification). \page {3}\nbs {}\ref {#bap} {\abbr {BAP}} and \ref {#bitblaze} {BitBlaze} use a variant of \sc {SimpIL}.
+
+\page {4}\nbs {}\i {Dynamic taint analysis}: track flow between sources and sinks. Determined by \term {taint policy}: \innerlist {{overtainting,} {undertainting,} {precise.}} Tuple \simplemath {⟨v, τ⟩}: value and taint status. \i {Taint policy}: how taint is introduced, how taint propagates, how taint is checked. \page {5}\nbs {}\comment {Investigate more about \i {taint jump policy}.} \page {6}\nbs {}Memory operation has two arguments: value and memory address. Taint jump policy treats them separately. \page {7}\nbs {}So, there is also \i {taint addresses policy}: memory cell is tainted if either the memory cell value or the memory address is tainted.
+
+\i {Control-flow taint}: statement \simplemath {\i {s}\sub {2}} is control-dependent on statement \simplemath {\i {s}\sub {1}} if \simplemath {\i {s}\sub {1}} controls whether or not \simplemath {\i {s}\sub {2}} will execute (in \sc {SimpIL} only indirect and conditional jumps). To detecting control-dependent taint:
+\list
+    {use of static analysis over the entire program, or over a collection of dynamic analysis runs,}
+    {use heuristics.}
+
+\i {Sanitization problem}: \page {8}\nbs {}\simplemath {\i {b} = \i {a} ⊕ \i {a}}, hash functions.
+
+\todo {Add notes from Mendeley.}
+
+\pages {15 pages}
+

@@ -1,0 +1,17 @@
+\2 {A Comparative Study of Incremental Constraint Solving Approaches in Symbolic Execution} {paper_solving_comparison}
+
+\paperblock {solving_comparison}
+
+\page {1} Stack-based approach is often much faster than cache-based. They use \ref {#klee} {\abbr {KLEE}}. There are 3 alternatives to incremental solving:
+\list
+    {\i {First alternative} to incremental solving it to only solve changed parts (different from original) of the constraint. So, it uses already-computed solution for variables from unchanged parts. \page {2} But this works \i {only if paths are explored in order (depth-first search) and not all variables are dependent}.}
+    {\i {Second alternative}: cache solutions of every independent expression observed in every path constraint. It has memory overheada and time consumption. Uses by \abbr {KLEE}.}
+    {\i {Third alternative}: use of built-in \abbr {SMT} solver support to solve similar constraints (\ref {#cvc} {\abbr {CVC4}}, \ref {#mathsat} {MathSAT5}, \ref {#yices} {Yices}, \ref {#z3} {\abbr {Z3}} learn lemmas which can be reused).}
+
+Their tests are real and randomly-generated programs (using \abbr {RUGRAT}). Stack-based approach has \b {5× speedup}. But they want to improve it. \page {3} Their own improvement is 1.11x speedup. \abbr {SE} uses solving to (1) check path feasibility and (2) generate inputs. Only \abbr {CVC4}, MathSAT and \abbr {Z3} are incremental solvers (provide an assertion stack: \m {push} and \m {pop} commands). \page {4} \comment {Note that \m {(exit)} destroys solver context with lemmas learned in previous computations.}
+
+\page {5} They just eliminate common-subexpressions from input constraints. Firstly, they said \abbr {SE} converts fragment \m {a = x + y; if (a + z) > 10} to \m {x + y + z > 10}, \comment {but it is not true}. And their optimization is just using intermediate variables for that. \comment {All our tools already do that. Any other not?} \comment {\abbr {OK}, they also use renaming \i {before} \m {push} to have more created assertions.} \page {10} They have tested both bitvector and integer constraints.
+
+\page {12} If we send new query to solver each time, more time is spend to expression construction (not to parsing). \comment {The main problem is not to avoid text trace parsing but how to use solver internal state for new query.} Their technique spent more time to rename variables. They use static source code transformations to make an \abbr {SSA} form, inlining, loops unrolling. Linearization is significantly \page {13} more expensive compared to \abbr {SSA}. \comment {Oh, and they don't investigate how \abbr {KLEE}'s optimizations interfer with theirs.} \page {14} See \ref {#green_solver} {Green} solver infrastructure. See
+
+\comment {OK, it's interest but does it work for random search or only for depth-first search? Ask them about.}

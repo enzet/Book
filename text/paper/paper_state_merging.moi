@@ -1,0 +1,8 @@
+\2 {Efficient State Merging in Symbolic Execution} {paper_state_merging}
+
+\paperblock {state_merging}
+
+\page {1} If you have program \m {if (x < 0) x = 0; else x = 5;} with \simplemath {\i {X}} assigned to \simplemath {\i {x}} you can merge two states \simplemath {(\i {X} < 0, \[\i {x} = 0\]) and (\i {X} >= 0, \[\i {x} = 5\])} to one state \simplemath {(true, \[\i {x} = \abbr {ITE}(\i {X} < 0, 0, 5)\])}. \comment {So, you can represent \i {whole} program with one \ref {#smt} {\abbr {SMT} formula}. Or one function as in \ref {#veritesting} {Veritesting}.}
+
+\pages {12 pages}
+

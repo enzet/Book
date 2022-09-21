@@ -1,0 +1,6 @@
+\2 {Symbolic Execution of Multithreaded Programs from Arbitrary Program Contexts} {paper_se_multithreaded}
+
+\paperblock {se_multithreaded}
+
+\page {6} \comment {Here is difference between single metavariables and arrays.} One metavariable for  \comment {And the pointers problem.}
+

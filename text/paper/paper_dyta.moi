@@ -1,0 +1,8 @@
+\2 {DyTa: Dynamic Symbolic Execution Guided with Static Verification Results} {paper_dyta}
+
+\paperblock {dyta}
+
+\page {1} DyTa tool. It combines static verification and dynamic test generation. Works for \abbr {.NET} Framework using C# accepts. \page {2} Two phases: \i {static phase} and \i {dynamic phase}. Static phase: potential defect detection using static analysis (locate potential violations of user defined contracts, dereferencing a null pointer, and division by zero); code instrumentation to mark this locations and dangerous condidtions. Marks branches whose the other unexplored branch does not lead to any location of potential defects. Those branches \b {will not} inverted at the dynamic phase. \comment {I don't think it is interprocedural.} Dynamic phase: pretty simple depth-first or breadth-first search.
+
+So, it just removes some branches from inverting. But it is not true. Even if branch does not lead to the defect, it could be part of the whole path that leads this defect.
+

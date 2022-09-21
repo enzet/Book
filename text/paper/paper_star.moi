@@ -1,0 +1,11 @@
+\2 {\abbr {STAR}: Stack Trace based Automatic Crash Reproduction via Symbolic Execution} {paper_star}
+
+\paperblock {star}
+
+\quote {See \ref {https://home.cse.ust.hk/~hunkim/papers/chen-tse2015.pdf} {\abbr {PDF} online}.}
+
+\quote {Leonid's review.    Java
+      Error stack trace is processed →
+      Backward symbolic execution to collect weakest preconditions of crash →
+      Testcase generation: collect methods’ semantic info, generate sequence of calls to create valid object.}
+

@@ -1,0 +1,6 @@
+\2 {Check’n’Crash: Combining Static Checking and Testing} {paper_checkncrash}
+
+\paperblock {checkncrash}
+
+\page {1} Static and dynamic analysis combination. Combination of \abbr {ESC}/Java (S) and JCrasher (D). \page {2} They said, “crash” in Java is to throw an undeclared runtime exception.
+

@@ -1,0 +1,30 @@
+\2 {\[\ref {#angr} {angr}\] (State of) The Art of War: Offensive Techniques in Binary Analysis} {paper_angr}
+
+\paperblock {angr}
+
+\page {1} Binary analysis is important. Problem: you cannot compare different tools. \ref {#angr} {angr} goal is to intergrate many of the state-of-the-art binary analysis techniques. \page {2} angr has both static and dynamic techniques. They do vulnerability discovery, exploit replaying and generation, compilation of \abbr {ROP} shellcode, exploit hardening. \page {3} \abbr {SA} has false positives, \abbr {DA} is not scalable, has path explosion problem.
+
+\pages {pages 4—7, sections \abbr {III}—\abbr {V} skipped: backgrounds}
+
+\page {7} angr is cross-architecture, cross-platform, \page {8} support different analysis paradigms, uses Python and \ref {#ipython} {IPython}. The goal is to have framework on top of which you can reproduce any analysis technique in a week. They use \ref {#vex} {\abbr {VEX}} for multiple architectures support. For binary loading (\m {.so}, \m {.dll}) \abbr {CLE} (\abbr {CLE} Loads Everything) is used. It uses elftools for Linux and pefile for Windows. SimuVEX collects program state: registers, memory, \abbr {POSIX}, etc. \page {9} SimuVEX allows user to provide a powerful way to instrument blocks with Python code. Claripy module creates expression trees. Claripy has a set of frontends for tracking constraints, solving, several formulae optimizations, using \abbr {VSA}, etc. angr itself provides \abbr {DSE} and \abbr {CFG} recovery (\comment {could we correct \abbr {CFG} from \abbr {SA} using \abbr {DA}?}). Two interfaces for full-program analysis: \i {Path Group} (any \abbr {DSE}—split pathes or terminate) and \i {Analyses} (any \abbr {SA}, it has \abbr {KB} {knowledge base}).
+
+\page {10} For \abbr {CFG} recovery \abbr {SA} is uses: two algorithms CFGAccurate and CFGFast. CFGAccurate: forced execution, lightweight backward slicing (for context-sensitiveness), \abbr {SE}, \abbr {VSA}. Binary should not be obfuscated (for speed).
+
+\pages {pages 11—12 to section \abbr {IX} skipped}
+
+\page {13} Their \abbr {DSE} is based on \ref {#mayhem} {Mayhem} (memory model and path prioritization). \ref {#veritesting} {Veritesting} uses it as a base. \comment {So, they \i {uses} Veritesting or they \i {implement} it?} Claripy populates the symbolic memory model using SimuVEX. \m {Path} object tracks actions, contains \abbr {PC}. \m {PathGroup} is for splitting, merging, and filtering of paths. Advanced state merging: statically and selectively merging paths.
+
+They use \ref {#paper_ucse} {under-constrained symbolic execution} (\abbr {UCSE}). \abbr {UCSE} is a \abbr {DSE} where execution is performed on each function separately. Analysis is not accurate and suffers from \abbr {FP} {false positives}. They add global memory under-constraining, path limiters (no more 64 paths for each function), false positive filtering (something about checking constraints, I don't understand). It is implemented as \m {SimState} plugin. \page {14} It can be performed using the same \m {PathGroup} paradigm as \abbr {DSE}.
+
+Symbolic-assisted fuzzing is \ref {#driller} {Driller}. So, it is \ref {#afl} {\abbr {AFL}} as foundation and angr as symbolic tracer. Driller's symbolic component is implemented using angr's \abbr {SE} engine. At each step of the \m {PathGroup} (from concrete input from \abbr {AFL}), every branch is checked if it is unknown to \abbr {AFL}. \comment {Look, it is not concrete branch address for inversion.} New input from solver is fed back to \abbr {AFL}.
+
+Crash reproduction. Approach from \ref {#replayer} {Replayer}.
+
+\pages {Skipped}
+
+\page {17} Veritesting has better results but found less vulneragilities than \abbr {DSE} alone. Veritesting uses efficient path merging and can go deeper before path explosion, but path merging introduces complex expressions (to support different values on merged paths), and solver stucks.
+
+\page {18} \abbr {UCSE} found a lot of vulnerabilities but with high false positives rate.
+
+/*
+

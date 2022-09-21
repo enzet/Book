@@ -1,0 +1,7 @@
+\2 {Z3str3: A String Solver with Theory-aware Branching} {paper_z3str3}
+
+\paperblock {z3str3}
+
+\page {1} Faster, than Z3str2, Norn, S3, and S3P. They change \ref {#z3} {Z3}'s branching heuristic to \term {theory-aware branching}.
+
+It is integrated with Z3.

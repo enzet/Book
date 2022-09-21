@@ -1,0 +1,8 @@
+\2 {Verifying Optimizations using \abbr {SMT} Solvers} {paper_ver_opt}
+
+\paperblock {ver_opt}
+
+\quote {2014. See \ref {https://www.dropbox.com/sh/3s1a0zfzp0ix5lf/AABprVetldbR1nafzeSQ1Qwka/S%26M/Lopes-SMT.pdf?dl=0} {\abbr {PDF} on Dropbox}.}
+
+They use \abbr {SMT} solvers fot prove code equivalency. \comment {Can we use it for clones finding?} They also want to make automatic conversion from C++ to \abbr {SMT-LIB} 2 (\comment {what is it?}).
+

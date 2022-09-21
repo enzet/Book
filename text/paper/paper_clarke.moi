@@ -1,0 +1,8 @@
+\2 {A System to Generate Test Data and Symbolically Execute Programs} {paper_clarke}
+
+\paperblock {clarke}
+
+\page {1} Test generation for \ref {#fortran} {\abbr {ANSI} Fortran}. Performs symbolic execution. Uses \term {artificial constraints} (that simulate error conditions). It also generates human readable symbolic representation of output data.
+
+/* 1996 */
+

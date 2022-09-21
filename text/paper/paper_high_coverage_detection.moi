@@ -1,0 +1,8 @@
+\2 {High Coverage Detection of Input-Related Security Faults} {paper_high_coverage_detection}
+
+\paperblock {high_coverage_detection}
+
+\quote {\ref {#paper_cute} {\abbr {CUTE}'s paper} said, combination of concrete and symbolic execution was firstly proposed here. \comment {But for single path?}}
+
+\page {1} They are looking for "out of bounds". They relax requirements to the inputs.
+

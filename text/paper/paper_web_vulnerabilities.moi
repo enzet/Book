@@ -1,0 +1,8 @@
+\2 {Detecting Security Vulnerabilities in Web Applications Using Dynamic Analysis with Penetration Testing} {paper_web_vulnerabilities}
+
+\paperblock {web_vulnerabilities}
+
+\page {1} Most of vulnerabilities result from improper input validation. Most efficient way to detect—manual. Two major automatic approaches: (1) submit various malicious patterns (like \abbr {SQL}-injections) and \page {2} (2) analysis from the server side: Tainted Mode model, model input validation vulnerabilities, static and dynamic analysis. They consider data from client as tainted and don't want it to be used for \abbr {HTTP} responses construction.
+
+They said, \i {Tainted Mode model} is bad. \page {3} It is implemented by means of static analysis.
+

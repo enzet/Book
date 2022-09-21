@@ -1,0 +1,12 @@
+\2 {Assisting in Auditing of Buffer Overflow Vulnerabilities via Machine Learning} {paper_auditing_buffer_overflow}
+
+\paperblock {auditing_buffer_overflow}
+
+\page {2} Dangerous functions:
+\list
+    {\m {strcpy(dst, src)}, \m {strncpy(dst, src, n)},}
+    {\m {strcat(dst, src)}, \m {strncat(dst, src, n)},}
+    {\m {memcpy(dst, src, n)},}
+    {\m {memmove(dst, src, n)},}
+    {\m {gets(str, fgets(str, n, fp))}.}
+

@@ -1,0 +1,10 @@
+\2 {\ref {#replayer} {Replayer}: Automatic Protocol Replay by Binary Analysis} {paper_replayer}
+
+\paperblock {replayer}
+
+\page {1} Problem: you have one program on one host and want to reproduce its execution on another host. They call it \i {replay of application dialog}. \page {2} You may have initiator, host A, and host B. Dialog is between initiator and A, initiator and B. They want to build \i {post-condition} \i {q} for program \i {P} such that it is true for output of host B with some modified host A input iff host B reproduces execution of host A. \page {3} So, this post-condition checks “similarity” of execution. But “similarity” may vary. Function Φ specifies what to check.
+
+\image {image/diagram/replayer.png} {Replayer diagram}
+
+Program creates symbolic formula over state and input. They use this formula to check post-condition. \comment {They talk about forward symbolic execution with link to 1976 \i {Symbolic execution and program testing}.} \comment {They said that if we symbolically execute all program paths, we could combine the formulas into a single formula for the entire program.} But they want to compute the \i {weakest pre-condition} \i {wp}(\i {P}, \i {q}) that leads satisfying post-condition. Computing \page {4} includes translation program into \abbr {GCL} (guarded command language), computing formula and its simplifying.
+

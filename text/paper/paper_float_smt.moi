@@ -1,0 +1,10 @@
+\2 {An \abbr {SMT}-\abbr {LIB} Theory of Binary Floating-Point Arithmetic} {paper_float_smt}
+
+\paperblock {float_smt}
+
+\tag {floating-point}
+
+\page {1} Floating point is essential for embedded systems (avionics, automotive). Almost all use \i {binary} \ref {#float} {\abbr {IEEE} 754}. Floating point rounding is unintuitive. \comment {\abbr {OK}, I trust you, floating point support is important.} \page {2} For making deal with floating point (1) proof assistants and (2) abstract interpretation is used.
+
+\pages {15 pages}
+

@@ -1,0 +1,18 @@
+\2 {\[\ref {#glasstt} {GlassTT}\] A Symbolic Java Virtual Machine for Test Case Generation} {paper_glasstt}
+
+\paperblock {glasstt}
+
+\tag {#symbolic virtual machine}
+
+\page {1} \comment {See also \i {Babel Abstract Machine} and \i {Warren Abstract Machine}.} Their symbolic execution is based on user-specified coverage criterion. And they focus on \i {def-use-chain criterion} (to cover as many def-use chains as possible). Def-use: from one variable definition to value destruction. Def-use-chain: from one definition to many destructions. \page {2} They do only \i {few} iterations of each loop. \ref {#glasstt} {GlassTT} is \abbr {SJVM} {symbolic Java virtual machine} and it itself implemented in Java and run on \abbr {JVM}. \comment {Facepalm.} They simplify (\simplemath {\i {x} + 1 + 1}) to (\simplemath {\i {x} + 2}) on-the-fly. Expressions are object tree in the host \abbr {JVM}'s heap.
+
+\page {3} They implement stack and heap, full \abbr {JVM} specification, backtracking mechanism, exception table. \page {4} They treat exceptions and danger instructions like conditional jumps. \comment {In fact, they \i {are} conditional jumps.} They use \abbr {SA} {static analysis} to discover def-use chains. Coverage criteria: \innerlist {{def-use chains,} {branch coverage,} {instruction.}} \page {5} They use Mathematica as a solver.
+
+\comment {So, I think, they perform \abbr {SE} for one method, not for entire program.}
+
+\pages {7 pages}
+
+\quote {See also their paper \ref {http://gpd.sip.ucm.es/rafa/papers/wflp2004.pdf} {\i {Constraint Solving for Generating Glass-Box Test Cases}} about solving optimization. They do solving before \abbr {SMT}-solvers.}
+
+/* \2 {2005} {paper_2005} */
+

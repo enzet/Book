@@ -1,0 +1,6 @@
+\2 {\ref {#pin} {Pin}: Building Customized Program Analysis Tools with Dynamic Instrumentation} {paper_pin}
+
+\paperblock {pin}
+
+\page {1} \ref {#pin} {Pin} is for Linux on x86, Itanium®, \abbr {ARM}. Has rich \abbr {API} which follows \ref {#atom} {\abbr {ATOM}} model (allows write high-level programs). Provides instrumentation using \abbr {JIT} compiler to insert and optimize code. Has efficient attaching and detaching. \page {2} \abbr {JIT}-compiler takes native sequences, generate new sequences according with Pintool instrumentation and ensures that it regains control when a branch exits the sequence. Sequences caches.
+

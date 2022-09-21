@@ -1,0 +1,6 @@
+\2 {Building Java Program Analysis Tools using \ref {#javana} {Javana}} {paper_javana_short}
+
+\paperblock {javana_short}
+
+\date {10.03.2015} \page {1} \ref {#javana} {Javana} is a tool for creating customized Java program analysis tools. Javana consists of a \abbr {VM} and a dynamic bynary instrumentation tool that runs underneath the \abbr {VM}.  The virtual machine communicates with the dynamic binary instrumentation tool through an event handling mechanism. \abbr {VM} sends events. Dynamic instrumentator captures all natively executed machine instructions (by application, \abbr {VM} itself, by native libraries). Javana knows about all native instructions and which module and which source code line it corresponds; and for all accessed memory locations, Javana knows what objects are being accessed. \page {2}
+

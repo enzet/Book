@@ -1,0 +1,16 @@
+\2 {\ref {#javana} {Javana}: A System for Building Customized Java Program Analysis Tools} {paper_javana}
+
+\paperblock {javana}
+
+\date {11.03.2015} \page {1} \abbr {VM} uses \i {event handling} mechanism to send events when an object is created, moved or collected, a method gets compiled or re-compiled, thread created, switchd, etc. \page {2} Dynamic binary instrumentator handles everything (in user space): bytecode interpretation, \abbr {JIT} work, \abbr {JNI}, \abbr {VM} work, but \i {it excludes kernel-level system calls}. It useful if the goal is deep understanding of the application's behavior: memory usage, cache misses, etc. Java \abbr {VM} is instrumented. \page {3} \abbr {DBI} takes as input a specification provided by user—what to be instrumented.
+
+\bookquote {Running a dynamic binary instrumentation tool underneath a virtual machine requires that the instrumentation tool can deal with self-modifying code.}
+
+\comment {Is it a problem? Can static instrumentator work with self-modifying code?}
+
+\abbr {VM} triggers—empty native C functions, handled by \abbr {DBI}, all other information (function names, etc.) \abbr {DBI} knows from symbol information of \abbr {VM}. For vertical map method \abbr {AVL} tree and \page {4} object \abbr {AVL} tree are used: instruction pointers to method and object information. Fighting the using of absolute time: run uninstrumented, write stategy, and then run instrumented with this strategy. They include Javana triggers into Jikes \abbr {RVM} (\abbr {JVM} written in Java). \abbr {DBI} in Javana is \abbr {DIOTA} (for Linux and x86), it is similar to \ref {#pin} {\abbr {PIN}} and \ref {#valgrind} {Valgrind}.
+
+\pages {pages 4—13 skipped}
+
+\bookquote {\page {13} Static instrumentation cannot be used for analyzing Java applications because it cannot deal with dynamically generated code.}
+

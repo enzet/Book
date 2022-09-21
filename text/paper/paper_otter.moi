@@ -1,0 +1,20 @@
+\2 {\[\ref {#otter} {Otter}\] Directed symbolic execution} {paper_otter}
+
+\paperblock {otter}
+
+See \ref {dale:/space/enzet/text/letter/2014_11_29_lkr_sva} {L.~Kruglov letter}, \ref {dale:/space/enzet/text/letter/2014_11_29_lkr_sva_2} {answer}.
+
+\date {20.03.2015} \page {1} Goal: reach particular target line (for debugging or for static analysis reports reproducing). 2 strategies:
+
+\list
+	{\abbr {SDSE}—\b {shortest-distance symbolic execution} uses a distance metric in an interprocedural \abbr {CFG};}
+	{\abbr {CCBSE}—\b {call-chain-backward symbolic execution} iteratively runs forward symbolic execution, starting in the function containing the target line, and then jumping backward up the call chain until it finds a feasible path from the start of the program;}
+	{Mix-\abbr {CCBSE} strategy (\abbr {CCBSE} + \abbr {KLEE} strategy).}
+
+Line reachability problem is equivalent to general problem to finding a particular program state.
+
+\hidden {directed_symbolic_execution_graphs} {Graphs}
+{
+    \image {image/writing/directed_symbolic_execution.jpg} {directed_symbolic_execution}
+}
+

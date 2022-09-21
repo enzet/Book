@@ -1,0 +1,21 @@
+\2 {\[MergePoint\] Enhancing symbolic execution with veritesting} {paper_veritesting}
+
+\paperblock {veritesting}
+
+\quote {From \ref {#paper_driller} {Driller paper}. Here is something about state merging in terms of symbolic execution.}
+
+\page {1} Veritesting is a \i {technique} (using statis symbolic execution for \abbr {DSE}) and MergePoint is \abbr {SE} a \i {system} for software testing. So, there are \abbr {DSE} {dynamic symbolic execution} (for testing) and \abbr {SSE} {static symbolic execution, not selective!} (for verification). \comment {But! They are talking about online \abbr {DSE}, not concolic (offline)!} Veritesting alternates between these two approaches. MergePoint is for 32-bit Linux binaries and works without debug information. \page {2} They begin with \abbr {DSE} and then switch to \abbr {SSE} to check \i {program fragments} for testing, not to verification. Their main success: combined approach is better on all 3 metrics: \innerlist {{number of real bugs,} {code coverage,} {path coverage}}. All metrics are important (you can have 100 % coverage but fail to find bugs) \comment {to thesis}.
+
+\page {3} \abbr {SSE} techniques: \ref {#calysto} {Calysto} and \ref {#saturn} {Saturn}. \abbr {DSE} forks off two executors (and they are forever independent) but \abbr {SSE} can summarize the effects of both branches: all paths encoded into a single formula.
+
+\code {for (int i = 0; i < 100; i++) \{
+    if (input[i] == 'a') counter++;
+\}
+if (counter == 75) abort();}
+
+\ref {#klee} {\abbr {KLEE}}, \ref {#s2e} {S\super {2}E}, and \ref {#mayhem} {Mayhem} fails on above example. \abbr {SSE} uses dynamically recovered \abbr {CFG} {control flow graph} to determine frontiers (what is easy to solve) and summarizes the effects of all path through the easy nodes up to the hard frontier. See \ref {#paper_state_merging} {dynamic state merging}.
+
+\page {4} First after fork is \abbr {CFG} recovery: obtain partial \abbr {CFG} (entry point is branch). It uses \ref {#bap} {\abbr {BAP}} for recovery.
+
+\page {6} MergePoint is build on top of \ref {#mayhem} {Mayhem}. They use \ref {#pin} {Pin} for instrumentation and \ref {#z3} {\abbr {Z3}} for solving.
+

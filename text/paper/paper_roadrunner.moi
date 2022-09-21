@@ -1,0 +1,12 @@
+\2 {The \sc {RoadRunner} Dynamic Analysis Framework for Concurrent Programs} {paper_roadrunner}
+
+\paperblock {roadrunner}
+
+\date {11.06.2015} \page {1} Concurrency defects: (1)~race conditions, (2)~deadlocks, (3)~violations of desired atomicity, (4)~violations of determinism properties. Event is operation of interest: accessing memory, acquiring a lock, forking a new thread, etc. \sc {RoadRunner} is written entirely in Java, with no modifications to the underlying \abbr {JVM}. It adds instrumentation code to the target program's bytecode at load time. Writing back-end only requires defining methods to handle various events of interest.
+
+\date {25.06.2015} \page {2} Tools can be composed into a \i {tool chain}. Oh! They implement \ref {#eraser} {Eraser} with tool chain: \m {ThreadLocal}, \m {ReadOnly}, and \m {LockSet}. They said their \m {HappensBefore} is slow and filters like \m {ThreadOnly} and \m {ReadOnly} can significantly improve it. \sc {RoadRunner} has \i {pipe-and-filter} architecture. \page {3} It has \m {ShadowThread} object for each \m {Thread} \abbr {JVM} object. And \m {ShadowLock}. \m {Decoration} class contains user-defined fields for tool-specific information associated with threads and locks. And \m {ShadowVar}—\m {shadow location} for each memory location. For each memory access \m {access} method is called. \comment {I think it is too slow, \ref {#asan} {AddressSanitizer} should be faster.} \page {4} They have single \i {shadow location} for each memory location for all tools in tool chain.
+
+\page {5} Instrumentator works at classes loading and is build using \abbr {ASM}. \page {6} It has shadow for fields, replaces all gets and sets by own methods, has shadow arrays for arrays. Optimizations lies on \abbr {JIT}'s aggressive inlining. They use \ref {#hotspot} {HotSpot}. They compare themselves with \abbr {SOOT}, Sofya (has its own \abbr {JVM}), CalFuzzer, \ref {#atom} {\abbr {ATOM}} (\ref {#eraser} {Eraser} built on top of \abbr {ATOM}), and \ref {#valgrind} {Valgrind}.
+
+\comment {Seems like it is very slow but easy-to-use.}
+

@@ -1,0 +1,57 @@
+\2 {Unleashing \ref {#mayhem} {Mayhem} on Binary Code} {paper_mayhem}
+
+\paperblock {mayhem}
+
+\quote {Based on \ref {#pin} {Pin}, \ref {#bap} {\abbr {BAP}} converts assembly instructions to \abbr {IL}. Uses \ref {#z3} {Z3}.}
+
+\comment {It has taint references support? What does it mean?}
+
+\page {1} \ref {#mayhem} {Mayhem}—system for finding exploitable bugs in \i {binary} programs. Every bug accompained by an exploit. \comment {Is it just an input?} It is based on \ref {#aeg} {\abbr {AEG}'s ideas}. They combine online symbolic execution (\ref {#s2e} {S\super {2}E}) and offline symbolic execution (concolic, \ref {#sage} {\abbr {SAGE}}). They have experiments proved that re-execution in offline mode can be very expensive. \page {2} Hybrid engine saves current execution state (\abbr {PC}), thread is restored by restoring the formula, concretely running the program up to the previous execution state, and then continuing. Main features:
+
+\list
+	{Hybrid execution.}
+	{Index-based memory modeling.}
+	{Binary-only exploit generation.}
+
+\page {3} They are looking for exploitable errors so they need low-level details (return addresses, stack pointers). They want to execute as much instructions concretely as possible. There are \abbr {CEC} (concrete executor client to run on \abbr {CPU}) and \abbr {SES} (symbolic executor server). \abbr {CEC} instruments the code and performs dynamic taint analysis. When \abbr {CEC} encounters a tainted branch condition, \page {4} it calls \abbr {SES}. \abbr {SES} receives a stream of tainted instructions from the \abbr {CEC} (it runs in parallel and produce concrete values) and jits the instructions to an \abbr {IL}. \abbr {SES} maintains \i {path formula} and \i {exploitability formula}. On tainted branch point \abbr {SES} queries \abbr {SMT} solver. \comment {For each tainted branch?} If fork is needed, all the new forks are sent to the path selector to be prioritized. \comment {All new forks? There are many of them?} If there is no more memory, checkpoint manager starts generating checkpoints instead of forking. During the execution, \abbr {SES} switches context between executors. \abbr {CEC} maintains a virtualization layer. They use \ref {#bap} {\abbr {BAP}} to convert x86 assembly to an \abbr {BAP} \abbr {IL}. Mayhem alternate between online and offline modes.
+
+They said \abbr {SAGE} is concolic (= offline symbolic execution) and it has two steps: (1)~concretely execute and record a trace; (2)~\page {5} symbolically execute the instructions in the recorded trace. \comment {Is it their description of concolic?} Online: S\super {2}E, \ref {#klee} {\abbr {KLEE}}, \ref {#aeg} {\abbr {AEG}}. \abbr {KLEE} has an immutable state representation and S\super {2}E shares common state between snapshots of physical memory and disks. Checkpoints are \abbr {SE} state: path predicate, statistics, replay information. When for offline it is just seed. To restore concrete state Mayhem concretely executes the program until target instruction. \comment {So, it has reexecution anyway. But only when memory exhausted.} \page {6} \comment {They said, standard concolic execution \i {do} symbolically re-execution.}
+
+\abbr {CEC} performs taint analysis and \abbr {SES} performs symbolic execution. \comment {Once more, taint analysis and symbolic execution are \i {different things}.} If basic block is tainted it is sent to the \abbr {SES} for symbolic execution. \comment {Symbolic execution only for taint \abbr {BB}!} During online execution \abbr {CEC} handles multiple concrete execution states. Concrete execution state: current registers, memory, \abbr {OS} state (files, network, kernel state). \comment {So, there are coppies of the one file.} The virtualization layer mediates \i {all system calls}. States saving is incremental.
+
+\abbr {SES} caps the number of symbolic executors. When memory is exhausted, it stops generating new interpreters and produces \i {checkpoints}. \comment {So, it goes online while it has memory, after ti generates checkpoints and does new runs.}
+
+Three heuristic ranking rules:
+
+\list
+	{execute new code or execute known code more times,}
+	{memory accesses,}
+	{symbolic instruction pointers with highest priority \comment {(?)}.}
+
+Optimizations:
+
+\list
+	{independent formula (as such in \abbr {KLEE}, but it keeps a map from input variables to formulas at all times),}
+	{algebraic simplifications,}
+	{taint analysis.}
+
+\page {7} It has \i {index-based memory model} for symbolic memory handling. Memory model is a map: (32-indices) → (expressions). \comment {They said, symbolic index is very frequent in binary code.} 40 % of the examples require to handle symbolic memory. In Mayhem writes are always concretized, but symbolic reads are allowed to be modeled symbolically.
+
+Two simple approaches:
+
+\innerlist
+{
+	{Concretize index. Can miss paths. Common for offline executors, such as \abbr {SAGE} and \ref {#bitblaze} {BitBlaze}.}
+	{Allow memory to be fully symbolic. Low performance. In McVeto, \abbr {BAP}, BitBlaze.}
+}
+
+\page {9} Exploit generation for:
+
+\list
+	{symbolic (tainted) instruction pointer,}
+	{symbolic format string.}
+
+\todo {Add info.}
+
+\page {13} Mayhem is on average 3.4× slower than \abbr {AEG} (based on source code), because it has no adventage of operating at a high-level abstraction. \comment {Wow!}
+

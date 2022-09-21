@@ -1,0 +1,20 @@
+\2 {Loop-Extended Symbolic Execution on Binary Programs} {paper_lese}
+
+\paperblock {lese}
+
+\tag {symbolic length} \tag {symbolic execution}
+
+\page {1} They generalize symbolic execution to examining more than one execution path at a time by introducing symbolic variables for the number of times each loop executes and linking it to features as \i {variable-length} or \i {repeating fields} (\comment {what is it?}). \comment {They examine a class of paths at a time. Can we do this not only for loops?} They use term \term {single-path symbolic execution} (\abbr {SPSE}) for the common concolic. They present \term {loop-extended symbolic execution} (\abbr {LESE}). It performs more detailed analysis to identify loop-dependent variables (e.g. which variables is a linear function of index).
+
+\page {2} Their tests is for binary code. They said, concolic is a combination between dynamic and static analysis (they refer to \ref {#exe} {\abbr {EXE}}, \ref {#dart} {\abbr {DART}}, \ref {#cute} {\abbr {CUTE}}).
+
+\code {while (input[ptr] != DELIMITER) \{
+    // do something
+    index++; ptr++;
+\}
+if (index > 8) \{...\}}
+
+Single-path exploration does not have enough information to reason about \m {index} value. \comment {Is it a implicit dependency?} \page {3} In \abbr {SPSE} some concrete values indirectly dependent on the input because of loops. In \abbr {LESE} they are symbolic. They introduce new class of symbolic variables—\term {trip count}. Each loop has a trip count (number of times loop has executed). Construct relationships: input ↔ trip count ↔ symbolic variable. They are looking for linear functions of the trip counts (covers a lot). For input ↔ count connection they introduce \i {auxiliary} input variables for lengths and repetition counts.
+
+\hiddenimage {image/diagram/lese.png} {\abbr {LESE} diagram}
+

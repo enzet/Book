@@ -1,0 +1,18 @@
+\2 {\ref {#droidscope} {DroidScope}: Seamlessly Reconstructing the \abbr {OS} and Dalvik Semantic Views for Dynamic Android Malware Analysis} {paper_droidscope}
+
+\paperblock {droidscope}
+
+\quote {Syracuse University and Air Force Research Laboratory.}
+
+\date {06.02.2015} \page {2} DroidScope is built on top of \ref {#qemu} {\abbr {QEMU}}. They have three tools on top of the DroidScope: instruction tracer, interactions tracer, and \b {taint tracker} to analyze information leakage.
+\date {11.02.2015} Their slowdown: 11 to 34 times.
+\date {21.04.2015} They \i {disable \abbr {JIT}} in Dalvik! DroidScope can be used to analyze the Java and native components of Android apps. Event-based analysis—3 levels: Android device, hardware, Linux and Dalvik. Malware apps can detect \abbr {JDWP} using.
+\date {22.04.2015} The entire Android runs on top of an emulator. Android remains unchanged. It has \abbr {ARM} and x86 support. \page {4} Analysis tools: (1) \abbr {API} tracer—log interactions, (2, 3) native instruction tracer, Dalvik instruction tracer—log native and bytecode instructions, (4) taint tracker—taint analysis at the machine code level.
+
+They rebuild at runtime information about processes, threads, memory mapping, system calls. The basic techniques for reconstructiong the \abbr {OS}-level view is \i {vitrual machine instrospection} (read about/*Narrowing the semantic gap in virtual machine introspection, A virtual machine introspection based architecture for intrusion detection, Stealthy malware detection through vmm-based ”out-of-the-box” semantic view reconstruction*/). They instrument code on \ref {#qemu_tcg} {\abbr {TCG}} level (insert extra \abbr {TCG} code). \abbr {OS}-level knowledge is used for: (1) system calls: instrument special instructions for system calls, get function parameters, etc; (2) processes and threads; (3) memory map.
+
+\hidden {droidscope} {DroidScope structure}
+{
+	\image {image/diagram/droidscope.png} {DroidScope}
+}
+

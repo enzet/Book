@@ -1,0 +1,10 @@
+\2 {Automatically Discovering, Reporting and Reproducing Android Application Crashes} {paper_android_crash_reproducting}
+
+\paperblock {android_crash_reproducting}
+
+\quote {See \ref {http://www.cs.wm.edu/~denys/pubs/__CrashScope_ICST16-CRC.pdf} {\abbr {PDF} online}.}
+
+\quote {Leonid's review.    Android
+      Finding defects: explore \abbr {GUI} hierarchy and execute events (graph of transition states traversal) →
+      Parse saved \abbr {GUI} event info and generate reproduction script.}
+

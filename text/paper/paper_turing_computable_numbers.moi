@@ -1,0 +1,28 @@
+\2 {On Computable Numbers, With an Application to the Entscheidungsproblem} {paper_turing_computable_numbers}
+
+\paperblock {turing_computable_numbers}
+
+\quote {Summary: computers could not completely prove mathematical assertions (mathematics could not be completely modelled by computers).}
+
+\simplemath {\i {e}} and \simplemath {π} are computable.
+
+\page {1} Church has introduced an idea of “effective calculability”, equivalent to his “computability”.
+
+\quote {For the present I shall only say that the justification lies in the fact that the human memory is necessarily limited.}
+
+\code {
+m-configurations: q_1, q_2, ..., q_R
+
+... m-configuration: q_i
+
+configuration --- m-configuration and the scanned symbol
+}
+
+\page {3} \term {\i {a}-machine} is deterministic, \term {\i {c}-machine} is indeterministic (should make some arbitrary choice\; to deal with axiomatic systems). There are two kind of symbols. If first kind is (0, 1), the machine is \term {computing machine}. \term {complete configuration}\: number of the scanned square, the complete sequence of all symbols on the tape, and \i {m}-configuration. Machine's step is \term {move}.
+
+\page {4} \term {Circular machine}\: writes down more than a finite number of symbols (otherwise, \term {circle-free}). Sequence is computable if it can be computed by a circle-free machine.
+
+\page {6} "Skeleton table"\: capital German letter is for \i {m}-configuragion, \page {7} small Greek letter is for a symbol.
+
+/* \2 {1967} {paper_1967} */
+

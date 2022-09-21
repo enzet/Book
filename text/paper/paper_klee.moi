@@ -1,0 +1,35 @@
+\2 {\ref {#klee} {\sc {KLEE}}: Unassisted and Automatic Generation of High-Coverage Tests for Complex Systems Programs} {paper_klee}
+
+\paperblock {klee}
+
+\quote {Symbolic execution dynamic analysis tool, modified \ref {#exe} {\abbr {EXE}} (See \ref {#paper_exe} {\abbr {EXE} paper}).}
+
+\date {09.02.2015} \page {1} It found 56 serious bugs, including 3 in \sc {Coreutils}. Symbolic input initially allowed to be “anything”. 2 main problems of symbolic execution: \innerlist {{the \b {exponential} number of paths and} {interacts with its surrounding \b {environment} (\abbr {OS}, the network, the user)}}.
+
+\page {3} Non-determinism in checked code have produced \b {false positives} in practice. \ref {#klee} {\abbr {KLEE}} analyses \ref {#llvm} {\abbr {LLVM}} bytecode. \date {10.02.2015} \page {4} Given more than one active path, \abbr {KLEE} must pick which one to execute first. At each dangerous operation \abbr {KLEE} checks if any possible value allowed by the current path condition would cause an error.
+
+\abbr {KLEE} is a hybrid between \abbr {OS} for \abbr {SE} and interpreter. Each symbolic process (\abbr {KLEE} called it \i {state}) has a register file, stack, heap, program counter, and path condition. \abbr {KLEE} interprets \abbr {LLVM} bytecode with bit-level accuracy. Symbolic storage locations refer to expressions (trees!) instead of raw data values. If all given operands are concrete \abbr {KLEE} performs the operation natively. \abbr {KLEE} queries the constraint solver to determine if the branch condition is either provably true or provably false along the current path; if so, the instruction pointer is updated to the appropriate location; if both branches are possible, \abbr {KLEE} clones the state. \comment {It runs \abbr {STP} on every branch?} Dangerous operations implicitly generate branches. Load and store instructions also generate checks. \page {5} When a dereferenced pointer \m {p} can refer to \i {n} objects, \abbr {KLEE} clones the current state \i {n} times. \date {19.02.2015} There are a lot of recorded states (symbolic processes) during execution: hunderds of thousands in few minutes. In \abbr {KLEE} heap is implemented as \i {immutable map} and portions of it is shared between states (\abbr {EXE} used only one process per state).
+
+Query optimizations:
+
+\list
+	{\i {Expression Rewriting}. \simplemath {(2\i {x} − \i {x})} to \simplemath {\i {x}}.}
+	{\i {Constraint Set Simplification}. \simplemath {\i {x} < 10} to \simplemath {true} if there was \simplemath {\i {x} = 5}.}
+	{\i {Implied Value Concretization}. Replace \simplemath {x} with \simplemath {9} if there is \simplemath {\i {x} + 1 = 10}.}
+	{\i {Constraint Independence}. \simplemath {\i {i} < \i {j}, \i {j} < 20, \i {k} > 0} to \simplemath {\i {i} < \i {j}, \i {j} < 20} and \simplemath {\i {k} > 0}.}
+	{\i {Counter-example Cache}. They said it is possible to build a more sophisticated cache! \page {6}
+	\list
+		{When a subset of a constraint set has no solution, then neither does the original constraint set.}
+		{When a superset of a constraint set has a solution, that solution also satisfies the original constraint set.}
+		{When a subset of a constraint set has a solution, it is likely that this is also a solution for the original set. \comment {Really? Do you have a proof?}}
+	}
+
+Search strategies:
+
+\list
+	{\i {Random Path Selection}.}
+	{\page {7} \i {Coverage Optimized Search}.}
+
+\date {12.03.2015} When program reads from environment, \abbr {KLEE} want to return all values that the read could produce. Calls are redirected to \i {models} (need to understand semantics well enough). Files have \b {fixed size}. Calling \m {open()} with symbolic name matches \i {N} symbolic files and one fail answer. \page {8} Standart library contains a huge number of functions! \abbr {KLEE} also simulates environmental failures (such as no more space on disk). \page {10} \abbr {KLEE} only checks for low-level errors and violations of user-level asserts, while developer tests validate expected behavior. \comment {So, you can't say \abbr {DA} is better than manual tests.}
+\page {12} \comment {Symbolic execution tools have significant trick. They run path before branch only once. Is it mean \abbr {SE} is better than Avalanche style?} \page {13} \abbr {KLEE} can be used for verify functional equivalence using \simplemath {assert(\i {f}(\i {x}) == \i {f}'(\i {x}))}. \comment {Think about using \abbr {DA} for this for different languages.}
+

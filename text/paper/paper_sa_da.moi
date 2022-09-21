@@ -1,0 +1,8 @@
+\2 {Combined Static and Dynamic Automated Test Generation} {paper_sa_da}
+
+\paperblock {sa_da}
+
+\page {1} They propose static and dynamic analysis combination for call sequence generation. DA infer call sequence model from a sample execution.
+
+/* \2 {2009} {paper_2009} */
+

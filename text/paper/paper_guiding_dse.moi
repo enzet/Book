@@ -1,0 +1,6 @@
+\2 {Guiding Dynamic Symbolic Execution toward Unverified Program Executions} {paper_guiding_dse}
+
+\paperblock {guiding_dse}
+
+\page {1} They guide \abbr {DSE} to parts unverified by static analysis. They said, \abbr {DSE} is also called concolic. Simply applying DSE in addition to other techniques leads to redundancy when executions covered by \abbr {DSE} have already been verified using other techniques. \comment {Good thought.}
+

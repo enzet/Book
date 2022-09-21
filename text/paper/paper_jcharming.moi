@@ -1,0 +1,13 @@
+\2 {\abbr {JCHARMING}: A Bug Reproduction Approach using Crash Traces and Directed Model Checking} {paper_jcharming}
+
+\paperblock {jcharming}
+
+\quote {See \ref {https://users.encs.concordia.ca/~abdelw/sba/papers/SANER2015-JCharming.pdf} {\abbr {PDF} online}.}
+
+\quote {Leonid's review. 2013
+   Java
+      Crash trace is processed →
+      Model checker forward executes statements from crash trace →
+      Compare trace with original trace →
+      If match, generate unit test.}
+

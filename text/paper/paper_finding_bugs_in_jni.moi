@@ -1,0 +1,10 @@
+\2 {Finding Bugs in Exceptional Situations of \abbr {JNI} Programs} {paper_finding_bugs_in_jni}
+
+\paperblock {finding_bugs_in_jni}
+
+\quote {\comment {It is \b {static analysis} and they don't looking for any errors in native code, \b {only for exceptions mishandling}.}}
+
+\date {27.01.2015} \page {1} They build static analysis framework to examine exceptions and report errors in \ref {#jni} {\abbr {JNI} programs}. Sandboxing is good and native components are usually the security dark corner. In Sun's \abbr {JDK} 1.6 over 800 \abbr {KLOC} of C/C++. \page {2} Both Java code and native code may throw exceptions. Native—through \m {Throw} and \m {ThrowNew}. \abbr {JNI} exceptions will be thrown in Java only after native code finished. After exception throwing in native code next code will be executed. And they search this—exceptions mishandling. \page {3} Static analysis examines every control flow path in a program and in general will not miss any security vulnerabilities (\comment {really?}).
+
+\pages {more to 11, didn't read}
+

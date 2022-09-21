@@ -1,0 +1,12 @@
+\2 {[Barad] Event Listener Analysis and Symbolic Execution for Testing GUI Applications} {paper_barad}
+
+\paperblock {barad}
+
+\page {1} They key point is to use event listener. \comment {Instead of tracking any possible action?} Two challenges: \innerlist {{select events and} {select data for events.}} Data is usually random or manual. \page {2} They are for \ref {#java} {Java} \abbr {SWT} {Standard Widget Toolkit}. Barad combine event-flow and data-flow white-box testing.
+
+They generate event sequence and run in symbolically. It is based on \i {bytecode instrumentation}. They introduce symbolic widgets: remove visualization and performance (only functionality).
+
+\page {4} They use Emma for code coverage. \comment {Try it.} So, they have a symbolic version of \abbr {GUI}. For comparioson, they generate events up to given bounds (length of event chain) using \term {conventional \abbr {GUI} techniquies} without \abbr {SE} and with random data.
+
+\page {7} Widget: button, field, etc.
+

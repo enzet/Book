@@ -1,0 +1,15 @@
+\2 {Improving fuzzing performance by applying interval mutations} {paper_interval_mutations}
+
+\3 {Paper review} {paper_interval_mutations_review}
+
+Improving fuzzing performance by applying interval mutations
+
+The paper presents a new algorithm implementated in ISP-Fuzzer, an extensible dynamic program analysis framework. The main goal of the algorithm is to get rid of mutations in input file headers, which doesn't allow us to find new execution paths. Practical results look encouraging, especially with regard to the number of detected crashes and hangs.
+
+However, the paper seems to be very short and far from exceeding limits. Although the idea is pretty simple, the algorithm description lacks theoretical basis and is based mostly on examples.
+
+Also I recommend to improve the language of the paper. It contains a lot of spelling mistakes.
+
+Уровень компетенции\: 1.
+Оценка статьи\: 1.
+

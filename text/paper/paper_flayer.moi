@@ -1,0 +1,8 @@
+\2 {\ref {#flayer} {Flayer}: Exposing Application Internals} {paper_flayer}
+
+\paperblock {flayer}
+
+\page {1} Tool for tainted data flow analysis and a complementary fuzz testing. \ref {#flayer} {Flayer} is implemented as a plug-in to \ref {#valgrind} {Valgrind} using \ref {#memcheck} {Memcheck}. Tracks tainted flow and logs traversal of conditional jumps. \ref {#autodafe} {autodafé} and Byakugan also traks flow, but Flayer uses dynamic binary instrumentation. It also provides the ability to \b {redirect the flow irrespective of input}. \page {2} \comment {Problem of incremental length is described here.}
+
+/* \2 {2008} {paper_2008} */
+

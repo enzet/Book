@@ -1,0 +1,8 @@
+\2 {SELECT--A FORMAL SYSTEM FOR TESTING AND DEBUGGING PROGRAMS BY SYMBOLIC EXECUTION} {paper_select}
+
+A comprimise between
+\list
+	{an automated program proving,}
+	{current debugging practice.}
+
+Similar to King's work.

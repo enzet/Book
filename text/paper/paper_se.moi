@@ -1,0 +1,10 @@
+\2 {Symbolic Execution and Program Testing} {paper_se}
+
+\paperblock {se}
+
+\comment {\ref {#se} {Symbolic execution} approach originally outlined here.}
+
+\page {1} \abbr {EFFIGY}—symbolic executor for \abbr {PL/I}. This work is for program analysis without formal specification. They assume, the program is correct on the sample if it produses correct results on it.
+
+Two extreme alternatives\: \term {program testing} and \term {program proving} (e.g. formal analysis). Proving doesn't need program execution. \comment {So, is it always static?} \abbr {SE} is between these two alternatives.
+

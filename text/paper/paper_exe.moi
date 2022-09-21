@@ -1,0 +1,8 @@
+\2 {\ref {#exe} {\abbr {EXE}}: Automatically Generating Inputs of Death} {paper_exe}
+
+\paperblock {exe}
+
+From \ref {#paper_klee} {\abbr {KLEE} paper}: \abbr {EXE} used one native \abbr {OS} process per state.
+
+\date {05.03.2015} \page {1} Runs code symbolically. Forks execution on conditions. It checks dangerous operations. Uses \ref {#stp} {\abbr {STP}}.
+
