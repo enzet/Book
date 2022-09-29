@@ -1,0 +1,13 @@
+\1 {JavaScript} {js}
+
+JavaScript has no classes, only objects.
+
+Node.js – JavaScript runtime environment. npm – node package manager.
+
+\m {package.json} – list of all packages needed for the project (just like \m {requirements.txt}). To create \m {package.json}, run \m {npm init} to make it interactively or \m {npm init -y} to create default file and edit it manually.
+
+Install: \m {npm install \formal {package}} (stores to \m {npm_modules}), intall globally: \m {npm install -g \formal {package}}.
+
+\m {export function \formal {function name}} makes function exportable. And then you may use \m {import \{ \formal {function name} \} from \formal {file path}}.
+
+Printing: \m {print(\formal {text})}, \m {console.log(\formal {object})}.

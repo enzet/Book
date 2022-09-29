@@ -1,0 +1,110 @@
+\3 {C++} {cpp}
+
+\ref {http://www.cplusplus.com/doc/tutorial/variables/} {Type sizes}.
+
+\image10 {image/diagram/pointer.svg} {Pointers cheat sheet}
+
+\4 {\m {typedef}} {cpp_typedef}
+
+\m {typedef \formal {type} \formal {alias}}
+
+\4 {String operations} {c_string}
+
+\5 {\m {<stdio.h>}} {stdio}
+
+\m {*printf()}, \m {*scanf()}, \m {NULL}…
+
+\5 {\m {<stdlib.h>}} {stdlib}
+
+\m {exit()}, \m {malloc()}, \m {free()}, \m {rand()}…
+
+\5 {\m {<string>}} {cpp_string}
+
+Class \ref {http://www.cplusplus.com/reference/string/string/} {\m {std::string}}:
+\list
+    {\m {find(const string& str, size_t pos = 0)},}
+    {\m {length()},}
+    {\m {substr(size_t pos = 0, size_t len = npos)}.}
+
+\5 {\m {<iostream>}} {iostream}
+
+\m {std::cout} with operator \m {<<} and \m {str::cin} with operator \m {>>}.
+
+\5 {\m {<sstream>}} {sstream}
+
+Class \ref {http://www.cplusplus.com/reference/sstream/stringstream/} {\m {std::stringstream}}:
+
+\code {cpp} {
+std::stringstream ss;
+ss << 100 << " strings.";
+std::string s = ss.str();
+}
+
+\4 {Placement \m {new}} {cpp_placement_new}
+
+Syntax: \m {new (\formal {address}) \formal {class constructor};}, \m {address} is of \m {void*} type. E.g. \m {A* a = new(0xcafebabe) A(5);}. Note, that it's just memory initialization. You \b {should} allocate memory before (using \m {malloc}, \m {mmap}, or \m {operator new}). For simple memory allocation use \m {mmap(\formal {address}, \formal {size}, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);}.
+
+\4 {Memory mapped file (mmap)} {mmap}
+
+\m {\skw {void} \ssp {*}mmap\ssp {(}\skw {void} \ssp {*}addr\ssp {,} \skw {size_t} len\ssp {,} \skw {int} prot\ssp {,} \skw {int} flags\ssp {,} \skw {int} fildes\ssp {,} \skw {off_t} off\ssp {);}}
+
+Just get a pointer to file content and use it for reading/writing. \m {addr} parametr is an address you want to have memory at (if it equals \m {(caddr_t) 0}, \abbr {OS} will choose it for you.
+
+\4 {Boost library} {boost}
+
+To build something with \m {\smc {#include <boost/\formal {library}.hpp}} you need to have boost directory (e.g. \m {boost_1_60}) in your include path (\m {-I}). Boost directory is something contained \m {boost/\*.hpp}.
+
+\5 {Installation} {boost_install}
+
+For example, Boost 1.55.0 installation process:
+
+\listing {\skw {wget} \sk {-O} boost_1_55_0.tar.gz \
+    \ref {http://sourceforge.net/projects/boost/files/boost/1.55.0/boost_1_55_0.tar.gz/download}
+\skw {tar} \sk {xzvf} boost_1_55_0.tar.gz}
+
+No \m {stage} and \m {build} folders, no \m {b2} and \m {bjam}.
+
+\listing {\skw {cd} boost_1_55_0
+\skw {sudo} \skw {apt-get} \scn {update}
+\skw {sudo} \skw {apt-get} \scn {install} build-essential g++ python-dev autotools-dev libicu-dev \
+    build-essential libbz2-dev libboost-all-dev
+\skw {./bootstrap.sh} \sk {--prefix}\ssp{=}/usr/local}
+
+Creates \m {b2} and \m {bjam}.
+
+To build 32-bit version on 64-bit system use \m {\skw {./b2} \sk {address-model}\ssp {=}32}. You also should install \m {gcc-multilib} and \m {g++-multilib} via \m {apt-get}.
+
+Run \m {b2} to build Boost. If you want static Boost, use \m {\skw {./b2} \sk {link}\ssp {=}static} instead. It will create \m {boost_1_55_0} directory with dynamic Boost library (a lot of \m {.so} files) in \m {boost_1_55_0/stage/lib}.
+
+Installation:
+
+\m {\skw {sudo} \skw {./b2} install}
+
+After that system somehow will be aware about Boost libraries and dynamic linking will be successful, but run-time library loading will be failed because it looks for it in \m {/usr/lib/x86_64-linux-gnu/}.
+
+On macOS path for Boost includes is \m {/opt/local/include/boost} and libraries are \m {libboost*.dylib} in \m {/opt/local/lib}.
+
+\5 {Regex} {boost_regex}
+
+\listing {\smc {#include <boost/regex.hpp>}
+
+boost\ssp {::}regex re\ssp {;}
+boost\ssp {::}cmatch matches\ssp {;}
+
+re \ssp {=} \formal {expression}\ssp {;}
+
+\skw {bool} is_match \ssp {=} boost\ssp {::}regex_match\ssp {(<}\skw {string}\ssp {>.}c_str\ssp {(),} matches\ssp {,} re\ssp {));}
+
+matches\ssp {[}\scn {0}\ssp {];} \scm {// all string}
+matches\ssp {[}\scn {1}\ssp {];} \scm {// first matched group}}
+
+\4 {\abbr {STL}} {stl}
+
+\5 {Pair} {std_pair}
+
+\listing {\skw {std}\ssp {::}pair \ssp {<}\skw {int}\ssp {,}\skw {char}\ssp {>} foo \ssp {(}\scn {10}\ssp {,} \scn {'x'}\ssp {);}
+\skw {std}\ssp {::}get\ssp {<}\scn {0}\ssp {>(}foo\ssp {)} \ssp {=} \scn {50}\ssp {;}}
+
+\5 {Map} {std_map}
+
+\m {std::map}'s elements are sorted accoring to the keys. And it is quaranteed by the standard that iteration with keys sorted in ascending order and \m {*begin()} gives smallest and \m {*rbegin()} gives largest element. Check key: \m {\formal {map}.find(\formal {key}) == \formal {map}.end()}. Put element: \m {\formal {map}\[\formal {key}\] = \formal {value}}.

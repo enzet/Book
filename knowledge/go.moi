@@ -1,0 +1,17 @@
+\1 {Go language} {golang}
+
+Everything is inside a binary. No dynamic libraries are needed. Entry point is always \m {main.main}.
+
+Go environment variables can be listed with \m {go env}.
+
+Important environment variables\: \m {GOROOT} (is \m {/usr/local/go}, never change it!), \m {GOPATH} is for Go libraries (e.g. \m {~/golib} or more paths). So when you do e.g. \m {go get github.com/nsf/gocode}, you'll get \m {~/golib/src/github.com/nsf/gocode} directory with installed library (so, it uses \b {first} part of \m {GOPATH} to install libraries).
+
+Your \m {PATH} variable should than be \m {$PATH:$GOROOT/bin:$GOPATH/bin}.
+
+Workspace\: directories \m {src}, \m {bin}, \m {pkg} (for intermediate binaries).
+
+A module is a collection of Go packages stored in a file tree with a \m {go.mod} file at its root.
+
+\2 {Interfaces} {golang_interface}
+
+Interface can be thought as a (concrete value, type) tuple. Interface is \m {nil} iff both it's concrete value and type are \m {nil}. One can call method on an interface that has \m {nil} concrete value, but calling a method on a \m {nil} interface is a run-time error. Empty interface is \m {interface\{\}} (can hold values of any type).

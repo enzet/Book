@@ -1,0 +1,111 @@
+\3 {x86 assembler language} {x86_assembler}
+
+\quote {See \ref {https://en.wikipedia.org/wiki/X86_instruction_listings} {instructions listing}, \ref {https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf} {x64 cheat sheet \abbr {PDF} online}.}
+
+8 \abbr {GPR} (general-purpose registers), 6 segment registers, 1 flag register and \abbr {IP} (instruction pointer). Push all general purpose registers: \m {PUSHA}, pop them: \m {POPA}. Flag register is EFLAGS (32-bit register). There are 16 1-bit flags and 1 2-bit flag. Push flags: \ref {http://pdos.csail.mit.edu/6.828/2008/readings/i386/PUSHF.htm} {\abbr {PUSHF}}, pop flags: \ref {http://pdos.csail.mit.edu/6.828/2008/readings/i386/POPF.htm} {\abbr {POPF}}.
+
+\4 {x86-64} {x64}
+
+Also known as x64, \abbr {AMD64}.
+
+\quote {See \ref {http://www.scs.stanford.edu/05au-cs240c/lab/amd64/AMD64-3.pdf} {instruction reference}, \ref {http://www.tptp.cc/mirrors/siyobik.info/reference.html} {another instruction reference}, \ref {http://people.freebsd.org/~lstewart/references/amd64.pdf} {some examples}.}
+
+\5 {Addressing} {x64_address}
+
+\i {Intel® 64 and IA-32 Architectures Software Developer’s Manual. Volume 1. 3.7. Operand addressing.}
+
+Data for instruction source operand can be located in:
+\list
+    {the instruction itself (an immediate operand) (14 in \m {ADD EAX, 14}),}
+    {a register,}
+    {a memory location: referenced by means of a \i {segment selector} (specifies segrment containing the operand) and \i {offset} (specifies linear address or effective address),}
+    {an I/O port.}
+
+Some operands are specified explicitly and others are implicit. 
+
+The most common method of specifying a segment selector: implicitly using \abbr {CS}, \abbr {SS}, \abbr {DS}, or \abbr {ES} (depending on reference type). But you also can use \i {segment override}: \m {MOV ES:[EBX], EAX} means move a value from \abbr {EAX} into segment pointed to by the \abbr {ES} register (instead of data segment \abbr {DS}) with offset from \abbr {EBX}.
+
+Offset (effective address) = \b {base} + \b {index} * \i {scale} + \i {displacement}.
+\list
+    {\b {Displacement}: absolute address or static address. Encoded in the instruction.}
+    {\b {Base}: indirect offset to the operand.}
+    {\b {Base + Displacement}: index to an array (base is index, and displacement is array) or access a field of a record.}
+    {\b {(Index * Scale) + Displacement}: index into a static array.}
+    {\b {Base + Index + Displacement}: two-dimensional array.}
+    {\b {Base + (Index * Scale) + Displacement}: two-dimensional array.}
+
+At the machine-code level, the selected combination of displacement, base register, index register, and scale factor is encoded in an instruction.
+
+\5 {Instructions} {x64_instruction}
+
+\abbr {MOV} is for moving values and \abbr {LEA} is for moving effictive address. So,
+\m {LEA ESI, \[EBX + 8*EAX + 4\]}
+has the same result as
+\m {MOV ESI, EBX + 8*EAX + 4} (if we assume such operation is valid)
+but you cannot do math in \abbr {MOV} instruction.
+
+\table
+    {{\m {objdump}} {Intel} {Description}}
+    {
+        {\m {lea -0x18(%ebp), %ebx}}
+        {\m {lea ebx,[ebp-0x18]}}
+        {\abbr {EBX} now contains value of \abbr {EBP} minus 18\sub {16}}
+    }
+
+\5 {Registers} {x64_register}
+
+x86-64 has 16 64-bit registers: \abbr {RAX}, \abbr {RCX}, \abbr {RDX}, \abbr {RBX}, \abbr {RSI}, \abbr {RDI}, \abbr {RSP}, \abbr {RBP}, \abbr {R8}, …, \abbr {R15}. Lower bytes of them also 32-, 16- and 8-bit registers, other—in the stack (first of them on the top of stack). Return value will be stored in \abbr {RAX} if any.
+
+\table
+    {{63—32} {31—16} {15—8} {7—0} {Descripton}}
+    {{\m {%rax}} {\m {%eax} \m {%ax}} {\m {%ah}} {\m {%al}} {Return value}}
+    {{\m {%rbx}} {\m {%ebx} \m {%ax}} {\m {%bh}} {\m {%bl}} {Callee saved}}
+    {{\m {%rcx}} {\m {%ecx} \m {%cx}} {\m {%ch}} {\m {%cl}} {4th argument}}
+    {{\m {%rdx}} {\m {%edx} \m {%dx}} {\m {%dh}} {\m {%dl}} {3rd argument}}
+    {{\m {%rsi}} {\m {%esi} \m {%si}} {} {\m {%sil}} {2nd argument}}
+    {{\m {%rdi}} {\m {%edi} \m {%di}} {} {\m {%dil}} {1st argument}}
+    {{\m {%rbp}} {\m {%ebp} \m {%bp}} {} {\m {%bpl}} {Callee saved}}
+    {{\m {%rsp}} {\m {%esp} \m {%sp}} {} {\m {%spl}} {Stack pointer}}
+    {{\m {%r8}} {\m {%r8d} \m {%r8w}} {} {\m {%r8b}} {5th argument}}
+    {{\m {%r9}} {\m {%r9d} \m {%r9w}} {} {\m {%r9b}} {6th argument}}
+    {{\m {%r10}} {\m {%r10d} \m {%r10w}} {} {\m {%r10b}} {Callee saved}}
+    {{\m {%r11}} {\m {%r11d} \m {%r11w}} {} {\m {%r11b}} {Used for linking}}
+    {{\m {%r12}} {\m {%r12d} \m {%r12w}} {} {\m {%r12b}} {Unused for C}}
+    {{\m {%r13}} {\m {%r13d} \m {%r13w}} {} {\m {%r13b}} {Callee saved}}
+    {{\m {%r14}} {\m {%r14d} \m {%r14w}} {} {\m {%r14b}} {Callee saved}}
+    {{\m {%r15}} {\m {%r15d} \m {%r15w}} {} {\m {%r15b}} {Callee saved}}
+
+Segment registers: to derive the actual memory address.
+
+\table
+    {{\m {%cs}} {Code segment (text, execuatable) (used for \abbr {IP})}}
+    {{\m {%ss}} {Stack segment (used for \abbr {SP})}}
+    {{\m {%ds}} {Data segment (unchanged variables) (used for \abbr {MOV})}}
+    {{\m {%es}} {Extra segment (used for \abbr {MOVS}, etc.)}}
+    {{\m {%fs}} {No processor-defined purpose}}
+    {{\m {%gs}} {No processor-defined purpose}}
+
+\m {%gs:0x14} is base address of \abbr {GC} + 14\sub {16}. Is it \abbr {GC} * 16 + 14\sub {16}?
+
+\5 {Calling} {x64_call}
+
+Function call instruction just push the return address (\abbr {RIP} value that points to the next instruction) onto the stack and jump to the start of the specified function.
+
+\image10 {image/diagram/stack.svg} {Call stack layout}
+
+\table
+    {{Bits} {Name}       {Suffix}}
+    {{8}    {byte}       {\m {b}}}
+    {{16}   {word}       {\m {w}}}
+    {{32}   {doubleword} {\m {l}}}
+    {{64}   {quadword}   {\m {q}}}
+
+Suffix \m {z} (\m {s}) extend operands of the type of the first suffix to that of the second with zero-extension (signed extension).
+
+Calling a function: program should place the first six integer or pointer parameters to \m {%rdi}, \m {%rsi}, \m {%rdx}, \m {%rcx}, \m {%r8}, \m {%r9} and other to the stack. First parameters is on the top of stack. Retrun value will be in \m {%rax}. Function uses \i {stack frame} to store local variables, etc. You \b {should push} \m {%rbx}, \m {%rbp}, and \m {%r12}—\m {%r15} if you will use them in function. You also should allocate more memory in stack frame using \m {subq $\formal {number of bytes} %rsp}.
+
+\abbr {RSP} is a stack pointer. \abbr {RBP}—base pointer. By convention, it stores the original value of \abbr {RSP}. Stack grows downwards.
+
+Register: \m {%eax}, \m {%ebx}, immediate (just value): \m {$6} (means 6), memory: \m {value}, \m {variable_name} (just variables).
+
+\m {movl \formal {from} \formal {to}}

@@ -1,0 +1,140 @@
+\1 {Python} {python}
+
+\2 {Modules and packages} {python_modules}
+
+Module: pure (just one \m {.py} file), extension (dynamically loadable file).
+
+\2 {Data Model} {python_data_model}
+
+From \ref {https://docs.python.org/3/reference/datamodel.html} {Data model}.
+
+Object in Python\: identity (\m {id()}), type (\m {type()}), and value. Identity and type are unchangable (new type is a new object).
+
+Immutable containters may have mutable objects, so \i {immutable} doesn't mean \b {unchangable}. Immutability is determined by type.
+
+Containers\: tuples, lists, dictionaries.
+
+\code {python} {
+>>> a = 5
+>>> b = 5
+>>> a is b
+True
+}}
+
+\code {python} {
+>>> a = 500
+>>> b = 500
+>>> a is b
+False
+}}
+
+\2 {Bytecode} {python_bytecode}
+
+\table {
+	{{\m {co_names}} {Global attributes and methods used inside the scope.}}
+	{{\m {co_varnames}} {Local variable names used in funciton.}}
+	{{\m {co_consts}} {Literals.}}
+}
+
+Papers\:
+\list
+	{\ref {#paper_scalpel} {Scalpel},}
+	{\ref {#paper_pycg} {PyCG}.}
+
+\2 {Parallel programming} {python_parallel}
+
+3 ways to parallel in Python:
+\list
+	{\m {asyncio},}
+	{threads,}
+	{\m {multiprocessing}.}
+
+Threads share virtual memory, processes not.
+
+In threading Python uses \abbr {GIL} {global interpreter lock}, a global lock for the entire interpreter. So only non-Python code is actually paralleled.
+
+First line for unicode files: \m {# -*- coding: utf-8 -*- from __future__ import unicode_literals}.
+
+Call process: \m {\formal {output byte string} = subprocess.check_output(\[\formal {program}, \formal {argument 1}, \formal {argument 2}\])
+}
+
+Print to error stream: \m {print >> sys.stderr, \formal {message}}.
+
+Regular expressions. For groups: \m {matcher.groupdict()}.
+
+Argument parsing:
+
+\code {import argparse
+parser = argparse.ArgumentParser(description='program description')
+parser.add_argument('integers', metavar='N', type=int, nargs='+',
+                    help='an integer for the accumulator')
+parser.add_argument('--sum', dest='accumulate', action='store_const',
+                    const=sum, default=max,
+                    help='sum the integers (default: find the max)')
+parser.add_argument('remainder_arguments', nargs=argparse.REMAINDER)
+options = parser.parse_args(sys.argv\[1:\])}
+
+Parameters: \m {action}, \m {nargs}, \m {const}, \m {default}, \m {type}, \m {choices}, \m {required}, \m {help}, \m {metavar}, \m {dest}. To dictionary: \m {vars(options)}.
+
+Modules. Run only if you actually run the script and not imported: \m {if __name__ == "__main__":}.
+
+Random element of array: \m {random.choice(\formal {list})}. Random integer: \m {random.randint(a, b)} (for a <= N <= b).
+
+\code {logging.basicConfig(level=logging.ERROR, format='%(message)s.')
+logging.info('message')
+logging.warning('message')
+logging.error('message')
+logging.critical('message')}
+
+Sleep: \m {time.sleep(\formal {time in seconds})}.
+
+\4 {File system} {python_file_system}
+
+Go through files in folder: \m {for file_name in os.listdir('/mydir')}. Check if file exists: \m {os.path.isfile(\formal {file name})}.
+
+\4 {Date and time} {python_datetime}
+
+Now: \m {datetime.datetime.now()}, today: \m {datetime.date.today()}, parse date: \m {datetime.datetime.strptime('2012-10-09T19:00:55Z', '%Y-%m-%dT%H:%M:%SZ')}, print date: \m {date.strftime('%Y_%m_%d_%H_%M')} (See \ref {https://docs.python.org/2/library/datetime.html#strftime-strptime-behavior} {all shortcuts}).
+
+\4 {Encoding} {python_encoding}
+
+\image {image/diagram/python_encoding.svg} {Python encoding}
+
+\4 {Built-in functions} {python_builtin}
+
+\m {dir()}: list of names in the current scope (methods and fields of object, etc.).
+
+Sorting: \m {sorted(\formal {list}, key=lambda element:\formal {function}}. Map: \m {map(\formal {lambda element:\formal {functions}}, \formal {list})}.
+
+\4 {Datamodel} {python_datamodel}
+
+\table {
+    {{\m {object\[key\]}} {\m {object.__getitem__(key)}}}
+}
+
+\4 {Formats} {python_formats}
+
+\abbr {YAML}: \m {yaml.safe_dump(\formal {structure}, allow_unicode=True)}.
+
+\abbr {XML}:
+
+\code {from bs4 import BeautifulSoup
+html = open('file.html').read()
+soup = BeautifulSoup(html, "html.parser")
+divs = soup.fild_all('div')
+divs\[0\].name
+divs\[0\]\[class\] == \['class_name', 'class_name_2'\]}
+
+\4 {Import} {python_import}
+
+\m {import} directive doesn't reload package even if \m {sys.path} has changed. Use \m {reload} function for this.
+
+\4 {UI} {python_ui}
+
+\m {pygame} and \m {pyglet}.
+
+\4 {pip} {pip}
+
+Install: \m {sudo pip2.7 install \formal {package}}. Look: \m {pip2.7 show \formal {package}}, \m {pip2.7 list}. Packages are in \m {/usr/local/lib/python2.7/dist-packages}.
+
+Be careful, \m {pip} installs packages to \m {dist-packages} but does not controll it. So, \m {dist-packages} can contain modules installed manually.

@@ -1,0 +1,577 @@
+\2 {Solving} {solving}
+
+\quote {\ref {http://www.satcompetition.org/} {The international \abbr {SAT} Competitions}.}
+
+ \comment {Try to call \m {unsat_core()} on \ref {#z3} {Z3}. Can we use it?}
+
+Constraint satisfaction problems:
+
+\list
+    {\ref {#sat} {\abbr {SAT}} (Boolean satisfiability problem) — propositional logic (zeroth-order logic).}
+    {\ref {#smt} {\abbr {SMT}} (Satisfiability modulo theories) — first-order logic.}
+    {answer set programming.}
+
+\abbr {SMT}-formula is a \abbr {SAT} formula with predicates instead of variables.
+
+Techniques for \term {constraint satisfaction}:
+
+\list
+    {Backtracking.}
+    {Local consistency (reduce search space): enforced by \term {constraint propagation} (change the problem without changing the solution)—reduce domains of variables, strengthen constraints, create constraints.}
+    {Local search (heuristic method): (WalkSAT).}
+
+Denis Yurichev's Quick introduction into \abbr {SAT}/\abbr {SMT} solvers and symbolic execution: \ref {https://yurichev.com/writings/SAT_SMT_draft-EN.pdf} {English}, \ref {https://yurichev.com/writings/SAT_SMT_draft-RU.pdf} {Russian}.
+
+He said that all \abbr {SMT} solvers use \abbr {SAT} solver as backend. Even \ref {#z3} {Z3} (but its own \abbr {SAT} solver). \comment {Is it true?}
+
+\term {Bit blasting}: \abbr {SMT} → \abbr {SAT}.
+
+Logics\:
+
+\list {
+    {\b {Propositional logic} (propositional calculus): propositions (boolean variables) with logical connectivenes (logical or, logical and, etc.).}
+    {\b {First-order logic} (predicate logic): variables, logical connectivnes, quantifiers, functions, and predicates.}
+    {\b {Second-order logic}: quantifiers not only over variables, but also over predicates.}
+}
+
+There are \term {Boolean algebra} and \term {propositional logic}.
+
+\grid {
+    {{Boolean term} {↔} {propositional formula}}
+    {{Boolean variables (\simplemath {\i {x}}, \simplemath {\i {y}})} {↔} {propositional variables (atoms, \simplemath {\i {P}}, \simplemath {\i {Q}})}}
+    {{0, 1} {↔} {false, true}}
+}
+
+\3 {\abbr {SAT} solving} {sat}
+
+According to \ref {https://www.cs.upc.edu/~oliveras/espai/papers/JAR-smtcomp.pdf} {\abbr {SMT} competition document}, \sc {MiniSat} is most popular \abbr {SAT} solver for \abbr {SMT}. Some \abbr {SMT} solvers use Rsat/\abbr {NFLSAT}, PrecoSAT, Chaff (previously), \abbr {SATO}, CirCUs, SatBox, cryptoMiniSAT}, \ref {#picosat} {PicoSat}. Some \abbr {SMT} solvers use custom \abbr {SAT} solvers.
+
+\abbr {SAT} variations:
+
+\list
+    {Unrestricted or \abbr {CNFSAT},}
+    {\abbr {3-SAT} or \abbr {3CNFSAT},}
+    {1-in-3-SAT,}
+    {\abbr {2-SAT},}
+    {\abbr {HORN-SAT},}
+    {\abbr {XOR-SAT}.}
+
+Satisfiability problems\:
+
+\list
+    {\b {\abbr {SAT}} (Boolean (propositional) satisfiability problem): is there an interpretation for Boolean formula (in propositional logic).}
+    {\b {\abbr {SMT}} (satisfiability modulo theories).}
+    {\b {\abbr {MAX-SAT}} (maximum satisfiability problem) for \abbr {CNF}: determining the maximum number of clauses that can be made true.}
+
+A \term {formula} is a syntactic object that can be given a semantics meaning by means of an interpretation.
+
+\term {Bit blasting}: converting \abbr {SMT}-fomula into Boolean formula.
+
+\abbr {SAT} algorithm classification:
+
+\list
+    {1\:
+    \list
+        {\b {Conflict-driven} (\abbr {DPLL} and its modifications like \abbr {CDCL}): good for large (\ref {#minisat} {\sc {MiniSat}}, \ref {#manysat} {ManySAT}).}
+        {\b {Look-ahead}: good for complex (\ref {#march} {march_dl}).}
+    }
+    {\b {Complete} (\abbr {DPLL}, \abbr {CDCL}) and \b {incomplete} (\abbr {GSAT}, WalkSAT).}
+    {\b {Randomized}: \abbr {PPZ}, \abbr {PPSZ}.}
+
+\4 {Davis-Putnam algorithm} {dp}
+
+\quote {See \ref {#paper_dp} {main 1960 paper}.}
+
+Resolution-based propositional decision procedure (backtrack search): searching for unsatisfiable \term {ground instance} inside the formula.
+
+For checking the validity of a first-order logic formula. Uses resolution-based decision procedure for propositional logic. Terminates only on valid forumlae.
+
+Algorithm\:
+
+\list
+    {eliminate quantifiers,}
+    {generate \term {ground instances},}
+    {check if each instance is satisfiable:
+    \list {
+        {for every variable and for every clause with variable and every clause with negation of the variable, \term {resolve} them and add the resolvent; remove all original clauses containing the variable or ths negation.}
+    }
+
+\4 {\abbr {DPLL}} {dpll}
+
+\4 {\abbr {CDCL}} {cdcl}
+
+Conflict-driven clause learning. Authors: Marques-Silva and Sakallah (1996, 1999) and Bayardo and Schrag (1997).
+
+\list
+    {Assign varialbe.}
+    {Unit propagation.}
+    {Build the \term {implication graph}.}
+    {Analyze the conflict and back jump to the appropriate decision level.}
+
+\abbr {CDCL} is \abbr {DPLL} with back jumping based on clause learning.
+
+Based on \abbr {CDCL}: \ref {#minisat} {\sc {MiniSat}}, zChaff, \ref {#z3} {Z3}, ManySAT, \abbr {GRASP}.
+
+\4 {\abbr {GSAT} or WalkSAT algorithm} {walksat}
+
+\quote {See \ref {https://www.cs.rochester.edu/u/kautz/walksat/} {home page}.}
+
+Authors\: Bart Selman (Cornell University), Henry Kautz (University of Rochester).
+
+Local search algorithms for \abbr {SAT}. They work with \abbr {CNF}.
+
+\list
+    {Assign random value to each variable.}
+    {Check \abbr {SAT}; if not, flip random (based on occurance in true clauses) variable from random false clause.}
+
+Is used mainly for automated planning problems.
+
+\4 {\abbr {PPZ}} {ppz}
+
+\quote {See \i {Satisfiability Coding Lemma} (1997).}
+
+It is for \i {k}-\abbr {CNF}.
+
+\4 {\sc {MiniSat}} {minisat}
+
+\quote {See \ref {http://minisat.se/} {home page}, \ref {#paper_minisat} {main paper}. Authors: Niklas Eén, Niklas Sörensson.}
+
+\ref {#cdcl} {\abbr {CDCL}}-based (so, it is \term {conflict-driven}). Was relatively successful on 2005 \abbr {SAT} competition. Input language: \ref {dimacs_cnf} {\abbr {DIMACS-CNF}}. Written in \ref {cpp} {C++}.
+
+\4 {march} {march}
+
+\ref {#dpll} {\abbr {DPLL}}-based. Uses lookahead heuristics to determine the branch variable in all nodes of the \abbr {DPLL} search tree.
+
+march_dl is an upgraded version of march_eq \abbr {SAT} solver. Look-ahead solver. Won a prize at the 2007 \abbr {SAT} competition.
+
+\4 {Sat4j} {sat4j}
+
+Input language\: \ref {dimacs_cnf} {\abbr {DIMACS-CNF}}. Writtein in \ref {java} {Java}.
+
+\4 {Glucose} {glucose}
+
+Input language\: \ref {dimacs_cnf} {\abbr {DIMACS-CNF}}.
+
+\4 {RSat} {rsat}
+
+Won a gold medal at the 2007 \abbr {SAT} competition.
+
+\4 {PicoSAT and Lingeling} {picosat}
+
+Lingeling won a gold medal at the 2011 \abbr {SAT} competition.
+
+\3 {\abbr {SMT} solving} {smt}
+
+Princess's page said \term {theorem prover} and \term {\abbr {SMT} solver} are synonyms.
+
+zChaff's \ref {http://www.princeton.edu/~chaff/zchaff.html} {home page} said:
+
+\quote {We have success stories of using zChaff to solve problems with more than one million variables and 10 million clauses. (Of course, it can't solve every such problem!).}
+
+So, 1 M variables and 10 M clauses seem to be a limit for solvers.
+
+\table {
+    {{Solver} {Format} {Incremental} {License} {Platform} {\abbr {API}} {Comment}}
+    {
+        {\ref {#absolver} {ABsolver}}
+        {\abbr {SMT-LIB} 1.2, \abbr {DIMACS}} {} {\abbr {CPL}} {Linux} {C++} {\abbr {SMT}, \abbr {DPLL}-based}
+    }
+    {
+        {Alt-Ergo}
+        {partial \abbr {SMT-LIB} 1.2 and 2, polymorphic first-order input language} {} {CeCILL-C}
+        {Linux, macOS, Windows} {OCaml} {\abbr {SMT}, \abbr {SAT}-based: Shostak-like and Nelson-Oppen like approaches}
+    }
+    {
+        {\ref {#barcelogic} {Barcelogic}}
+        {\abbr {SMT-LIB} 1.2} {} {Proprietary} {Linux} {C++}
+        {\abbr {SMT}, \abbr {DPLL}-based, congruence closure}
+    }
+    {
+        {Beaver}
+        {\abbr {SMT-LIB} 1.2} {} {\abbr {BSD}} {Linux, Windows} {OCaml}
+        {\abbr {SMT}, \abbr {SAT}-based}
+    }
+    {{\ref {#blt} {\abbr {BLT}}} {} {} {} {} {} {}}
+    {
+        {\ref {#boolector} {Boolector}}
+        {\abbr {SMT-LIB} 2}
+        {\abbr {SMT-LIB} 1 only}
+        {\abbr {GPL} 3}
+        {Linux} {C}
+        {\abbr {SMT}}
+    }
+    {{\ref {#clsat} {clsat}} {} {} {} {} {} {\abbr {SMT}}}
+    {{\abbr {CORAL}} {} {} {} {} {} {}}
+    {
+        {\ref {#cvc} {\abbr {CVC}}}
+        {} {} {} {} {}
+        {\abbr {SMT}, \abbr {SAT}-based (\ref {#chaff} {Chaff}), Nelson-Oppen, no quantifiers}
+    }
+    {{\ref {#cvc} {\abbr {CVC} Lite}} {} {} {} {} {} {\abbr {SMT}}}
+    {{\ref {#cvc} {\abbr {CVC3}}} {} {} {} {} {} {\abbr {SMT}}}
+    {
+        {\ref {#cvc} {\abbr {CVC4}}}
+        {\abbr {SMT-LIB} 2, \abbr {CVC}}
+        {\yes {}}
+        {\abbr {BSD}}
+        {Linux, macOS, Windows} {C++} {}
+    }
+    {{ExtSAT} {} {} {} {} {} {\abbr {SMT}}}
+    {{Fx7} {} {} {} {} {} {\abbr {SMT}}}
+    {{\abbr {HTP}} {} {} {} {} {} {\abbr {SMT}}}
+    {{Jat} {} {} {} {} {} {\abbr {SMT}}}
+    {
+        {\ref {#mathsat} {MathSAT}}
+        {\abbr {SMT-LIB} 2}
+        {\yes {} (counter)}
+        {Proprietary}
+        {Linux, macOS, Windows} {C/C++, Python} {}
+    }
+    {{MiniSMT} {} {} {} {} {} {\abbr {SMT}}}
+    {{NuSMV} {} {} {} {} {} {\abbr {SMT}}}
+    {{OpenSMT} {} {} {} {} {} {\abbr {SMT}}}
+    {
+        {Princess}
+        {Princess native language, \abbr {SMT-LIB} 2, \abbr {TPTP}} {} {} {} {} {}
+    }
+    {{Sammy} {} {} {} {} {} {\abbr {SMT}}}
+    {{Sateen} {} {} {} {} {} {\abbr {SMT}}}
+    {{\abbr {SBT}} {} {} {} {} {} {\abbr {SMT}}}
+    {{Simplics} {} {} {} {} {} {\abbr {SMT}}}
+    {{simplifyingSTP} {} {} {} {} {} {\abbr {SMT}}}
+    {{SMTInterpol} {} {} {} {} {} {}}
+    {
+        {\ref {#stp} {\abbr {STP}}}
+        {\abbr {SMT-LIB} 2, \abbr {CVC}}
+        {\yes {} (counter)}
+        {\abbr {MIT}}
+        {Linux, OpenBSD, macOS, Windows} {C/C++, Python, Java} {}
+    }
+    {{\abbr {SONOLAR}} {} {} {} {} {} {\abbr {SMT}}}
+    {{Spear} {} {} {} {} {} {\abbr {SMT}}}
+    {{\abbr {SVC}} {} {} {} {} {} {\abbr {SMT}}}
+    {{\ref {#sword} {\abbr {SWORD}}} {} {} {} {} {} {\abbr {SMT}}}
+    {{\ref {#verit} {veriT}} {} {} {} {} {} {\abbr {SMT}}}
+    {{\ref {#test_pmathsat} {test_pmathsat}} {} {} {} {} {} {\abbr {SMT}}}
+    {
+        {\ref {#yices} {Yices}}
+        {\abbr {SMT-LIB} 2}
+        {\yes {} (counter)}
+        {Proprietary}
+        {Linux, macOS, Windows} {C} {}
+    }
+    {{\ref {#yices} {Yices2}} {} {} {} {} {} {\abbr {SMT}}}
+    {
+        {\ref {#z3} {\abbr {Z3}}}
+        {\abbr {SMT-LIB} 2, \abbr {CVC}, Simplify, low-level native format in the spirit of the \abbr {DIMACS}}
+        {\yes {}}
+        {\abbr {MIT}}
+        {Linux, FreeBSD, macOS, Windows} {C/C++, Python, Java, .NET common language, OCaml} {\abbr {SMT}}
+    }
+}
+
+Theories (\m {theory} in \abbr {SMT-LIB}):
+
+\list
+    {arrays\: \m {select}, \m {store},}
+    {fixed size bit vectors: \m {concat}, \m {extract}, \m {bvult}, \m {div}, \m {rem}, \m {bv2nat}, ...,}
+    {core: \m {true}, \m {false}, \m {nor}, \m {and}, \m {or}, \m {xor}, \m {equality}, \m {distinct}, \m {ite},}
+    {integers: \m {+}, \m {-}, \m {*}, \m {div}, \m {mod}, \m {abs}, \m {<=}, \m {<}, \m {>=}, \m {>},}
+    {reals: \m {+}, \m {-}, \m {*}, \m {/}, \m {abs}, \m {<=}, \m {<}, \m {>=}, \m {>},}
+    {floating point: \m {sort}, \m {round}, \m {abs}, \m {neg}, \m {add}, \m {sub}, \m {mul}, \m {div}, \m {fma}, \m {sqrt}, \m {rem}, \m {round}, \m {min}, \m {max}, \m {leq}, \m {lt}, \m {geq}, \m {gt}, \m {eq}, \m {isNormal}, \m {isSubnormal}, \m {isZero}, ...,}
+    {uninterpreted functions (empty theory).}
+
+So, theory is a constants and operations. Logics too. But logic is some combination of theories. For example, \abbr {AUFLIA} logic is a combination of \m {Ints} and \m {ArraysEx} in \abbr {SMT-LIB}.
+
+Logics (\m {logic} in \abbr {SMT-LIB})\:
+
+\image10 {image/diagram/smt_logics.svg} {\abbr {SMT} logics}
+
+\4 {Nelson-Oppen} {nelson_oppen}
+
+\quote {See \ref {https://www.cs.upc.edu/~oliveras/TDV/NO.pdf} {A. Oliveras and E. Rodriguez-Carbonell slides}.}
+
+Technique for using \abbr {SMT}-solving for solve combination of: \innerlist {{linear arithmetic,} {arrays, and} {uninterpreted functions.}} There are two approaches: deterministic and non-deterministic. Main idea is to divide formulae to sets of formulae in different theories which only \i {share constants}.
+
+\4 {\abbr {SMT-LIB} 2} {smtlib2}
+
+\4 {Reminder and modulo} {smtlib_rem}
+
+For
+
+\code{(declare-fun x () (_ BitVec 32))
+(declare-fun y () (_ BitVec 32))
+(assert (= (bvurem x y) #x00000005))
+(check-sat)}
+
+\ref {#stp} {\abbr {STP}} and \ref {#z3} {\abbr {Z3}} both return
+
+\code
+{ASSERT( x = 0x00000005 );
+ASSERT( y = 0x00000000 );}
+
+Actually it's a bullshit, but (from \ref {http://www.cs.nyu.edu/pipermail/smt-lib/2007/000182.html} {this} letter):
+
+\code
+{\[\[(bvurem s t)\]\] := if bv2nat(\[\[t\]\]) != 0 then
+                          nat2bv\[m\](bv2nat(\[\[s\]\]) rem bv2nat(\[\[t\]\]))
+
+Note that the semantic interpretation above is underspecified because it
+   does not specify the meaning of (bvudiv s t) or (bvurem s t) in case
+   bv2nat(\[\[t\]\]) is 0.}
+
+\4 {Boolector} {boolector}
+
+\4 {\abbr {BLT}} {blt}
+
+\quote {See \ref {#paper_blt} {main paper}, \ref {https://github.com/GaloisInc/blt} {GitHub page}.}
+
+For solving certain integer linear programming problems (e.g. problem of reversing \abbr {JPEG}). They use bounded integer linear constraint solving via Lattice search.
+
+\4 {\abbr {CVC}} {cvc}
+
+\abbr {SVC}: Stanford Validity Checker.
+
+Cooperating Validity Checker.
+
+\abbr {CVC3}: \ref {http://www.cs.nyu.edu/acsys/cvc3/} {official site}.
+
+\abbr {CVC4}: \ref {http://cvc4.cs.nyu.edu/web/} {official site}, \ref {https://github.com/CVC4/CVC4} {GitHub page}. From-scratch rewrite of \abbr {CVC3}. Has \ref {#string_solving} {string theory} support.
+
+\4 {Green solver} {green_solver}
+
+\quote {\ref {https://github.com/green-solver/green-solver} {GitHub page}, \ref {https://code.google.com/archive/p/green-solver/wikis/GreenDocumentation.wiki} {short description}, \ref {#paper_green_solver} {main paper}.}
+
+Hear about it from this \ref {https://twitter.com/feliam/status/700316058356420608} {tweet}:
+
+\tweet {Now we are talking. Symbolic Execution and the Green Solver. #Include<all-solver-tricks.h> \ref {https://github.com/green-solver/green-solver} {https://github.com/green-solver/g…}}
+
+Based on \ref {#z3} {\abbr {Z3}}.
+
+\4 {MathSAT} {mathsat}
+
+\quote {\i {See} \ref {#paper_mathsat} {main paper}.}
+
+\4 {Omega library} {omega}
+
+\quote {See \ref {https://www.cs.umd.edu/projects/omega/} {the Omega project main page}.}
+
+The Omega library (since at least 1996) is a part of the Omega project. It is a set of routines for manipulating linear constraints over integer variables, Presburger formulas, and Integer tuple relations and sets.
+
+\4 {PySMT} {pysmt}
+
+\quote {See \ref {#paper_pysmt} {main paper}, \ref {https://github.com/pysmt/pysmt} {GitHub page}.}
+
+\code
+{from six.moves import cStringIO
+from pysmt.smtlib.parser import SmtLibParser
+
+parser = SmtLibParser()
+script = parser.get_script(cStringIO(<SMT-LIB 2 string>))
+}
+
+\4 {\abbr {STP}} {stp}
+
+\quote {See \ref {#paper_stp} {main paper}, \ref {https://sites.google.com/site/stpfastprover/} {official page}, \ref {https://github.com/stp/stp} {GitHub page}.}
+
+\abbr {STP} is for quantifier-free formulae. It uses \ref {#minisat} {\sc {MiniSat}}: bit blasting from \abbr {SMT}-formulae into Boolean formulae.
+
+\abbr {STP} doesn't fully support \abbr {SMT-LIB} 2 syntax. It also has its own \ref {#cvc} {\abbr {CVC}} syntax. For \m {(get-model)} \m {-p} command-line option is used. It has no syntax sugar for \m {declare-const ...}, so use \m {declare-fun ... ()} instead.
+
+\table
+{
+    {{\m {(declare-fun x () (_BitVec 32)}} {32-bit vector}}
+    {{\m {(declare-fun a () (Array (_BitVec 32) (_BitVec 7)))}} {Array of 7-bit elements with 32-bit indices}}
+    {{\m {#b0000111101010000}} {Binary representation}}
+    {{\m {#x0f50}} {Hex representation}}
+}
+
+\4 {Build} {build_stp}
+
+Build \ref {#minisat} {MiniSAT}:
+
+\code {-- Could NOT find Boost
+-- Only building executable with few command-line options because the boost
+   program_options library were not available}
+
+\code
+{$ sudo apt-get install zlib1g-dev
+$ sudo apt-get install bison
+$ sudo apt-get install flex}
+
+\code
+{$ git clone https://github.com/stp/minisat.git
+$ cd minisat
+$ mkdir build && cd build
+$ cmake ..
+$ make
+$ sudo make install
+$ sudo ldconfig}
+
+And \abbr {STP} itself:
+
+\code
+{$ mkdir build && cd build
+$ cmake -G 'Unix Makefiles' /path/to/stp/source/root
+$ make}
+
+\4 {\abbr {CVC}} {cvc}
+
+Is used in \ref {#tracegrind} {Tracegrind}.
+
+\4 {Issue} {stp_issue}
+
+Git \ref {https://github.com/stp/stp/issues/208} {issue} about modulo inconsistent behavior and \ref {#smtlib2} {possible bug of interpretation}.
+
+\4 {Yices} {yices}
+
+\4 {\abbr {Z3}} {z3}
+
+\quote {\strike {\ref {/space/enzet/projects/z3/LICENSE.txt} {Microsoft Research License Agreement}, Non-Commercial Use Only.} \abbr {MIT} license, total open source. \i {See} \strike {\ref {http://z3.codeplex.com/} {home page}}, \ref {https://github.com/Z3Prover/z3} {GitHub page}, \ref {http://rise4fun.com/Z3/} {online compiler}.}
+
+\quote {\ref {https://www.youtube.com/watch?v=ruNFcH-KibY} {Analyzing Programs with \abbr {Z3}} lecture video.}
+
+Be careful: source code has moved to \ref {https://github.com/Z3Prover/z3} {GitHub}. Source code on \ref {http://z3.codeplex.com/} {CodePlex} is obsolete.
+
+Efficient Theorem Prover from Microsoft Research. Has floating point support.
+
+\abbr {Z3} syntax is in \ref {http://www.smtlib.org/} {\abbr {SMT-LIB} 2.0 standard}. Syntax guide is \ref {http://rise4fun.com/z3/tutorial/guide} {here}. Comments begins with \m {;}. \abbr {Z3} has a \b {stack} of user provided formulas and declarations by using \m {(push)} and \m {(pop)} commands. \abbr {Z3} commands—\ref {z3_commands} {result of \m {(help)} command}. \comment {They describe problems of manual \abbr {VM} change}.
+
+Types (sorts): \m {Int}, \m {Bool}, \m {Real}. Not to be confused with machine fixed size integer or floating point. There is only explicit type conversion, e.g. \m {to_real}.
+
+\table
+{
+    {{Declaration} {\m {(declare-const \formal {name} \formal {type})}\br {}\m {(declare-fun \formal {name} (\formal {parameter types}) \formal {return type})}}}
+    {{Assertion} {\m {(assert (\formal {formula}))}}}
+    {{Checking \abbr {SAT}} {\m {(check-sat)}}}
+    {{Getting model if \abbr {SAT} (only after \m {(check-sat)})} {\m {(get-model)}}}
+    {{If-then-else} {\m {(ite \formal {condition} \formal {true-value} \formal {false-value})}}}
+}
+
+All functions are total (can get every value as input), even division (you can divide by zero and get unspecified value, use if—then—else for this function). Definition is used for interpretation: \m {(define-fun \formal {name} (\formal {parameters name and type}) \formal {return type} \formal {body})}. \abbr {Z3} \b {is not complete} for non-linear arithmetic. Checking may return unknown or loop. \simplemath {\i {b}\super {3} + \i {b}\i {c} = 3} will fail.
+
+\4 {Bitvectors} {z3_bitvec}
+
+Bitvectors cannot be signed or unsigned. Instead, there are special arithmetical operations. Type for variables: \m {(_ BitVec \formal {decimal size})} Constants: \m {(_ bv\formal {decimal value} \formal {bitvector size})}. Bitvector literals: \m {#b010} (size—3), \m {#x0a0} (size—12).
+
+\list
+    {Basic: \m {bvadd}, \m {bvsub}, \m {bvneg}, \m {bvmul}, \m {bvsdiv}, \m {bvudiv}, \m {bvurem}, \m {bvsrem}, \m {bvsmod}, \m {bvshl}, \m {bvlshr}, \m {bvashr}.}
+    {Bitwise: \m {bvor}, \m {bvand}, \m {bvnot}, \m {bvxor}, \m {bvnand}, \m {bvnor}, \m {bvxnor}.}
+    {Predicates: \m {bvule}, \m {bvult}, \m {bvuge}, \m {bvugt}, \m {bvsle}, \m {bvslt}, \m {bvsge}, \m {bvsgt}.}
+
+Arrays: \m {select \formal {array} \formal {number}}, \m {store \formal {array} \formal {number} \formal {value}}. Arrays are extensional over \m {select}.
+
+Conversion between different sizes. Extract: \m {((_ extract \formal {to bit} \formal {from bit}) \formal {value})}, e.g.: \m {(assert (= var_of_size_32 ((_ extract 31 0) var_of_size_64)))}. Extend: \m {((_ zero_extend \formal {size difference}) \formal {value})}, \m {((_ sign_extend \formal {size difference}) \formal {value})}.
+
+\4 {Getting \abbr {Z3}} {getting_z3}
+
+git clone using \m {git clone https://git01.codeplex.com/z3}. Cloning was failed on Ubuntu. Source code downloaded to \ref {/space/enzet/projects/z3} {\m {projects/z3}}.
+
+It is written on C++ (300 \abbr {KLOC}).
+
+\abbr {Z3} building (works well on Ubuntu and macOS):
+
+\code
+{$ python scripts/mk_make.py
+$ cd build
+$ make
+$ sudo make install}
+
+Write file with \abbr {SMT-LIB} 2 commands and run \m {z3 -smt2 \formal {file name}}.
+
+\4 {\abbr {API}} {z3_api}
+
+\quote {See \ref {http://research.microsoft.com/en-us/um/redmond/projects/z3/index.html} {all \abbr {API} documentation}.}
+
+L. de Moura \ref {https://stackoverflow.com/questions/14628279/z3-convert-z3py-expression-to-smt-lib2} {said} "every function in the \ref {#z3_c_api} {C \abbr {API}} is available in \ref {#z3_python_api} {Z3Py}".
+
+\5 {\ref {#c} {C} \abbr {API}} {z3_c_api}
+
+\quote {See \ref {https://z3prover.github.io/api/html/group__capi.html} {documentation}.}
+
+Print \abbr {SMT-LIB} 2 formula:
+\m {\sk {Z3_benchmark_to_smtlib_string}\ssp {(}Z3_context c\ssp {,} Z3_string name\ssp {,} Z3_string logic\ssp {,} Z3_string status\ssp {,} Z3_string attributes\ssp {,} \skw {unsigned} num_assumptions\ssp {,} Z3_ast \skw {const} assumptions\ssp {[],} Z3_ast formula\ssp {)}}.
+
+Parse \abbr {SMT-LIB} 2 formula:
+\m {\sk {Z3_parse_smtlib2_string}(Z3_context c\ssp {,} Z3_string str\ssp {,} unsigned num_sorts\ssp {,} Z3_symbol \skw {const} sort_names\ssp {[],} Z3_sort \skw {const} sorts\ssp {[],} \skw {unsigned} num_decls\ssp {,} Z3_symbol \skw {const} decl_names\ssp {[],} Z3_func_decl \skw {const} decls\ssp {[])}}.
+
+\5 {\ref {#cpp} {C++} \abbr {API}} {z3_cpp_api}
+
+\quote {\ref {http://research.microsoft.com/en-us/um/redmond/projects/z3/group__cppapi.html} {documentation}.}
+
+Including to source C++ files: \m {#include <z3.h>}
+
+\5 {\ref {#python} {Python} \abbr {API}} {z3_python_api}
+
+\quote {\ref {http://z3prover.github.io/api/html/namespacez3py.html} {documenation}.}
+
+\code
+{import z3
+
+solver = z3.Solver()
+
+x = z3.BitVec('x', 32)
+solver.assert_exprs(x == 5)
+
+if solver.check() == z3.sat:
+    model = solver.model()}
+
+Model is dictionary \m {FuncDeclRef} to \m {BitVecNumRef}.
+
+\3 {String solving} {string_solving}
+
+For string-intensive programs.
+
+Solvers:
+
+\list
+    {\ref {#z3str} {Z3str → Z3str2 → Z3str3},}
+    {\ref {#cvc} {\abbr {CVC4}},}
+    {Norn,}
+    {S3 → S3P,}
+    {Stranger → \abbr {ABC},}
+    {\abbr {DPRLE},}
+    {\ref {#rex} {Rex},}
+    {\ref {#hampi} {Hampi}.}
+
+\4 {Z3-str} {z3str}
+
+\quote {See \ref {https://github.com/z3str/Z3-str} {GitHub page of Z3-str and Z3-str2}, \ref {#paper_z3str} {Z3-str main paper}, \ref {#paper_z3str2} {Z3-str2 main paper}, \ref {https://sites.google.com/site/z3strsolver/} {Z3str3 official page}.}
+
+Z3-str and Z3-str2 are only based on \ref {#z3} {Z3}.
+
+Z3str3 (from third version) is a part of the \ref {#z3} {Z3 theorem prover}'s main codebase, and is the primary string solver in Z3. It seems to be in \m {src/smt/theory_str.cpp}.
+
+\4 {Hampi} {hampi}
+
+\quote {See \ref {https://people.csail.mit.edu/akiezun/hampi/} {official page}, \ref {#paper_hampi} {main paper}.}
+
+\4 {Rex} {rex}
+
+\quote {See \ref {#paper_rex} {main paper}.}
+
+\3 {Other solving} {other_solving}
+
+\4 {Lean} {lean}
+
+\quote {See \ref {http://leanprover.github.io/} {official page}, \ref {https://github.com/leanprover/lean} {GitHub page}, \ref {https://leanprover.github.io/tutorial/?live} {online version}.}
+
+Main developers: Leonardo de Moura from \ref {#microsoft} {Microsoft Research} and Soonho Kong from \ref {#carnegie_mellon} {Carnegie Mellon}.
+
+Uses \abbr {CIC}—Calculus of Inductive Constructions language.
+
+\m {def} for function definition. \m {check} for type checking. \m {eval} for simple evaluation. For evaluation Lean generates bytecode for every definition and uses efficient \i {vitrual machine} (as in Ocaml and Python)—\m {vm_eval}. It is also a \i {programming language}.
+
+\4 {dReal} {dreal}
+
+\quote {See \ref {http://dreal.github.io} {official page}, \ref {https://github.com/dreal/dreal3} {GitHub page}.}
+
+Main developer: Soonho Kong from \ref {#carnegie_mellon} {Carnegie Mellon}.
+
+\3 {\abbr {SMT} division} {smt_div}
+
+\ref {#paper_ucse} {Paper about \abbr {UCSE} {under-constrained symbolic execution}} said, symbolic division and remainder operations are bad for solvers. The worst cases occurred when an unsigned remainder operation had a symbolic value in the denominator. So, there is a class of expensive queries.
+
+\3 {Questions} {solver_questions}
+
+Can we use \m {Real} type for floating point?

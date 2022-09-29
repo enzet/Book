@@ -1,0 +1,188 @@
+\2 {Java} {java}
+
+\quote {See also \ref {#java_research} {Java research}. Java implementation source code on \ref {http://grepcode.com/} {GrepCode}.}
+
+\4 {Types} {java_types}
+
+\ref {https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html} {Type sizes}: for float \ref {dale:/space/enzet/articles/Standard/IEEE Standard for Floating-Point Arithmetic.pdf} {\i {binary} 32-bit \abbr {IEEE} 754}, for double \i {binary} 64-bit \abbr {IEEE} 754. See \ref {#float} {floating point}. There is two float zeros: \m {0.0} and \m {-0.0}. \m {0.0 == -0.0} is true, but \m {new Double(0.0).equals(new Double(-0.0))} is false. You can see bits representation using \m {Double.doubleToRawLongBits()} method. Also \m {Double.NaN == Double.NaN} is true and with boxing is false. Implementation of \m {Double.equals()}:
+
+\code {    public boolean equals(Object obj) \{
+        return (obj instanceof Double)
+               && (doubleToLongBits(((Double)obj).value) ==
+                      doubleToLongBits(value));\}}
+
+\4 {Coding} {java_coding}
+
+\ref {https://github.com/iluwatar/java-design-patterns} {Project with Java design patterns}.
+
+\4 {Concurrency} {java_concurrency}
+
+Java has:
+
+\list
+    {threads,}
+    {shared memory,}
+    {and locks.}
+
+\m {synchronized(e) \{s\}} first evaluates \m {e} to an object, acquires the lock of that object, executes \m {s}, and releases the lock.
+
+\4 {\abbr {JVM}} {jvm}
+
+\ref {http://docs.oracle.com/javase/specs/jvms/se7/html/index.html} {\abbr {JVM} specification by Oracle},
+\ref {http://blog.jamesdbloom.com/JVMInternals.html} {\abbr {JVM} internals}.
+
+\hidden {jvm_internals} {\abbr {JVM} internals}
+{
+    \image {image/diagram/jvm_internals.png} {\abbr {JVM} internals}
+}
+
+Option \m {-XX:NewSize} is a default size of new generation (in bytes).
+
+\m {load}: from registers to stack,\br {}
+\m {store}: from stack to registers.
+
+\m {stm} (store memory)—\m {push},\br {}
+\m {ldm} (load memory)—\m {pop}.
+
+\4 {Java files structure} {java_file_structure}
+
+\list
+    {\abbr {JDK} (Java Development Kit)—implementation of Java \abbr {SE}, Java \abbr {EE} or Java \abbr {ME} platforms (e.g. OpenJDK)
+    \list
+    	{\abbr {JRE} (Java Runtime Environment):
+    	\list
+    		{\abbr {JVM} implementation,}
+    		{\abbr {JCL} (Java Class Library) implementation, \m {rt.jar}:
+    		\list
+    			{\m {java.lang}}
+    			{\m {java.io}}
+    			{…}
+    		}
+    	}
+    	{Utilities:
+    	\list 
+    		{\m {javac}}
+    		{\m {javap}}
+    		{…}
+    	}
+    	{Documentation.}
+    }
+
+\abbr {JVM} (Java Virtual Machine) may refers to\:
+\list
+    {\abbr {JVM} specification—a book,}
+    {\abbr {JVM} implementation—a computer program (e.g. HotSpot),}
+    {\abbr {JVM} instance—a process.}
+
+\m {java} is in e.g. \m {/usr/bin/java -> /etc/alternatives/java -> /usr/lib/jvm/java-6-oracle/jre/bin/java}.
+
+Check Java version\: \m {java -version}.
+
+Switching between Java versions\:
+
+\m {sudo update-alternatives --config java} gets
+
+\code {  Selection    Path                                            Priority   Status
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-6-oracle/jre/bin/java          1062      auto mode
+  1            /usr/lib/jvm/java-6-openjdk-amd64/jre/bin/java   1061      manual mode
+  2            /usr/lib/jvm/java-6-oracle/jre/bin/java          1062      manual mode
+  3            /usr/lib/jvm/java-6-sun/jre/bin/java             63        manual mode
+  4            /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java   1051      manual mode}
+
+It's relink \m {/etc/alternatives/java} to what you select.
+
+\4 {\m {java} as utility} {java_as_utility}
+
+For full options list see \ref {http://docs.oracle.com/javase/6/docs/technotes/tools/windows/java.html} {Oracle site}.
+
+Options\:
+
+\list {
+    {\m {-Xint}: interpreted-only mode, compilation to native code is disabled, and all bytecodes are executed by the interpreter. \ref {https://blog.codecentric.de/en/2012/07/useful-jvm-flags-part-1-jvm-types-and-compiler-modes/} {Here} is said slowdown factor is usually 10 or higher.}
+    {\m {-Xcomp}: contrary to \m {-Xint}.}
+}
+
+\4 {AspectJ} {aspectj}
+
+Extension for Java.
+
+\3 {Java bytecode} {java_bytecode}
+
+\quote {See \ref {https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings} {Java bytecode listing}, \ref {http://cs.au.dk/~mis/dOvs/jvmspec/ref-Java.html} {instruction reference}.}
+
+\image {image/diagram/java_bytecode.svg} {Java bytecode}
+
+\4 {\ref {http://www.jopdesign.com/doc/timing.pdf} {Bytecode execution time}} {bytecode_time}
+
+\3 {\abbr {JNI}} {jni}
+
+\quote {Good manual: \ref {http://journals.ecs.soton.ac.uk/java/tutorial/native1.1/implementing/index.html} {Java Native Interface Programming}.}
+
+See Joshua Bloch's \ref {http://jtechies.blogspot.ru/2012/07/blog-post.html} {blog post \i {Item 54: Use native methods judiciously}} (it is also a book). He describes 3 main uses of \abbr {JNI}:
+
+\list
+    {platform-specific facilities (registers, file locks);}
+    {legacy code;}
+    {performance-critical (but it is good for very rare circumstances).}
+
+\abbr {JNI} is a \abbr {FFI}—foreign function interface.
+
+All native components are simply shared libraries that are dynamically loaded at runtime.
+
+\4 {How to use \abbr {JNI}} {use_jni}
+
+Path for libraries: \m {-Djava.library.path=<path>}.
+
+\list
+{
+    {Write C/C++ code with \m {#include <jni.h>} and \m {#include \formal {class name}.h}}
+    {Write Java code in \m {\formal {class name}.java} with \m {System.loadLibrary("\formal {library name}")} in \m {static \{\}}, it will load \m {lib\formal {library name}.so} (mind \m {lib} prefix).}
+    {Compile Java code using \m {javac}.}
+    {Use \m {javah}: \m {\formal {class name}.java} → \m {\formal {class name}.h}.}
+    {Compile C/C++ code: \list {
+        {Ubuntu: \m {gcc -I/usr/lib/jvm/java-6-openjdk/include -o libinc.so -shared -fPIC incremental.c}}
+        {macOS: \m {gcc -I$JAVA_HOME/include -I$JAVA_HOME/include/darwin -o libincrement.so -shared -fPIC increment.c} where \m {\$JAVA_HOME} is \m {/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home}}
+    }}
+    {Run Java: \m {java -Djava.library.path=\formal {path} \formal {class name}}.}
+}
+
+You should specify \m {-Djava.library.path} for path of library you load using \m {System.loadLibrary()}. But if this library itself depends on some other library, you should specify its path in \m {PATH}, \m {LD_LIBRARY_PATH}, or \m {DYLD_LIBRARY_PATH} (for Windows, Linux, and macOS respecitvely).
+
+Function name should be \m {Java_\formal {class name}_\formal {method name}}.
+
+Example\:
+
+\code {#include <jni.h>
+#include Test.h
+
+JNIEXPORT jint JNICALL Java_Test_increment (JNIEnv *env, jclass class_, jint number) \{
+    return number + 1;
+\}}
+
+Assembler code will be:
+
+\b {push} \abbr {RBP}\br {}
+\abbr {RBP} = \abbr {RSP}\br {}
+[\abbr {RBP} − 08] = \abbr {RDI} — \i {1\super {st} argument (\m {env})}\br {}
+[\abbr {RBP} − 10] = \abbr {RSI} — \i {2\super {nd} argument (\m {class_})}\br {}
+[\abbr {RBP} − 14] = \abbr {EDX} — \i {3\super {rd} argument (\m {number})}\br {}
+[\abbr {RBP} − 14] = [\abbr {RBP} − 14] + 1\br {}
+\abbr {EAX} = [\abbr {RBP} − 14]\br {}
+\b {pop} \abbr {RBP}\br {}
+\b {return}
+
+\4 {Field access} {jni_field_access}
+
+\code {#include <jni.h>
+#include Test.h
+
+JNIEXPORT void JNICALL Java_Test_field(JNIEnv* env, jclass class_, jobject obj) \{
+    jclass objClass = (*env)->GetObjectClass(env, obj);
+    jfieldID myFieldID = (*env)->GetFieldID(env, objClass, "myField", "I");
+    jint fieldVal = (*env)->GetIntField(env, obj, myFieldID);
+    printf("%d\\n", fieldVal);
+\}}
+
+\image {image/diagram/jni_field_access.svg} {\abbr {JNI} field access}
+

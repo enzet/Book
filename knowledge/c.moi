@@ -1,0 +1,4 @@
+\3 {C} {c}
+
+\m {offsetof(\formal {class}, \formal {member})} from \m {stddef.h} evaluates offset in bytes of given member within a struct or union or class (for C++).
+

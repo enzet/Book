@@ -1,0 +1,23 @@
+\2 {Static analysis} {static_analysis}
+
+\3 {Terms} {static_analysis_terms}
+
+\list {
+	\b {Flow-sensitive} — respects the order of statements.
+	\b {Flow-insensitive} — doesn't consider the order between statements.
+} {
+	\b {Steensgaard's analysis} — equality-based (vs subset-based) points-to analysis.
+	\b {Anderson's analysis} — subset-based (vs equality-based) points-to analysis.
+}
+
+\3 {BinNavi} {binnavi}
+
+\3 {\abbr {IDA} Pro} {ida}
+
+Interactive disassembler.
+
+\3 {mcSema} {mcsema}
+
+\quote {See \ref {https://github.com/trailofbits/mcsema} {GitHub page}. Open source.}
+
+\abbr {MC}-Semantics. Translates the semantics of native code to \ref {#llvm} {\abbr {LLVM} \abbr {IR}}.

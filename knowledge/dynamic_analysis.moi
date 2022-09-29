@@ -1,0 +1,916 @@
+\2 {Dynamic analysis} {dynamic_analysis}
+
+/* \rightimage {image/illustration/dynamo.jpg} */
+
+\quote {See \ref {image/diagram/tools.svg} {total tools diagram}.}
+
+\ref {https://github.com/saswatanand/symexbib} {Papers related to symbolic execution} by \ref {#georgia} {Saswat Anand}.
+
+Execute program and monitor events.
+
+Used for\:
+
+\list
+    {Defect detection. Defect types:
+    \list
+        {Memory leaks (monitor \m {malloc} and \m {free});}
+        {Deadlock (monitor \m {lock} and \m {unlock});}
+        {Out-of-bounds, use-after-free, uninitialized reads;}
+        {Data races;}
+        {Just crashes (actually, every common execution detects crashes).}
+    }
+    {Profiling.}
+    {Coverage.}
+
+Pros\:
+
+\list
+    {Has no false positives in case of determinism and no unspecified user and uncovered system interaction except of infinity loop cases.}
+    {Immune to code obfuscation.}
+
+Cons\:
+
+\list
+    {NP-complete problem.}
+    {Exponential explosion problem.}
+    {Dynamic analysis is not always better than manual tests: it only can found a crash, but doesn't know what program has to do.}
+
+Problems\:
+
+\list
+    {Implicit data tainting.}
+
+To read\:
+
+\list
+    {\ref {http://deniable.org/reversing/symbolic-execution} {Practical Symbolic Execution and SATisfiability Module Theories (SMT) 101}.}
+
+/*
+
+\hidden {new_coverage_selection} {New coverage selection}
+{
+    \image {image/diagram/new_coverage_selection.jpg} {New coverage selection}
+}
+
+*/
+
+Concrete program input = test case.
+
+\3 {Defects detection} {defects_detection}
+
+Asking “will it crash?” is analogous to asking “will it stop?”, and any such analysis quickly runs afoul of the halting problem (\ref {#paper_angr} {angr paper}).
+
+\3 {Terminology} {dynamic_analysis_terminology}
+
+\i {Concolic} (first in \ref {#paper_cute} {\abbr {CUTE} paper}): \ref {#paper_cute} {\abbr {CUTE} paper}, (and \abbr {SAGE} or Mayhem?).
+
+\i {Concolic} is \i {dynamic symbolic execution} \ref {#paper_guiding_dse} {guiding \abbr {DSE} paper}.
+
+\i {Concolic} is \i {offline symbolic execution} (\ref {#paper_mayhem} {Mayhem paper}).
+
+\i {Dynamic symbolic execution}—hybrid of static and dynamic analysis if we consider symbolic execution as a static technique (sic!) and concrete execution as a dynamic technique (\ref {https://www.youtube.com/watch?v=QrtGOrSrVPQ} {Mayur Naik lecture}).
+
+\i {Computation tree}—same as \i {symbolic execution tree} (\ref {https://www.youtube.com/watch?v=QrtGOrSrVPQ} {Mayur Naik lecture}). But (!) \i {computation tree} also represents computation process of the nondeterministic Turing Machine (\ref {https://books.google.ru/books?id=KqeXZ4pPd5QC&pg=PA595&redir_esc=y#v=onepage&q&f=false} {Handbook of Computability Theory}).
+
+\3 {Binary analysis} {binary_analysis}
+
+\b {Pros}: code that is \i {actually} executed; IoT is powered by devices that are, in general, very resource-constrained; \abbr {JIT}-compilation of interpreted languages; compilers and tool chains are not bug-free (Xcode Ghost).
+
+\b {Cons}: the lack of high-level, semantically rich information about data structures and control constructs makes the analysis of program properties harder to scale.
+
+\3 {Symbolic execution} {symbolic_execution}
+
+Treats variables as symbolic variables. Its implementation requires full symbolic interpreter for a programming language.
+
+\ref {https://feliam.wordpress.com/2010/10/07/the-symbolic-maze/} {Classic maze example}.
+
+\4 {Dynamic symbolic execution (concolic)} {concolic}
+
+\quote {See \ref {https://en.wikipedia.org/wiki/Concolic_testing} {Wikipedia article}.}
+
+Concrete + symbolic. First coined in \ref {#cute} {\abbr {CUTE}} \ref {#paper_cute} {paper}. It is performing symbolic execution along concrete path (performing concrete execution along with symbolic execution). Technique introduced in \ref {#dart} {\abbr {DART}}. Idea extended in \ref {#exe} {\abbr {EXE}}, \ref {#klee} {\sc {KLEE}}, \ref {#jcute} {jCUTE}, \ref {#pathcrawler} {PathCrawler}, and \ref {#sage} {\abbr {SAGE}}.
+
+In \ref {#paper_sherlock} {Sherlock paper} they said concolic execution is just execution that records constraints.
+
+\comment {I don't really understand difference between concolic and symbolic execution. Why \abbr {KLEE} is not symbolic? If it is so, what is pure symbolic execution and how it could be implemented? Algorithm described in Wikipedia is Avalanche algorithm. Is it concolic?}
+
+It is used for bugs finding and for model checking. Concolic model checher traverses states of the model while storing both a concrete and a symbolic state. The symbolic state is used for checking properties, the concrete state is used to avoid reaching unreachable state. \comment {What?} One of such tools: \ref {#explisat} {ExpliSAT}.
+
+\3 {Indirect calls problem} {indirect_call}
+
+\3 {SSA} {ssa}
+
+\3 {Ideas} {da_ideas}
+
+What if we want to inverse more than one branch at a time? If we know, that
+
+\list
+    {there are two or more \i {independent} branches, and}
+    {inversion each of them will increase covered basic blocks number, and}
+    {all of them turns us to the same path (we need \abbr {CFG} analysis for this)}
+
+we can try to inverse them with one solver query.
+
+Invert true branches with higher priority (to go to false branch).
+
+\3 {Taint tracking} {taint}
+
+First case:
+
+\pseudocode
+{\math {\\overline \{a\} \\gets read()}\\;
+\\If\{\math {\\overline \{a\}} = 5\}
+\{\math {error()}\\;\}} {First case}
+
+\2 {Dynamic analysis group and people} {da_people}
+
+/* \hiddenimage {image/diagram/tools.svg} {Tools map} */
+
+\3 {Lausanne} {lausanne}
+
+School of Computer and Communication Sciences. Polytechnique Fédérale de Lausanne (\abbr {EPFL}), Switzerland.
+
+People: Vitaly Chipounov, Volodymyr Kuznetsov, George Candea.
+
+\3 {Microsoft Research team} {microsoft}
+
+RiSE (Research in Software Engineering) group. They also build \ref {#z3} {\abbr {Z3}}.
+
+People:
+
+\list
+    {Patrice Godefroid (\ref {http://research.microsoft.com/en-us/um/people/pg/} {home page}, \m {pg at microsoft.com}),}
+    {David Molnar (\ref {https://twitter.com/dmolnar} {@dmolnar}),}
+    {Michael Y.~Levin (\m {mlevin at microsoft.com}).}
+
+Tools:
+\innerlist
+    {\ref {#sage} {\abbr {SAGE}},}
+    {\abbr {PEX},}
+    {\abbr {YOGI},}
+    {\ref {#splat} {Splat}.}
+
+Papers:
+
+\list
+    {\ref {#paper_sage} {\abbr {SAGE}} (2008, with \ref {#berkeley} {Berkeley}),}
+    {\ref {#paper_splat} {symbolic length} (2008, with \ref {#berkeley} {Berkeley}).}
+
+\3 {Stanford team} {stanford}
+
+People: Christian Cadar, Dawson R.~Engler, V.~Ganesh, D.~Dunbar, Mayur Naik (\ref {#chord} {Chord}).
+
+Tools: \ref {#egt} {\abbr {EGT}}, \ref {#exe} {\abbr {EXE}}, \ref {#klee} {\abbr {KLEE}}.
+
+Papers: \ref {#paper_egt} {\abbr {EGT}} (2005), \ref {#paper_exe} {\abbr {EXE}} (2006), \ref {#paper_klee} {\abbr {KLEE}} (2008), \ref {#paper_multi_solver} {multi-solver} (2013), \ref {#paper_se_three_decades_later} {about \abbr {SE}} (2013), \ref {#paper_ucse} {Under-Constrained Symbolic Execution} (2015).
+
+\3 {Google} {google}
+
+Team from Research at Google.
+
+Lectures: \ref {https://www.youtube.com/watch?v=V2_80g0eOMc} {Sanitize your C++ code} at CppCon 2014.
+
+People: Derek Bruening, Timur Iskhodzhanov, Alexander Potapenko, Evgeniy Stepanov, Dmitry Vyukov.
+
+Tools:
+\list
+    {\ref {#asan} {AddressSanitizer},}
+    {\ref {#msan} {MemorySanitizer},}
+    {\ref {#tsan} {ThreadSanitizer}.}
+
+\3 {Shellphish} {shellphish}
+
+Shellphish is a command from Santa Barbara. Here is their \ref {https://github.com/shellphish} {GitHub page}.
+
+People: Yan Shoshitaishvili (\m {zardus}, \ref {https://github.com/zardus} {GitHub}), Kevin Borgolte (\m {caovc}, \m {cao}), Rouyu Wang...
+
+Tools: \ref {#mechaphish} {Mechanical Phish}, \ref {#angr} {angr}, \ref {#driller} {Driller}.
+
+\3 {Berkeley} {berkeley}
+
+Berkeley university.
+
+People: David Molnar (now in \ref {#microsoft} {Microsoft team}), Dawn Song (her interests are also deep learning).
+
+Tools: \ref {#catchconv} {Catchconv} (2007), \ref {#bitblaze} {BitBlaze} (2008, with \ref {#carnegie_mellon} {Carnegie Mellon}), \ref {#dta} {\abbr {DTA}++} (2011, with \ref {#carnegie_mellon} {Carnegie Mellon}), \ref {#jalangi} {Jalangi} (2013, from 2015 with Samsung).
+
+\3 {Carnegie Mellon} {carnegie_mellon}
+
+Team from Carnegie Mellon University (Pittsburgh, Pennsylvania).
+
+People: David Brumley et al.
+
+Tools: \ref {#bap} {\abbr {BAP}}, \ref {#aeg} {\abbr {AEG}}, \ref {#mayhem} {Mayhem}, \ref {#veritesting} {Veritesting}.
+
+Papers: \ref {#bitblaze} {BitBlaze} (2008, with \ref {#berkeley} {Berkeley}), \ref {#paper_bap} {\abbr {BAP}} (2011), \ref {#paper_aeg} {\abbr {AEG}} (2011), \ref {#paper_mayhem} {Mayhem} (2012), \ref {#paper_veritesting} {Veritesting} (2014).
+
+\3 {Georgia Institute of Technology} {georgia}
+
+People: Alessandro Orso (\ref {http://www.cc.gatech.edu/home/orso/} {home page}), Saswat Anand (\ref {http://cs.stanford.edu/people/saswat/} {home page}).
+
+\2 {Dynamic analysis tools} {da_tools}
+
+\3 {AddressSanitizer} {asan}
+
+Errors: buffer overflow (underflow), use-after-free.
+
+It was used for fuzz-testing the Chrome browser.
+
+To use it you should compile your C++ code with option: \m {clang++ -O1 -fsanitize=address a.cpp}. It instruments \i {source code}: for each array two red zone arrays (32 bytes before and 32 bytes after) are created and shadow memory filled. Run-time library replaces original \m {new}, \m {delete}, \m {malloc} calls at run-time. Before each memory access check is inserted to the source code.
+
+One major observation: for every 8 bytes (not bits!) in program may have only 9 states (\simplemath {\i {n}} bytes can be read, \simplemath {8 - \i {n}} bytes cannot be read). This number is suitable to one byte of shadow memory: Shadow = Addr >> 3.
+
+Red zones are fixed size buffers before and after allocated memory. If your overflow is greater than red zone size, AddressSanitizer will not found an error.
+
+\3 {\abbr {AEG}} {aeg}
+
+\quote {See \ref {#paper_aeg} {main paper}.}
+
+Written on \ref {#c} {C}. Uses \ref {#gcc} {\abbr {GCC}} and \ref {#llvm} {\abbr {LLVM} compiler}.
+
+\hiddenimage {image/diagram/aeg.png} {\abbr {AEG} architecture}
+
+\3 {American Fuzzy Lop} {afl}
+
+\quote {See \ref {http://lcamtuf.coredump.cx/afl/} {official page}, \ref {http://lcamtuf.coredump.cx/afl/technical_details.txt} {technical whitepaper}.}
+
+Good description of \abbr {AFL} is in \ref {#paper_driller} {Driller paper}.
+
+Used technique—corpus distillation (pioneered by Tavis Ormandy): block coverage measurements (to select seeds), high-quality corpus of candidate files. More sophisticated: \abbr {SE}, concolic, static analysis. \comment {All them are not viable alternative to fuzzing. Good.} \abbr {AFL} uses brute-force fuzzing with instrumentation-guided (edge coverage) \i {genetic algorithm}: transctiption, insertion, etc; ranking by a fitness function (unique code coverage). It requires user-supplied initial set of test cases. For new test case from queue it attempts to trim it to the smallest size. Side result is a set of small interesting test cases.
+
+Has its own \m {afl-gcc} to insert instrumentation.
+
+It tries to reduce input file size to the smallest one that triggers the same behavior. It uses dynamic instrumentation for track control flow. Every branch is instrumented:
+
+\list
+    {Set current ID to random,}
+    {Increment shared memory element with index (current ID XOR previous ID),}
+    {previous ID = current ID >> 1.}
+
+Shared memory elements are tuples of branches (A → B). There is global map of tuples seen in previous executions. A and B are basic blocks. Fitness function select inputs with better new basic blocks coverage. \comment {It's too obvious. But genetic algorithm is greedy.}
+
+\abbr {AFL} somehow mutates test cases using flips, insertions, deletions, arithmetics, splicing, etc. It doesn't try to reasom about the relationship between mutations and program states. Fuzzing is blind and guided only by the evolutionary design of the input queue (one exception: if some regions of file have no effect, they may be excluded from fuzzing).
+
+The tool determines loops and generate use 1, 2, 4, 8, etc. iterations.
+
+\m {afl-cmin} and \m {afl-tmin} are tools for test case and test corpus minimization.
+
+Link to \ref {https://lcamtuf.blogspot.ru/2014/08/binary-fuzzing-strategies-what-works.html} {fuzzing strategies} blog post.
+
+\3 {angr} {angr}
+
+\quote {See \ref {https://github.com/angr/angr} {GitHub page}, \ref {http://angr.io/} {official page}, \ref {http://docs.angr.io/} {full documentation}. Papers: \ref {#paper_angr} {main paper}, \ref {#paper_driller} {Driller paper}, \ref {#paper_firmalice} {Firmalice paper}.}
+
+\ref {#python} {Python} framework for analyzing binaries. Uses both \ref {#sa} {static} and \ref {#concolic} {concolic} analysis.
+
+It uses \ref {#vex} {\abbr {VEX}}, \ref {#veritesting} {Veritesting}.
+
+\4 {Installation} {angr_installation}
+
+Use \m {sudo pip2.7 install angr} (\m {pip2.7}, not just \m {pip} because it does not work with Python > 2.7). And you need latest version of \ref {#z3} {Z3} in your \m {/usr/lib/python2.7/dist-packages/libz3.so}.
+
+Environment (is optional):
+
+\m {\~/.bashrc} content:
+
+\code {export WORKON_HOME=/space/enzet/projects/angr/.environments
+export PROJECT_HOME=/space/enzet/projects/angr
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.5
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+source /usr/local/bin/virtualenvwrapper.sh}
+
+\code {$ source \~/.bashrc
+$ mkvirtualenv angr
+$ pip install angr}
+
+\3 {\abbr {ATOM}} {atom}
+
+\quote {See \ref {#paper_atom} {main paper}.}
+
+Since 1994. A framework for building custom instrumenting tools. \comment {Is it static instrumentation?}
+
+\3 {Autodafé} {autodafe}
+
+\quote {See \ref {http://autodafe.sourceforge.net/} {official page}, \ref {#paper_autodafe} {main paper}.}
+
+\3 {\abbr {BAP}} {bap}
+
+\quote {See \ref {#paper_bap} {main paper}.}
+
+\3 {BitBlaze} {bitblaze}
+
+\quote {See \ref {#paper_bitblaze} {main paper}.}
+
+\ref {#carnegie_mellon} {Carnegie Mellon team} with \ref {#berkeley} {Berkeley team}. See also \ref {#bitblaze_benchmark} {its benchmark}.
+
+\3 {BoundsChecker} {bounds_checker}
+
+For C++ source code. Since 1991.
+
+\3 {Buzzfuzz} {buzzfuzz}
+
+\3 {CalFuzzer} {calfuzzer}
+
+\quote {See \ref {#paper_calfuzzer} {main paper}.}
+
+\sc {CalFuzzer} uses \ref {#static_analysis} {static} and \ref {#dynamic_analysis} {dynamic} analyses to detect \ref {#concurrency_defect} {concurrent defects}.
+
+\3 {Calysto} {calysto}
+
+\3 {Catchconv} {catchconv}
+
+\quote {See \ref {#paper_dart} {main paper}.}
+
+Based on \ref {#stp} {\abbr {STP}} and \ref {#valgrind} {Valgrind}.
+
+\3 {Chord} {chord}
+
+Started as a Mayur Naik's doctoral work at \ref {#stanford} {Stanford}.
+
+Open-source, portable program analysis platform for Java bytecode. It allows to implement \i {static} and \i {dynamic} program analysis. Dynamic analysis is based on bytecode instrumentation with Javassist. Datalog analysis is based on bddbddb.
+
+\hidden {chord_image} {Chord architecture}
+{
+    \image {image/diagram/chord_architecture.png} {Chord architecture} {chord_diagram}
+}
+
+It performs class hierarchy analysis, rapid type analysis, uses three-address (quad) representation.
+
+\3 {ClusterFuzz} {clusterfuzz}
+
+\quote {See \ref {http://blog.chromium.org/2012/04/fuzzing-for-security.html} {post}.}
+
+\3 {\abbr {CUTE}} {cute}
+
+\quote {See \ref {#paper_cute} {main paper}, \ref {#jcute} {JCute}.}
+
+Concolic testing (path alternation) for binary code. Since 2005. Influences: \ref {#dart} {\abbr {DART}}.
+
+\3 {Dart} {dart}
+
+\quote {See \ref {#paper_dart} {main paper}. See also \ref {#jdart} {JDart}.}
+
+Concolic testing (path alternation) for binary code. Looks for program crashes, assert violations, non-termination. Since 2004. Influenced: \ref {#cute} {\abbr {CUTE}}.
+
+\3 {Dowser} {dowser}
+
+\quote {See \ref {#paper_dowser} {main paper}.}
+
+\3 {Dyninst} {dyninst}
+
+\quote {See \ref {http://www.dyninst.org/} {site}, \ref {https://ru.wikipedia.org/wiki/DynInst} {Russian Wikipeida page}.}
+
+\4 {Manuals} {dyninst_man}
+
+Manuals since version 9.2.0 is \ref {http://www.paradyn.org/html/manuals.html} {here}. For old versions:
+
+\list
+    {Dyninst Programmer’s Guide: \ref {http://www.dyninst.org/sites/default/files/manuals/dyninst/DyninstAPI.pdf} {8.1}, \ref {http://www.paradyn.org/release9.1.0/doc/dyninstAPI-9.1.0.pdf} {9.1}.}
+    {InstructionAPI Programmer's Guide: \ref {http://www.dyninst.org/sites/default/files/manuals/dyninst/InstructionAPI.pdf} {8.1}, \ref {http://www.paradyn.org/release9.1.0/doc/instructionAPI-9.1.0.pdf} {9.1},}
+    {PatchAPI Programmer's Guide: \ref {http://www.dyninst.org/sites/default/files/manuals/dyninst/PatchAPI.pdf} {8.1}, \ref {http://www.paradyn.org/release9.1.0/doc/patchAPI-9.1.0.pdf} {9.1}.}
+    {StackwalkerAPI Programmer's Guide: \ref {http://www.dyninst.org/sites/default/files/manuals/dyninst/StackwalkerAPI.pdf} {8.1}.}
+
+\4 {Basics} {dyninst_basic}
+
+\hidden {dyninst_image} {Dyninst \abbr {API}}
+{
+    \image {image/diagram/dyninst.png} {Dyninst \abbr {API}} {dyninst_diagram}
+}
+
+Dynamic binary instrumentator. It was build on top of \ref {#ptrace} {ptrace}. It has machine-independent \abbr {API}. For Linux, Windows, for \abbr {PPC}, \abbr {SPARC}, x86, \abbr {IA}-64. There is mutator, that contains \abbr {API} calls. Through \abbr {API} mutator uses Dyninst which generate snippets using ptrace. \i {Points} are locations in an application's code at which the library can insert instrumentation.
+
+\bookquote {Points can either be described symbolically (i.e., the entry point to a function), by descending the function hierarchy (i.e. a loop), or by providing a virtual address in the program (i.e., instrumenting a specific statement or instruction).}
+
+\i {Snippet} is an abstract representation of code to insert into a program. This is your instrumentation code written in their intermediate representation (kind of \abbr {AST}). They also has tool called DynC that can compile snippets from source code. But source code is just C-like, they use their own complier instead of \ref {#gcc} {\abbr {GCC}} or other.
+
+\hidden {dyninst_inserting} {Inserting code into a running program}
+{
+    \image {image/diagram/dyninst_inserting.png} {Inserting code into a running program} {dyninst_inserting}
+}
+
+\4 {Install} {dyninst_install}
+
+Installing is real pain.
+
+\code {mkdir inst
+cd inst
+cmake ..
+make
+make install}
+
+\m {cmake} fails with \abbr {GCC} 4.6 and less (no C++11 support). \m {make} fails with Boost version 1.46 (using of deleted function).
+
+So, solution is using last \abbr {GCC} and Boost 1.55 for Dyninst 9.1.0 and using \m {cmake -DBOOST_LIBRARYDIR=\formal {Boost path}/stage/lib/ -DUSE_GNU_DEMANGLER=1 ..}
+
+Boost was built from source using \m {./bootstrap.sh} and \m {./b2}.
+
+\4 {Instrumentation} {dyninst_instrumentation}
+
+Set \m {DYNINSTAPI_RT_LIB} to \m {/usr/lib/libdyninstAPI_RT.so}.
+
+Main structure: \m {BPatch_addressSpace* app}. It may be
+
+\list
+    {\m {BPatch_process} — created by \m {bpatch.processAttach(name, processID)} or \m {bpatch.processCreate(pathname, argv)} or}
+    {\m {BPatch_binaryEdit} — created by \m {bpatch.openBinary(pathname)}.}
+
+\m {BPatch_image* app_image = app->getImage();}
+
+I wrote \ref {https://www-auth.cs.wisc.edu/lists/dyninst-api/2016/msg00019.shtml} {this letter} to Dyninst team. Answer is: use \m {BPatch_image::findPoints(Dyninst::Address, std::vector<BPatch_point *> &)} function.
+
+Find points for function:
+
+\code {BPatch_function::findPoint(BPatch_procedureLocation)
+BPatch_function::findPoint(const std::set<BPatch_opCode>& ops)
+BPatch_function::findPoint(const BPatch_Set<BPatch_opCode>& ops)
+BPatch_function::findPoint(Dyninst::Address addr)}
+
+\image {image/diagram/dyninst_instruction_decomposition.png} {Instruction decomposition} {dyninst_instruction_decomposition}
+
+Since some version, \m {BPatch_module} is a part of \m {BPatch_object} and no more represents library but source file. So, \m {BPatch_object} is for library, \m {BPatch_module} is for source file (C++, C, etc.) and there is \m {DEFAULT_MODULE} for anything that it cannot match to a source file.
+
+\4 {Dyninst \abbr {API}} {dyninst_api}
+
+\m {insertSnippet} declarations:
+
+\code {BPatchSnippetHandle *insertSnippet(const BPatch_snippet &expr,
+    BPatch_point &point,
+    BPatch_callWhen when=[BPatch_callBefore| BPatch_callAfter],
+    BPatch_snippetOrder order = BPatch_firstSnippet)}
+
+\code {BPatchSnippetHandle *insertSnippet(const BPatch_snippet &expr,
+    const std::vector<BPatch_point *> &points,
+    BPatch_callWhen when=[BPatch_callBefore| BPatch_callAfter],
+    BPatch_snippetOrder order = BPatch_firstSnippet)}
+
+\m {BPatch_snippet} could be \m {BPatch_constExpr}, \m {BPatch_effectiveAddressExpr}...
+
+\m {BPatch_snippet} class also has a \m {bool generate(Point* point, Buffer &buffer)} function, that could be defined as \m {unsigned char op[] = \{0x90, 0x48, 0x89, 0xE2\}; buf.copy(nop, 4); return true;}.
+
+Examples:
+
+\code {insertSnippet(BPatch_arithExpr, std::vector<BPatch_point*>);
+insertSnippet(BPatch_funcCallExpr, std::vector<BPatch_point*>);
+}
+
+\4 {Stack walking} {dyninst_stackwalker}
+
+Dyninst has Stackwalker \abbr {API} to access runtime stack. The current implementation supports Linux/x86, Linux/\abbr {AMD}-64, Linux/Power, Linux/Power-64, BlueGene/L, and BlueGene/P.
+
+\code {processState =
+        Dyninst::Stackwalker::ProcessState::getProcessStateByPid(pid);
+
+Dyninst::Stackwalker::Walker* walker;
+Dyninst::Stackwalker::ProcDebug* dbg;
+
+walker = Dyninst::Stackwalker::Walker::newWalker(pid);
+dbg = (Dyninst::Stackwalker::ProcDebug*) walker->getProcessState();
+
+Dyninst::MachRegisterVal value;
+processState->getRegValue(Dyninst::x86_64::rax, 0, value);}
+
+\3 {Driller} {driller}
+
+\quote {See \ref {#paper_driller} {main paper}.}
+
+\4 {Installation} {driller_install}
+
+Requirements: \ref {#mechaphish} {Mechaphish} Fuzzer and Tracer.
+
+\code {sudo python setup.py install}
+
+\3 {Droidscope} {droidscope}
+
+\quote {See \ref {#paper_droidscope} {main paper}.}
+
+\3 {\abbr {DTA}++} {dta}
+
+\3 {Eraser} {eraser}
+
+\quote {See \ref {#paper_eraser} {main paper}.}
+
+\3 {\abbr {EGT}} {egt}
+
+Concolic testing (path alternation) for binary code. Looks for low-level defects and user asserts violations. Successor: \ref {#exe} {\abbr {EXE}}.
+
+\3 {\abbr {EXE}} {exe}
+
+Since 2006.
+
+\3 {ExpliSAT} {explisat}
+
+Tool for the formal verification of C/C++ software.
+
+\3 {Flayer} {flayer}
+
+\quote {See \ref {#paper_flayer} {main paper}.}
+
+\3 {Fuzzgrind} {fuzzgrind}
+
+\quote {See \ref {http://esec-lab.sogeti.com/static/publications/09-hacklu-fuzzgrind.pdf} {slides}.}
+
+Completely automatic. Based on \ref {#se} {symbolic execution}, \ref {#flayer} {Flayer}'s ideas. It looks like \ref {#avalanche} {Avalanche}. Based on \ref {#valgrind} {Valgrind} and \ref {#stp} {\abbr {STP}}. It has system calls monitoring.
+
+\3 {GlassTT} {glasstt}
+
+\quote {See \ref {#paper_glasstt} {main paper}.}
+
+Symbolic Java virtual machine built on top of \abbr {JVM}. Performs \abbr {SE} for one given method.
+
+\3 {Goodlock} {goodlock}
+
+\3 {Immunity \abbr {ILLITHID}} {illithid}
+
+Was funded as part of \abbr {DARPA}'s Cyber Fast Track program.
+
+\3 {Immunity Debugger} {immunity_debugger}
+
+\quote {See \ref {http://www.immunitysec.com/downloads/sean_ruxcon2010.pdf} {Heelan's 2010 slides for Ruxcon}.}
+
+Written in \ref {#python} {Python}, uses \ref {#cvc3} {\abbr {CVC3}}.
+
+Converting x86 to \abbr {SMT}. Has symbolic execution engine. Seems like it is statis symbolic execution. And static analysis. They dumps all possible paths and try to filter invalid paths. They builds static \abbr {CFG} {control flow graph} and generates paths.
+
+\quote {Unfortunately, at Immunity we weren't big on academic publications =/ Immunity Debugger, with the symbolic execution engine included, is publicly available and my slides which introduced it at Ruxcon 2010 can be found at \ref {http://www.immunitysec.com/downloads/sean_ruxcon2010.pdf} {[1]} (Everything up to slide 82 is introductory material, so the ImmDbg + SymEx stuff starts there). In short, it was/is a symbolic execution engine embedded in Immunity Debugger which allowed one to solve a variety of different problems such as \abbr {ROP} chain construction, bug finding, taint tracking, figuring out inputs to reach a particular point and so on. Quite similar to angr/manticore in concept, but with the advantage of being integrated into a visual debugger and the disadvantage of having a lower level \abbr {API} than what they now have, and missing a few things like system call models.}
+
+\3 {Java PathFinder (\abbr {JPF})} {jpf}
+
+\quote {See \ref {#paper_jpf} {main paper}, \ref {http://babelfish.arc.nasa.gov/trac/jpf} {official page}, \ref {https://babelfish.arc.nasa.gov/hg/jpf} {top repository}, \ref {https://babelfish.arc.nasa.gov/hg/jpf/jpf-core} {source code of \m {jpf-core}}.}
+
+Papers:
+
+\list
+    {\ref {#paper_jpf} {Java PathFinder} (2005),}
+    {\ref {#paper_jpfse} {\abbr {JPF-SE}} (2007),}
+    {\ref {#paper_spf} {Symbolic PathFinder} (2010),}
+    {\ref {#paper_jdart} {JDart} (2016).}
+
+Starts from 1998, when it was Java → \ref {#promela} {Promela} translator to use it in \ref {#spin} {Spin model checker}.
+
+\abbr {JPF} is runtime \i {model checker} for Java bytecode. \abbr {JPF} is actually a something like Java virtual machine.
+
+There are a lot of sub-repositories (\ref {https://babelfish.arc.nasa.gov/hg/jpf/file/96f1fe12ad8f/.hgsub} {list}):
+
+\list
+    {\m {jpf-concolic},}
+    {\m {jpf-core} (main),}
+    {\m {jpf-fast-native},}
+    {\ref {#jdart} {\m {jpf-jdart}},}
+    {etc.}
+
+It seems that \m {jpf-fast-native} implements some classes from \m {java.util}: \m {ArrayDeque}, \m {ArrayList}, \m {HashMap}, \m {LinkedList}, \m {PriorityQueue}, and \m {Vector} (non-native methods).
+
+\hidden {jpf_design} {\abbr {JPF} design}
+{
+    \image {image/diagram/jpf_design.png} {Java PathFinder} {jpf_design}
+}
+
+\4 {Internals} {jpf_internals}
+
+Bytecode instruction implements \m {gov.nasa.jpf.\b {jvm}.bytecode.JVMInstruction} interface: extends \m {gov.nasa.jpf.\b {vm}.bytecode.InstructionInterface} (has \m {execute(ThreadInfo)}). \m {EXECUTENATIVE.execute()} calls \m {NativeMethodInfo.executeNative()} calls \m {java.lang.reflect.Method.invoke()}.
+
+\4 {Native support} {jpf_native_support}
+
+From \m {gov.nasa.jpf.vm.MJIEnv}:
+
+\listing {\scm {* MJIEnv is the call environment for "native" methods, i.e. code that
+ * is executed by the VM, not by JPF.}}
+
+\3 {Jalangi} {jalangi}
+
+\3 {Javana} {javana}
+
+\quote {See \ref {http://www.elis.ugent.be/javana/} {official site}.}
+
+\hidden {javana_image} {Javana structure}
+{
+    \image {image/diagram/javana.png} {Javana}
+}
+
+Framework for building Java analysis tools. It is patch for \ref {#rvm} {Jikes \abbr {RVM}} (\abbr {JVM} written in Java) and dynamic binary instrumentator \abbr {DIOTA}.
+
+Papers: \ref {#paper_javana_short} {short}, \ref {#paper_javana} {full}.
+
+\3 {JCute} {jcute}
+
+\3 {JDart} {jdart}
+
+\quote {See \ref {#paper_jdart} {main paper}, \ref {https://github.com/psycopaths/jdart} {GitHub page}.}
+
+\3 {Jinn} {jinn}
+
+\quote {See \ref {#paper_jinn} {main paper}.}
+
+\3 {\sc {KLEE}} {klee}
+
+\quote {See \ref {https://klee.github.io/} {official site}, \ref {https://github.com/klee/klee} {GitHub page}, \ref {#paper_klee} {main paper}.}
+
+Since 2008.
+
+\ref {https://dl.dropboxusercontent.com/u/101841567/UnderstandingKLEE.pdf} {Paper} about \abbr {KLEE} understanding.
+
+Now \abbr {KLEE} uses not one solver but a solver chain. Core solver may be \ref {#stp} {\abbr {STP}}, \ref {#z3} {\abbr {Z3}}, or \ref {#metasmt} {metaSMT}. But above core solver they have caching solvers: canonize queries and cache them and their counterexamples. Independence solver splits a query into sets of independent constraints.
+
+Search heuristics:
+
+\list
+    {depth first search (\abbr {DFS}),}
+    {randomly select a state to explore,}
+    {random path selection (see \ref {#paper_klee} {\abbr {OSDI}'08 paper}),}
+    {non uniform random search (\abbr {NURS}) with coverage-new heuristic,}
+    {\abbr {NURS} with min-dist-to-uncovered heuristic,}
+    {\abbr {NURS} with 2\super {depth} heuristic,}
+    {\abbr {NURS} with instr-count heuristic,}
+    {\abbr {NURS} with callPath-instr-count heuristic,}
+    {\abbr {NURS} with query-cost heuristic.}
+
+\3 {libFuzzer} {libfuzzer}
+
+\quote {See \ref {http://llvm.org/docs/LibFuzzer.html} {official page}, \ref {http://blog.llvm.org/2015/04/fuzz-all-clangs.html} {blog post}.}
+
+Based on \ref {#clang} {Clang}.
+
+To use it you should add one function:
+
+\code {extern "C" void TestOneInput(const uint8_t *Data, size_t Size);}
+
+It is infrastructure. The realized \m {clang-format-fuzzer} and \m {clang-fuzzer}.
+
+\3 {\abbr {LLVM}} {llvm}
+
+\quote {See \ref {#paper_llvm} {main paper}.}
+
+\3 {Mayhem} {mayhem}
+
+\quote {See \ref {#paper_mayhem} {main paper}.}
+
+\3 {Mechanical Phish} {mechaphish}
+
+\ref {https://github.com/mechaphish} {GitHub page}.
+
+Open source. They notice extreme effort for installing and working. It is based on \ref {#unicorn} {Unicorn}, \ref {#capstone} {Capstone}, and PeeWee.
+
+\3 {Memcheck} {memcheck}
+
+\ref {#valgrind} {Valgrind}'s plugin.
+
+\3 {MemorySanitizer} {msan}
+
+Errors: using uninitialized memory.
+
+\3 {NDroid} {ndroid}
+
+\quote {See \ref {#paper_ndroid} {main paper}.}
+
+\3 {\abbr {OSS}-Fuzz} {oss_fuzz}
+
+\quote {See \ref {https://github.com/google/oss-fuzz} {GitHub page}.}
+
+License: Apache License 2.0. Now they use \ref {#lib_fuzzer} {libFuzzer} with \ref {#sanitizers} {Sanitizers}.
+
+\3 {Otter} {otter}
+
+\3 {Pathcrawler} {pathcrawler}
+
+\quote {See \ref {#paper_pathcrawler} {main paper}.}
+
+For binary code. Since 2004.
+
+\3 {\abbr {PEBIL}} {pebil}
+
+\quote {See \ref {#paper_pebil} {main paper}, \ref {https://github.com/mlaurenzano/PEBIL} {GitHub repository}.}
+
+\abbr {PEBIL} has a number of tools. Their source code is in \m {tools} folder. Each tool has two files \m {\formal {tool name}.C} and \m {\formal {tool name}.h}. To add new tool copy Minimal tool files, add tool name to \m {tools/Makefile}, \m {DECLATE_INST_CLASS} and \m {GENERATE_MAKER} to \m {tools/pebil.C}, and to \m {DEPENDS}.
+
+\4 {Installation} {pebil_installation}
+
+Use \m {--enable-mpi=no} in \m {configure} script to disable \abbr {MPI} errors on Ubuntu. Without Fortran compiler installation you get incorrect shell file: \m {scripts/blacklist.sh: line 46: -o: command not found}. \m {configure} script ignores the \m {--prefix} options and doesn't use system directories.
+
+Install Fortran if needed:
+
+\code {$ sudo apt-get install gfortran}
+
+Install \abbr {PEBIL}:
+
+\code {$ export PEBIL_ROOT=/space/enzet/projects/pebil
+$ export PATH=$\{PATH\}:$\{PEBIL_ROOT\}/bin:$\{PEBIL_ROOT\}/scripts
+$ ./configure --enable-mpi=no
+$ make clean all install}
+
+\4 {Running} {pebil_run}
+
+Make sure you have correct \m {LD_LIBRARY_PATH}.
+
+\m {pebil --tool \formal {tool name} \formal {SO file name}}. You will get \m {\formal {SO file name}.\formal {tool shortcut}inst}.
+
+\3 {\abbr {PIN}} {pin}
+
+\quote {See \ref {#paper_pin} {main paper}.}
+
+Dynamic instrumentation tool for \ref {#x86} {x86}, Itanium®, \ref {#arm} {\abbr {ARM}}.
+
+\3 {PyBounds} {pybounds}
+
+\quote {See \ref {https://github.com/dhabensky/PyBounds} {GitHub page}.}
+
+Classifier of software bugs. Uses \ref {#gdb} {\abbr {GDB}}. Works like a very simple fuzzer. It determines intervals of input sizes with the sage bug class. It doesn't change file content, only file size.
+
+\3 {Replayer} {replayer}
+
+\quote {See \ref {#paper_replayer} {main paper}.}
+
+Berkeley team. Based on \ref {#valgrind} {Valgrind}.
+
+\3 {\sc {RoadRunner}} {roadrunner}
+
+\quote {See \ref {#paper_roadrunner} {main paper}.}
+
+\3 {S\super {2}E} {s2e}
+
+\quote {See \ref {#paper_s2e} {main paper}.}
+
+It was used by CodeJitsu for \abbr {CGC}. \ref {https://github.com/S2E/docs/blob/master/src/Tutorials/CGC.rst} {Setting S\super {2}E} for \ref {#darpacgc} {\abbr {DARPA} Cyber Grand Challenge}.
+
+\3 {\abbr {SAGE}} {sage}
+
+\quote {See \ref {#paper_sage} {main paper}, \ref {#paper_sage_2012} {2012 paper}, \ref {http://research.microsoft.com/en-us/um/people/pg/public_psfiles/SAGE-in-1slide-for-PLDI2013.pdf} {\abbr {SAGE} in one slide}.}
+
+\ref {#microsoft} {Microsoft Research}. Since 2008. Authors: Ella Bounimova, Patrice Godefroid, David Molnar.
+
+\3 {Sanitizers} {sanitizers}
+
+\quote {See \ref {https://github.com/google/sanitizers} {GitHub page}.}
+
+\list
+    {\ref {#asan} {AddressSanitizer}: buffer overflows, use-after-free,}
+    {\ref {#msan} {MemorySanitizer}: uninitialized memory,}
+    {\ref {#tsan} {ThreadSanitizer}: data races and deadlocks for \ref {#cpp} {C++} and \ref {#go} {Go}.}
+
+\3 {Saturn} {saturn}
+
+\quote {See \ref {http://saturn.stanford.edu/} {official page}.}
+
+\3 {Sherlock} {sherlock}
+
+\quote {See \ref {#paper_sherlock} {main paper}.}
+
+\3 {Splat} {splat}
+
+\quote {See \ref {#paper_splat} {main paper}.}
+
+\ref {#microsoft} {Microsoft Research}. Since 2008. Symbolic length technique.
+
+For C. Source-to-source instrumentation. Uses idea of tracking buffers and strings partially symbolically. Uses \ref {#stp} {\abbr {STP}}.
+
+\3 {Svace} {svace}
+
+\quote {\ref {#ispras} {Институт системного программирования \abbr {РАН}}.}
+
+\3 {Taintdroid} {taintdroid}
+
+\quote {See \ref {http://appanalysis.org/download.html} {download page}.}
+
+\3 {ThreadSanitizer} {tsan}
+
+\quote {See \ref {#paper_tsan} {main paper}.}
+
+\ref {https://code.google.com/p/data-race-test/wiki/ThreadSanitizer} {Google Code repository for version 1}, \ref {https://github.com/google/sanitizers} {GitHub page for new version and all Sanitizers}.
+
+Data race detector for C/C++ and Go. \i {So, it detects only this type of errors.} For other errors they have AddressSanitizer and MemorySanitizer.
+
+Uses 2 techniques: happens-before and lock set (remember every lock). Data race detected if we have two shared data accesses, at least one of them is write, there is no happens-before relation between them and intersection of lock sets is empty.
+
+Detector is state machine. Detects at run-time memory accesses (\m {READ}, \m {WRITE}), synchronization (\m {LOCK}, \m {UNLOCK}, \m {SIGNAL}, \m {WAIT}). Has shadow state for every byte of memory with information about previous accesses.
+
+They tried to use dynamic instrumentation: Valgrind and \abbr {PIN} (because it is multiprocess), but they was very slow. After that they tried to use static instrumentation: \abbr {GCC} and \abbr {LLVM}.
+
+\3 {Triton} {triton}
+
+\quote {See \ref {http://triton.quarkslab.com/} {web page}, \ref {https://github.com/JonathanSalwan/Triton} {GitHub page}, \ref {#paper_triton} {main paper}.}
+
+Dynamic binary analysis framework. Works on \ref {#x86} {x86}, \ref {#x64} {x64}.
+
+\hidden {triton_image} {Triton architecture}
+{
+    \image {image/diagram/triton_v03_architecture.png} {Triton architecture}
+}
+
+/* \hidden {triton_diagram_image} {Triton diagram}
+{
+    \image10 {image/diagram/triton.svg} {Triton diagram}
+} */
+
+See \ref {http://triton.quarkslab.com/files/sstic2015_slide_en_saudel_salwan.pdf} {2015 English slides}, \ref {http://triton.quarkslab.com/blog/What-kind-of-semantics-information-Triton-can-provide/} {semantics blog post}.
+
+Triton works at the instruction level (highest class is \m {Instruction}). Without context, the concretization will be processed on zero.
+
+\4 {Installation} {triton_install}
+
+\code {$ cd pin-2.14-71313-gcc.4.4.7-linux/source/tools/
+$ git clone https://github.com/JonathanSalwan/Triton.git
+$ cd Triton
+$ mkdir build
+$ cd build
+$ cmake -DPINTOOL=on ..
+$ make
+$ cd ..
+$ ./triton ./src/examples/pin/ir.py /usr/bin/id}
+
+Modified Triton on \m {dse} branch:
+
+\code {$ cmake -DNO_Z3=ON -DPYTHON_BINDINGS=OFF}
+
+\4 {\abbr {API}} {triton_api}
+
+It is C++ and Python \abbr {API}. For examples see \m {src/examples/\[cpp|python\]}.
+
+\4 {Iternal structure} {triton_structure}
+
+\list
+    {\m {src}
+     \list
+         {\m {libtriton}
+          \list
+              {\m {arch}
+               \list
+                   {\m {x86}
+                    \list {
+                        {\m {x86Semantics.cpp}. Semantics of x86.}
+                    }
+               }
+              {\m {includes}
+               \list {
+                    {\m {instruction.hpp}. Instruction class.}
+               }
+         }
+    }
+
+About missing references or incomplete \abbr {SMT}-\abbr {LIB} 2 form see \ref {https://github.com/JonathanSalwan/Triton/issues/327} {GitHub issue}. For now I use \m {ast = expr.getAst()}, but Salwan suggested to use \m {getFullAstFromId(expr.getId())}.
+
+\4 {How it works} {triton_works}
+
+In Triton \i {tainted} does not mean \i {symbolic}. To make register RAX tainted, run \m {api.taintReg(x86::x86_reg_rax)}. But it is only mark corresponding flag and it used only for \m {\formal {expression}->isTainted} checking (if expression depends on tainted registers or memory). To make register RAS symbolic, use \m {api.convertRegToSymVar(x86::x86_reg_rax)} call.
+
+\table
+{
+    {
+        {Send to Triton}
+        {Resulted trace}
+    }
+    {
+        {\m {xor ax, ax}}
+        {x\sub {0} = 0 ⊕ 0}
+    }
+    {
+        {AX = 5, \m {xor ax, ax}}
+        {x\sub {0} = 5 ⊕ 5}
+    }
+    {
+        {AX = 5, \m {xor ax, ax}, \m {add ax, 1}}
+        {x\sub {0} = 5 ⊕ 5, x\sub {7} = x\sub {0} + 1}
+    }
+}
+
+\3 {Valgrind} {valgrind}
+
+\quote {See \ref {#paper_valgrind} {main paper}.}
+
+\4 {VEX} {vex}
+
+Intermediate representation format. It uses by \ref {#angr} {angr}.
+
+\hidden {vex_structure} {\abbr {VEX} structure}
+{
+    \image {image/diagram/vex.svg} {\abbr {VEX} structure}
+}
+
+\3 {Dynamic instrumentators} {dynamic_instrumentation}
+
+\list
+{
+    {\ref {https://github.com/Samsung/ADBI} {\abbr {ADBI}}. For Samsung from Warsaw.}
+    {\abbr {LOPI} (\ref {http://www.bth.se/people/ska/lopi.pdf} {paper}). Low perturbation instrumentator. Said, they better than \ref {#dyninst} {Dyninst}. Has source-based instrumentation, binary rewriting, and memory image rewriting.}
+}
+
+\3 {MergePoint} {veritesting}
+
+Veritesting techinique.
+
+\quote {See \ref {#paper_veritesting} {main paper}.}
+
+\3 {Xandra} {xandra}
+
+\hiddenimage {image/diagram/xandra.png} {Xandra architecture}
+
+\3 {Google Project Zero} {project_zero}
+
+\quote {See \ref {https://en.wikipedia.org/wiki/Project_Zero_(Google)} {Wikipedia page}, \ref {http://googleprojectzero.blogspot.ru/} {blog}}
+
+\ref {https://www.google.com/about/appsecurity/research/} {Non-Google software vulnerabilities} discovered by Googlers.
+
+\3 {\abbr {DARPA}'s Cyber Grand Challenge} {darpacgc}
+
+\quote {See 100+ \ref {https://github.com/CyberGrandChallenge/samples} {source code of samples} (huge real programs).}
+
+They use their own \ref {#linux} {Linux}-derived operating system \ref {https://blog.legitbs.net/2016/05/what-is-decree.html} {\abbr {DECREE}}: no signals, no shared memory, no threads, only 7 system calls.

@@ -1,0 +1,25 @@
+\3 {Swift} {swift}
+
+\quote {See \ref {#swift_book} {main book}.}
+
+Creating new iOS project do not forget to check if you need "Use Core Data" checkbox be enabled.
+
+\4 {Persistent memory model} {swift_persistent}
+
+For a lot of data use Core Data. Core Data is not \abbr {ORM}, but it uses SQLite as backend. For using Core Data, corresponding checkbox should be set during project creation. There will be some new functions in \m {AppDelegate.swift}. \ref {http://jamesonquave.com/blog/core-data-in-swift-tutorial-part-1/} {Good Core Data tutorial}.
+
+\m {\[NSUserDefaults standardUserDefaults\]} is good for small amounts of data like user settings and preferences.
+
+If Core Data became inconsistent, just delete your application from iOS simulator.
+
+\4 {Date and time} {swift_date_and_time}
+
+Date creation:
+
+\code {swift} {
+let components = NSDateComponents()
+components.year = 2100
+components.month = 1
+components.day = 1
+var date: NSDate = NSCalendar(identifier: NSCalendarIdentifierGregorian)!.dateFromComponents(components)
+}

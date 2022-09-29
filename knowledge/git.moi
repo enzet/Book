@@ -1,0 +1,39 @@
+\3 {Git} {git}
+
+To see details of git working with network set environmental variable \m {GIT_CURL_VERBOSE}. E.g. \m {GIT_CURL_VERBOSE=1 git clone ...}.
+
+For git update on Ubuntu:
+
+\code {shell} {
+sudo add-apt-repository ppa:git-core/ppa
+sudo apt-get update
+sudo apt-get install git
+}
+
+List all files under repository: \m {git ls-tree --full-tree -r HEAD}. Exclude file from repository but remain it: \m {git rm --cached \formal {file name}}. Diff for files not in repository: \m {git diff --no-index \formal {file name 1} \formal {file name 2}}.
+
+\4 {Conifguration} {git_config}
+
+Set value: \m {git config --\[local|global\] \formal {option} \formal {value}}. Options: \m {core.editor} (editor for commit message), \m {user.name}, \m {user.email}.
+
+\4 {Logging} {git_log}
+
+For pretty logging\: \m {git log --oneline --graph --pretty=\formal {format}}. \m {-1 \formal {commit hash}} for just one commit. Pretty format: \m {--date=(relative|local|default|iso|iso-strict|rfc|short|raw)} and
+
+\table
+    {{\m {%ad}, \m {%at}, \m {%ai}} {date, \abbr {UNIX} timestamp, \abbr {ISO}}}
+    {{\m {%ae}} {author e-mail address}}
+    {{\m {%an}} {author name}}
+    {{\m {%c*}} {same as author but committer}}
+    {{\m {%h}, \m {%H}} {short and long hash}}
+    {{\m {%s}} {subject}}
+
+\4 {Hooks} {git_hooks}
+
+\m {hooks} folder contains scripts which are invoked when corresponding action is performed (post-commit, pre-push, etc.). By default there is a set of sample scripts with \m {.sample} extension. For using them, edit sample file and remove \m {.sample} extension.
+
+Hooks may be client side and server-size. Client-side hooks \i {are not} copied when you clone a repository.
+
+\4 {Branches} {git_branches}
+
+\m {master} is just a default name for the branch when you run \m {git init}, \m {origin} is just a default name for the remote when you run \m {git clone}. You have your local \m {master} and remote \m {origin/master}. When you run \m {fetch}, you just update \m {origin/master} on your machine. \m {git push serverfix} is \m {git push serverfix:serverfix}. You can run \m {git push serverfix:anotherbranch} as well (\m {anotherbranch} is on remote). If you run \m {git fetch origin} and there is new branch \m {newfix} on remote, you have no local \m {newfix} branch, only \m {origin/newfix}, which you \i {can't modify}. To create your local branch which \b {tracks} remote one, you should run \strike {\m {git checkout -b newfix origin/newfix}} \m {git checkout newfix}.
