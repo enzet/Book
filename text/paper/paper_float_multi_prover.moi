@@ -6,4 +6,3 @@
 
 \page {1} They have axiomatization of \abbr {FP} operations which allows to reduce verification to check the validity of logic formulas. They talk aboue \i {verification conditions} with floating point arithmetic. \page {2} Their implementation is for Frama-C. \page {3} They extend specification of \abbr {FP} equality and arithmetic with functions such as absolute value, exponential, trigonometric, etc.
 \page {8} They have Boolean model for “less of equals”, division
-

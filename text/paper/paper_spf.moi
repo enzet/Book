@@ -7,6 +7,3 @@
 \3 {Native} {spf_native}
 
 They said, \ref {#jpf} {\abbr {JPF}-core} has native peers mechanism to \i {model} native libraries and any other program part. It captures \m {java.lang.Math} libraries.
-
-/* \2 {2011} {paper_2011} */
-

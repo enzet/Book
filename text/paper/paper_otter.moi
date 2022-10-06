@@ -2,7 +2,7 @@
 
 \paperblock {otter}
 
-See \ref {dale:/space/enzet/text/letter/2014_11_29_lkr_sva} {L.~Kruglov letter}, \ref {dale:/space/enzet/text/letter/2014_11_29_lkr_sva_2} {answer}.
+See \ref {dale:/space/enzet/text/letter/2014_11_29_lkr_sva} {L. Kruglov letter}, \ref {dale:/space/enzet/text/letter/2014_11_29_lkr_sva_2} {answer}.
 
 \date {20.03.2015} \page {1} Goal: reach particular target line (for debugging or for static analysis reports reproducing). 2 strategies:
 

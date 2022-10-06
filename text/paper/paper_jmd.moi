@@ -6,6 +6,6 @@
 
 This paper is about \i {malware detection}, not about \i {defect detection}.
 
-\date {13.05.2015} \page {1} \abbr {JMD} uses combination of (1)~symbolic execution, (2)~instrumentation and (3)~dynamic analysis. They use \ref {#jpf} {Java PathFinder} and \ref {#aspectj} {AspectJ}. Number of vulnerabilities increases from 2001 to 2013. The most common delivery for exploits is a Java \b {applet} (\comment {read about!}).
+\date {13.05.2015} \page {1} \abbr {JMD} uses combination of (1) symbolic execution, (2) instrumentation and (3) dynamic analysis. They use \ref {#jpf} {Java PathFinder} and \ref {#aspectj} {AspectJ}. Number of vulnerabilities increases from 2001 to 2013. The most common delivery for exploits is a Java \b {applet} (\comment {read about!}).
 \date {15.05.2015} Application is executed under sandbox. There is a problem: malware can evade detection by remaining dormant until trigger is met, solution: \b {alternative paths exploration} (using \abbr {SE}). \page {2} Tool works with Java bytecode. There is no native code deterctors. (\comment {see later}).
 

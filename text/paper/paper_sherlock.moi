@@ -2,7 +2,7 @@
 
 \paperblock {sherlock}
 
-\quote {M.~Eslamimehr (\ref {http://www.mah-d.com/} {home page}), J.~Palsberg (\ref {http://www.cs.ucla.edu/~palsberg/} {home page}). \abbr {UCLA}, Univercity of California. See also M.~Eslamimehr PhD: \ref {http://www.mah-d.com/dissertation.pdf} {\abbr {PDF} online}, \ref {#sherlock} {Sherlock}.}
+\quote {M. Eslamimehr (\ref {http://www.mah-d.com/} {home page}), J. Palsberg (\ref {http://www.cs.ucla.edu/~palsberg/} {home page}). \abbr {UCLA}, Univercity of California. See also M. Eslamimehr PhD: \ref {http://www.mah-d.com/dissertation.pdf} {\abbr {PDF} online}, \ref {#sherlock} {Sherlock}.}
 
 \date {26.06.2015} \page {1} Deadlock detection. Many deadlock detectors requires annotations. They don't use annotations. Dynamic analysis good for this because it reports only real deadlocks. \i {Schedule} is a sequence of events that must be executed in order. Real deadlock is a combination of deadlock pattern and executable schedule. \page {2} They use \ref {#goodlock} {GoodLock} to quickly produce deadlock candidates. They use \ref {#concolic} {concolic execution} and new constraint-based approach to drive execution towards a deadlock candidate. \comment {Oh, it's look like Leonid's work! They check static analyzer defect candidates!} They can replay founded deadlock. They produce a set of deadlock candidates and then use separate search for each one.
 

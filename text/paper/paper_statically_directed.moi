@@ -10,6 +10,3 @@
 	    2 эвристики: двухкомпонентная (расстояние + количество достижимых инструкци из data-flow slice) и эвристика для циклов на основе шаблонов путей
 	    нет эксперементальных данных по отдельным эвристикам
 	    data-flow slice - a transitive closure of read-write dependencies of all variables used by the statement triggering the vulnerability}
-
-*/
-

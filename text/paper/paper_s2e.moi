@@ -4,11 +4,10 @@
 
 \page {1} \i {In-vivo} means with environment (\i {in-vitro} means without) because they perform both kernel-mode and user-mode binary analysis. Two main ideas: selective symbolic execution (S\super {2}E, \abbr {SSE}) and relaxed execution consistency model. Conceptually, they have one path explorer and modular path analyzers. It is a framework for analysis tools construction:
 
-\list {
+\list
 	{reason about entire families of paths,}
 	{take in account whole environment,}
 	{\page {2} operate on binary level.}
-}
 
 Also tool should have \i {selectors} to specify path of interest (e.g. paths that touch a specific memory object, or paths influenced by a specific parameter). S\super {2}E also has Windows \abbr {VM} {virtual machine}. \comment {They use term \i {symbolic execution tree} as owr \i {path tree}.} Following that tree they copy program state at every branch. But copy-on-write is used to make this process efficient. \page {3} S\super {2}E turns multi-path mode off whenever possible. When do this, it converts symbolic variable \i {x} to \b {some} concrete value (solving constraints). \comment {Here execution consistency model needed.} When go back to symbolic execution, you replace concrete values with symbolic variables but may add some constraints (e.g. \simplemath {\i {x} ⩽ 15}) from knowledge about environment. \comment {They use solving \i {only} when go from symbolic to concrete?} \page {4} Whenever you select concrete value for symbolic variable you can go back and change this value to another.
 
@@ -16,26 +15,24 @@ Also tool should have \i {selectors} to specify path of interest (e.g. paths tha
 
 In normal execution program state is always consistent (exists a feasible path from start to this point). But, they said, for many analyses this assumption is unnecessarily strong. (Like in unit testing, when you rely on unit interface, not all possible values.) So, there are paths that
 
-\list {
+\list
 	{statically feasible, they include}
 	{locally feasible, they include}
 	{globally feasible.}
-}
 
-\list {
+\list
 	{Strict consistency (\abbr {SC}):
-	\list {
+	\list
 		{\abbr {SC-CE} {concrete execution}: just concrete execution, no internal structure got, black-box random fuzzing.}
 		{\abbr {SC-UE} {unit-level execution}: collecting info (e.g. \abbr {PC} {path constraints}) while executing the unit. Environment is black-box. \ref {#dart} {\abbr {DART}}, \ref {#klee} {\abbr {KLEE}}.}
 		{\abbr {SC-SE} {system-level execution}: info about whole system.}
-	}}
+	}
 	{Local consistency (\abbr {LC}): replace result of environment calls with symbolic values with valid constraints.}
 	{Relaxed consistency (\abbr {RC}):
-	\list {
+	\list
 		{\abbr {RC-OC} {overapproximate consistency}: relax some constraints at unit/environment boundary.}
 		{\abbr {RC-CC} {CFG consistency}: relax some constraints anywhere–provided by static analysis.}
-	}}
-}
+	}
 
 \hiddenimage {image/diagram/s2e_consistency.png} {S\super {2}E consistency}
 
@@ -48,11 +45,10 @@ They said, our concretization is “blind”, but their is not. \page {6} Their 
 
 3 tools on top of S\super {2}E:
 
-\list {
+\list
     {testing of drivers. \page {10} 720 \abbr {LOC} of C++ code. Plugins: \i {CodeSelector}}
     {reverse engineering of drivers,}
     {performance profiling.}
-}
 
 \page {11} S\super {2}E executes 1000 times more instructions in concrete mode than in symbolic mode. \page {12} Parsers are the bane of \abbr {SE} engines, so S\super {2}E just skips parsing stage.
 

@@ -3,6 +3,3 @@
 \paperblock {flopsy}
 
 \page {1} They consider \ref {#dse} {\abbr {DSE} {dynamic symbolic execution}} and \abbr {SBST} {search-based software testing} as different complementary techniques. They combine them for floating point problem. \comment {See \abbr {EVACON} framework.}
-
-/* \2 {2015} {paper_2015} */
-

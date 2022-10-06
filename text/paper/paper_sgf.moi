@@ -3,6 +3,3 @@
 \paperblock {sgf}
 
 \page {1} Term \term {coverage-based greybox fuzzing} (\abbr {CGF}). They introduce \term {smart greybox fuzzing} (\abbr {SGF})\: leverages a high-level structural representation of the seed file. They define new mutations\: work on virtual file structure rather than on the bit level.
-
-/* 2018 */
-
