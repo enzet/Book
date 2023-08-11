@@ -1,0 +1,99 @@
+\1 {MIT 24.900 Introduction to Linguistics, Spring 2022} {linguistics_mit}
+
+See
+\ref {https://www.youtube.com/playlist?list=PLUl4u3cNGP63BZGNOqrF2qf_yxOjuG35j} {YouTube playlist}.
+
+\2 {Lecture 2: Morphology, Part 1} {linguistics_mit_2_1}
+
+The way to translate: the sentence in the foreign language, glosses for each
+word, translation. Parts of words — \term {morphemes} {morpheme}. Morphemes:
+roots and affixes (\term {suffixes} {suffix} and \term {prefixes} {prefix}).
+\term {Free morpheme} {morpheme free} — can be used without any other morphemes
+added; otherwise it’s a \term {bound morpheme} {morpheme bound}. There are also
+\term {clitics} {clitic} that are part of words, but function as separate words.
+Morpheme is \term {open-class morpheme} {morpheme open-class} if one can add
+more morphemes to it, otherwise it’s \term {close-class morpheme} {morpheme
+close-class}.
+
+\term {Infix} is an affix that cannot be added before or after, but inside
+already constructed word.  Words may be modified not only by adding affixes, but
+also subtract not add Sometimes tone can play the role of morpheme.
+
+\2 {Lecture 3: Morphology, Part 2} {linguistics_mit_3_2}
+
+\term {Allomorph} — morpheme that has many forms (there is usually a default
+allomorph).
+
+Sometimes, the order of morphemes matters. E.g. empowerment: power is a noun,
+em- can be attached only to a noun and produces a verb, \nospell {-ment} can be
+attached only to a verb, so it is power → empower → empowerment. Unlockable may
+be unlock-able (can be unlocked) or \nospell {un}-lockable (cannot be locked).
+
+\2 {Lecture 4: Morphology, Part 3} {linguistics_mit_4_3}
+
+\term {Noun}: person, place, thing or idea. Something that can go in “We are
+talking about ___”.
+
+\term {Adjective}: something that can go in “I consider her ___” meaning “I
+think she is ___”.
+
+\list
+    {\term {Isolating} (not many bound morphemes as in Chinese) vs
+        \term {polysynthetic} (many bound morphemes as in Wampanoag).}
+    {\term {Agglutinative} (morphemes easily separable as in Turkish) vs
+        \term {fusional} or \term {inflectional} (morphemes tend to squash
+        together as in Russian).}
+
+\term {Derivational} morphology (category-changing, causative, ...) is performed
+before \term {inflectional} morphology (agreement, tense, ...)
+
+Adjective order as in English and Russian before the word is 1, 2, ..., N and if
+adjectives go after the word it may be 1, 2, ..., N or N, ..., 2, 1, but the
+internal order is always the same.
+
+Some word parts may not be morphemes. As in Lardil: they add \nospell{-da} to
+monosyllable words just for sound preferences, and \nospell{-da} is not a
+morpheme.
+
+Some rules on how you change the word to get new form may apply in a particular
+order.
+
+\2 {Lecture 5: Phonetics, Part 1} {linguistics_mit_5_1}
+
+Labia-dental: top teeth and bottom lip, but not the another way around.
+
+\table
+    {{can} {\\can\\}}
+    {{can’t} {\\can + glottal stop\\}}
+
+The same [r] sound may be produced using different ways.
+
+There are \term {tense} {vowel tense} and \term {lax} {vowel lax} (somewhat
+relaxed) vowels.
+
+\2 {Lecture 6: Phonetics, Part 2} {linguistics_mit_6_2}
+
+If a language have only three vowels, they are expected to be “a”, “u”, and “i”.
+
+\term {Vowel harmony}: vowels may change based on the \nospell {“backness”} or
+“openness” of the other vowels in the word.
+
+\term {Ejectives} {ejective}: air flows not from lungs, but it is air between
+mouth and glottal.  \term {Clicks} {click}: air flows backwards.
+\term {Implosives} {implosive}: pronounce with a little bit of inhaling.
+
+There are no languages with vowel you pronounce when inhaling.
+
+There is no analogue for “картавость” in English, because English doesn’t have
+rolled “r”.
+
+Sometimes you detect a sound not by sound itself but by changes it performs on
+surrounded sounds, like in “pap” and \nospell {“bab”}. You don't have syllables
+like, \nospell {“psa”} in English, because in “pa” sound “p” is detected by
+change it produces on “a”, but in \nospell {“psa”} “s” hides this change.
+Sometimes you use your eyes to detect the sound correctly. English doesn't have
+words that ends into struts.  English doesn't have words that ends with
+voiceless and voiced consonants (or vise-versa). \term {Obstruent} consonant is
+a stop or fricative (\comment {on Wikipedia however it's also affricate}).
+\term {Phonotactics} is how sounds can combine.  There is a narrow transcription
+and a broad transcription.
