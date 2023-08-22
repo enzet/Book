@@ -3,23 +3,23 @@
 See
 \ref {https://www.youtube.com/playlist?list=PLUl4u3cNGP63BZGNOqrF2qf_yxOjuG35j} {YouTube playlist}.
 
-\2 {Lecture 2: Morphology, Part 1} {linguistics_mit_2_1}
+\2 {Lecture 2: Morphology, Part 1} {linguistics_mit_2}
 
 The way to translate: the sentence in the foreign language, glosses for each
 word, translation. Parts of words — \term {morphemes} {morpheme}. Morphemes:
 roots and affixes (\term {suffixes} {suffix} and \term {prefixes} {prefix}).
 \term {Free morpheme} {morpheme free} — can be used without any other morphemes
 added; otherwise it’s a \term {bound morpheme} {morpheme bound}. There are also
-\term {clitics} {clitic} that are part of words, but function as separate words.
-Morpheme is \term {open-class morpheme} {morpheme open-class} if one can add
-more morphemes to it, otherwise it’s \term {close-class morpheme} {morpheme
+\term {clitics} {clitic} that are part of words, but function as separate
+words. Morpheme is \term {open-class morpheme} {morpheme open-class} if one can
+add more morphemes to it, otherwise it’s \term {close-class morpheme} {morpheme
 close-class}.
 
 \term {Infix} is an affix that cannot be added before or after, but inside
-already constructed word.  Words may be modified not only by adding affixes, but
+already constructed word. Words may be modified not only by adding affixes, but
 also subtract not add Sometimes tone can play the role of morpheme.
 
-\2 {Lecture 3: Morphology, Part 2} {linguistics_mit_3_2}
+\2 {Lecture 3: Morphology, Part 2} {linguistics_mit_3}
 
 \term {Allomorph} — morpheme that has many forms (there is usually a default
 allomorph).
@@ -27,9 +27,11 @@ allomorph).
 Sometimes, the order of morphemes matters. E.g. empowerment: power is a noun,
 em- can be attached only to a noun and produces a verb, \nospell {-ment} can be
 attached only to a verb, so it is power → empower → empowerment. Unlockable may
-be unlock-able (can be unlocked) or \nospell {un}-lockable (cannot be locked).
+be unlock-able (can be unlocked) or \nospell {un}-lockable (cannot be locked),
+because there are two \nospell {“uns”}: for verbs (means undo something), for
+adjectives (means not).
 
-\2 {Lecture 4: Morphology, Part 3} {linguistics_mit_4_3}
+\2 {Lecture 4: Morphology, Part 3} {linguistics_mit_4}
 
 \term {Noun}: person, place, thing or idea. Something that can go in “We are
 talking about ___”.
@@ -44,11 +46,12 @@ think she is ___”.
         \term {fusional} or \term {inflectional} (morphemes tend to squash
         together as in Russian).}
 
-\term {Derivational} morphology (category-changing, causative, ...) is performed
-before \term {inflectional} morphology (agreement, tense, ...)
+\term {Derivational} morphology (category-changing, causative, ...) is
+performed before \term {inflectional} morphology (agreement, tense, ...)
 
-Adjective order as in English and Russian before the word is 1, 2, ..., N and if
-adjectives go after the word it may be 1, 2, ..., N or N, ..., 2, 1, but the
+Adjective order as in English and Russian before the word is
+\simplemath {1, 2, ..., \i {n}} and if adjectives go after the word it may be
+\simplemath {1, 2, ..., \i {n}} or \simplemath {\i {n}, ..., 2, 1}, but the
 internal order is always the same.
 
 Some word parts may not be morphemes. As in Lardil: they add \nospell{-da} to
@@ -58,7 +61,10 @@ morpheme.
 Some rules on how you change the word to get new form may apply in a particular
 order.
 
-\2 {Lecture 5: Phonetics, Part 1} {linguistics_mit_5_1}
+\2 {Lecture 5: Phonetics, Part 1} {linguistics_mit_5}
+
+\term {Conspiracy}—a situation in which different phonological or grammatical
+rules lead to similar or related outcomes.
 
 Labia-dental: top teeth and bottom lip, but not the another way around.
 
@@ -71,15 +77,16 @@ The same [r] sound may be produced using different ways.
 There are \term {tense} {vowel tense} and \term {lax} {vowel lax} (somewhat
 relaxed) vowels.
 
-\2 {Lecture 6: Phonetics, Part 2} {linguistics_mit_6_2}
+\2 {Lecture 6: Phonetics, Part 2} {linguistics_mit_6}
 
-If a language have only three vowels, they are expected to be “a”, “u”, and “i”.
+If a language have only three vowels, they are expected to be “a”, “u”, and
+“i”.
 
 \term {Vowel harmony}: vowels may change based on the \nospell {“backness”} or
 “openness” of the other vowels in the word.
 
 \term {Ejectives} {ejective}: air flows not from lungs, but it is air between
-mouth and glottal.  \term {Clicks} {click}: air flows backwards.
+mouth and glottal. \term {Clicks} {click}: air flows backwards.
 \term {Implosives} {implosive}: pronounce with a little bit of inhaling.
 
 There are no languages with vowel you pronounce when inhaling.
@@ -91,9 +98,93 @@ Sometimes you detect a sound not by sound itself but by changes it performs on
 surrounded sounds, like in “pap” and \nospell {“bab”}. You don't have syllables
 like, \nospell {“psa”} in English, because in “pa” sound “p” is detected by
 change it produces on “a”, but in \nospell {“psa”} “s” hides this change.
-Sometimes you use your eyes to detect the sound correctly. English doesn't have
-words that ends into struts.  English doesn't have words that ends with
-voiceless and voiced consonants (or vise-versa). \term {Obstruent} consonant is
-a stop or fricative (\comment {on Wikipedia however it's also affricate}).
-\term {Phonotactics} is how sounds can combine.  There is a narrow transcription
-and a broad transcription.
+This is why some languages don't allow three consonants in a row. Sometimes you
+use your eyes to detect the sound correctly. English doesn't have words that
+ends into struts.
+
+\2 {Lecture 8: Phonology, Part 1} {linguistics_mit_8}
+
+English doesn't have words that ends with voiceless and voiced consonants (or
+vise-versa). \term {Obstruent} consonant is a stop or fricative (\comment {on
+Wikipedia however it's also affricate}).
+
+\term {Phonotactics} is how sounds can combine. There is a narrow transcription
+and a broad transcription. \term {Compound}: noun as a result of putting two
+nouns together.
+
+\2 {Lecture 9: Phonology, Part 2} {linguistics_mit_9}
+
+\term {Optimality theory}: languages have a lot of preferences on phonology and
+when combining words or adding morphemes, they are trying their best to match
+as many preferences as possible.
+
+Children know basic rules of phonotactics, they know that English doesn’t allow
+voiced after voiceless consonant, but they may make mistakes trying to fix that.
+
+\2 {Lecture 10: Phonology, Part 3} {linguistics_mit_10}
+
+There is a \term {vowel harmony} (one back vowel triggers a back form of a vowel
+in another morpheme) and \term {sibilant harmony} (e.g. post-alveolar consonants
+in one morpheme triggers post-alveolar form of another morpheme).
+\term {Sibilant} = strident. \term {Telicity} (of verb) means that verb has
+endpoint: \term {telic} verb has endpoint and \term {atelic} verb hasn't.
+
+Idea of ranked constraints: languages has things they want to do with some
+priorities.
+
+Stress may affect phonetics. How to call people in English (H is high tone, L is
+low tone): \nospell {\fg{Lau}{H}.r\fg{a}{L}, \fg{Pi}{L}.\fg{erre}{HL},
+\fg{Ge}{H}.\fg{ne}{H}.\fg{vieve}{L}}. High tone is on the stressed syllable,
+last syllable is low, and high stays until the second stress.
+
+\table
+    {{\b {Percent of languages}} {\b {Stressed vowel}}}
+    {{33%}        {1\super {st}}}
+    {{6%}         {2\super {\nospell {nd}}}}
+    {{1 language} {3\super {rd}}}
+    {{4%}         {antepenultimate (предпредпоследняя)}}
+    {{39%}        {penultimate (предпоследняя)}}
+    {{18%}        {last}}
+
+There are two types of stresses in Russian: город doesn't have lexical accent,
+but ор\u {ех} and suffix -\u {ам} have lexical accents: in город\u {ам} one
+puts stress to the suffix and in ор\u {ехам} to the accent of the root (when
+there are two lexical accents, stress goes to the left one). In город accent is
+on the most left syllable.
+
+\2 {Lecture 11: Syntax, Part 1} {linguistics_mit_11}
+
+Star before a sentence means it's syntactically wrong. Sentence may be
+meaningless but grammatical and vice versa.
+
+\list
+    {Who are you talking to? (more natural)}
+    {To whom are you talking? (less natural)}
+    {What are you talking about?}
+    {*About what are you talking?}
+    {*Despite what did you leave?}
+    {**What did you leave despite?}
+
+People don't speak in complete sentences. However, in \b {competence}, we
+consider speech as if there is no any distractions to the speaker.
+\b {Performance} on the other hand is a study of how people actually speak.
+Syntactically sentences in English may be infinite, but people don't speak like
+that in real life. However, we will consider these sentences as well.
+
+How to detect sentence units. Example for the sentence “I will find
+\u {the red book}”.
+
+\list
+    {\b {Topicalization}: \u {The red book}, I will find.}
+    {\b {Coordination}: I will find \u {the red book} and \u {the blue pencils}.}
+    {\b {Answer}: What will you find? — \u {The red book}.}
+    {\b {Clefting}: What I will find is \u {the red book}.}
+
+\u {The red book} is a unit and it functions as a noun. Unit
+\u {find the red book} functions as a verb.
+
+Three different ways to use “verb + up”:
+\list
+    {Walk her up.}
+    {Wake them up.}
+    {Walk up the stairs.}
